@@ -1,0 +1,9 @@
+test.js
+node_modules/
+package-lock.json
+.gitignore
+
+.idea/
+.Ds_Store
+.github
+/src

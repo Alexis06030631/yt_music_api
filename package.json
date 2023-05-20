@@ -1,0 +1,43 @@
+{
+	"name": "ytmusic_api",
+	"version": "1.0.0",
+	"description": "A simple API to get music from YouTube Music",
+	"scripts": {
+		"test": "nodemon test.js",
+		"publish": "npm run build && npm publish --access public",
+		"build": "tsc"
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"keywords": [
+		"YouTube",
+		"YouTube music",
+		"music",
+		"Free"
+	],
+	"author": "Alexis06030631",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:Alexis06030631/meteofrance_api.git",
+		"directory": "src",
+		"branch": "main"
+	},
+	"bugs": {
+		"url": "https://github.com/Alexis06030631/ytmusic_api/issues"
+	},
+	"homepage": "https://github.com/Alexis06030631/ytmusic_api/",
+	"dependencies": {
+		"axios": "^1.4.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.1.0",
+		"nodemon": "^2.0.22",
+		"typescript": "^5.0.4"
+	},
+	"release": {
+		"branches": [
+			"main"
+		]
+	}
+}
