@@ -1,32 +1,47 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {SearchMusic} from "../models/Search";
+import {Music, Search, SearchVideo} from "../models/Search";
 
 
 const SearchManager = {
-    search: async (query: string, type: string, limit?: number, page?: number): Promise<any> => {
+    search: async (query: string): Promise<any> => {
         return requestToYtApi('search', {
-            "params": "EgWKAQIIAWoKEAMQBBAJEAoQBQ%3D%3D",
-            "query": query,
-        })
-    },
-
-    searchMusic: async (query: string): Promise<any> => {
-        return requestToYtApi('search', {
-            "params": "EgWKAQIIAWoKEAMQBBAJEAoQBQ%3D%3D",
             "query": query,
         }).then((res: any) => {
             const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-            const resp_data: Array<SearchMusic> = []
-            data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType === 'MUSIC_VIDEO_TYPE_ATV').forEach((item: any) => {
-                resp_data.push(new SearchMusic(item.musicResponsiveListItemRenderer))
+            const resp_data: Array<Search> = []
+            data.forEach((item: any) => {
+                resp_data.push(new Search(item.musicResponsiveListItemRenderer))
             })
             return resp_data
         })
     },
 
-    searchAll: async (query: string, limit?: number, page?: number): Promise<any> => {
-        return SearchManager.search(query, 'all', limit, page);
-    }
+
+    searchVideo: async (query: string): Promise<any> => {
+        return requestToYtApi('search', {
+            "query": query,
+        }).then((res: any) => {
+            const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
+            const resp_data: Array<SearchVideo> = []
+            data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType !== 'MUSIC_VIDEO_TYPE_ATV').forEach((item: any) => {
+                resp_data.push(new SearchVideo(item.musicResponsiveListItemRenderer))
+            })
+            return resp_data
+        })
+    },
+
+    Music: async (query: string): Promise<any> => {
+        return requestToYtApi('search', {
+            "query": query,
+        }).then((res: any) => {
+            const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
+            const resp_data: Array<Music> = []
+            data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType === 'MUSIC_VIDEO_TYPE_ATV').forEach((item: any) => {
+                resp_data.push(new Music(item.musicResponsiveListItemRenderer))
+            })
+            return resp_data
+        })
+    },
 }
 
 
