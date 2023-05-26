@@ -1,4 +1,5 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {makeAxiosError} from "../errors";
 
 let Defaultheaders = {
     'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ async function requestToYtApi(url: string, body:object, header?: object): Promis
                 resolve(res);
             })
             .catch((err: any) => {
-                reject(err);
+                reject(makeAxiosError(err.response?.data?.error?.status || err.message, err.response?.data?.error));
             })
     })
 }
