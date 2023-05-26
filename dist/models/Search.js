@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SearchVideo = exports.Search = exports.SearchMusic = void 0;
-class SearchMusic {
+exports.SearchVideo = exports.Search = exports.Music = void 0;
+class Music {
     constructor(search_result) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         this.artworks = search_result.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails;
@@ -25,16 +25,19 @@ class SearchMusic {
         });
         return artist_dt;
     }
+    getLink() {
+        return `https://music.youtube.com/watch?v=${this.id}`;
+    }
 }
-exports.SearchMusic = SearchMusic;
+exports.Music = Music;
 // Search = SearchMusic
-class Search extends SearchMusic {
+class Search extends Music {
     constructor(search_result) {
         super(search_result);
     }
 }
 exports.Search = Search;
-class SearchVideo extends SearchMusic {
+class SearchVideo extends Music {
     constructor(search_result) {
         super(search_result);
     }

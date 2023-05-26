@@ -1,7 +1,10 @@
-declare const SearchManager: {
-    search: (query: string, type: string, limit?: number, page?: number) => Promise<any>;
-    searchVideo: (query: string, type: string, limit?: number, page?: number) => Promise<any>;
-    searchMusic: (query: string) => Promise<any>;
-    searchAll: (query: string, limit?: number, page?: number) => Promise<any>;
+import { Music } from "../models/Music";
+declare const _default: {
+    search: (query: string, type: TypeSearch) => Promise<Array<Music>>;
+    get: (id: string) => Promise<Music>;
 };
-export default SearchManager;
+export default _default;
+declare class TypeSearch {
+    static readonly MUSIC = "MUSIC";
+    static readonly VIDEO = "VIDEO";
+}

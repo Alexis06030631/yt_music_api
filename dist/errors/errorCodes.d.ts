@@ -1,14 +1,11 @@
 /**
- * @typedef {Object} MeteoErrorCodes
-
- * @property {'UnknownID'} UnknownID
+ * @typedef {Object} YTErrorCodes
  *
  * @property {'UnrecognizedError'} UnrecognizedError
  */
 declare const _default: {
-    UnknownID: string;
     UnrecognizedError: string;
-    PlaceNotFound: string;
     BadRequest: string;
+    FAILED_PRECONDITION: string;
 };
 export default _default;

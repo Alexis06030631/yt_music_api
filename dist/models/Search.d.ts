@@ -1,4 +1,4 @@
-export declare class SearchMusic {
+export declare class Music {
     artworks: Array<Artwork>;
     id: string;
     name: string;
@@ -10,11 +10,12 @@ export declare class SearchMusic {
     private artist_data;
     constructor(search_result: any);
     extractArtistData(search_result: any): any;
+    getLink(): string;
 }
-export declare class Search extends SearchMusic {
+export declare class Search extends Music {
     constructor(search_result: any);
 }
-export declare class SearchVideo extends SearchMusic {
+export declare class SearchVideo extends Music {
     constructor(search_result: any);
 }
 declare class Artwork {

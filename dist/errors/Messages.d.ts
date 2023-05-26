@@ -1,4 +1,4 @@
 declare const Messages: {
-    [x: string]: string | ((placeName: string) => string);
+    [x: string]: (error: any) => string;
 };
 export default Messages;
