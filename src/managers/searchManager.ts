@@ -21,7 +21,7 @@ export default {
     },
 
     get: async (id: string): Promise<Music> => {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             return resolve(new Music(await GetData(id)))
         })
     }

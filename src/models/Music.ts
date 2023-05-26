@@ -9,7 +9,6 @@ export class Music {
         id: string;
     };
     public typeVideo: string
-    private artist_data: object;
     public length: {
         inSec: number;
         inText: string;
@@ -54,10 +53,6 @@ export class Music {
 
 function extractArtistData(search_result: any):any {
     return search_result.longBylineText.runs.find((item: any) => item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST')
-}
-
-function extractTitleData(search_result: any):any {
-    return search_result.longBylineText.runs.find((item: any) => item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ALBUM')
 }
 
 function timeToSec(time: string) {

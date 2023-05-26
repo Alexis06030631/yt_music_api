@@ -30,7 +30,7 @@ async function requestToYtApi(url: string, body:object, header?: object): Promis
     })
 }
 
-function makeUrl(url: string, ...params: any[]): string {
+function makeUrl(url: string): string {
     if (url.startsWith('http')) {
         return encodeURI(url);
     }else return encodeURI(YTmusic_API_URL + url);
