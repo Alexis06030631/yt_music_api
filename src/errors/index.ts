@@ -1,7 +1,7 @@
 import Messages from './Messages';
 import ErrorCodes from "./errorCodes";
 
-export function makeAxiosError (error: string, ...args: any[]) {
+export function makeAxiosError (error: string, ...args: any[]): Error {
     const msg = (error in ErrorCodes)? Messages[error]: Messages[ErrorCodes.UnrecognizedError];
 
     if (typeof msg === 'function') return new Error(msg(...(args as [string])));

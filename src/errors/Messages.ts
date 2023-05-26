@@ -1,12 +1,11 @@
-import MeteoErrorCodes from './errorCodes';
+import YTErrorCodes from './errorCodes';
 
 const Messages = {
-    [MeteoErrorCodes.UnknownID]: `The ID you provided is unknown, invalid or, in some cases, the ID method is not supported.`,
-    [MeteoErrorCodes.PlaceNotFound]: (placeName:string) => `The place "${placeName}" was not found.`,
-    [MeteoErrorCodes.BadRequest]: (details:string) => `The request was malformed. Message: ${details}`,
+    [YTErrorCodes.BadRequest]: (error:any) => `The request was malformed. Message: ${error.message}`,
+    [YTErrorCodes.FAILED_PRECONDITION]: (error:any) => `${error.code}. The request failed because a precondition was not met. Message: ${error.message}\nPlease contact the developer of the library (https://instagram.com/leko_system).`,
 
 
-    [MeteoErrorCodes.UnrecognizedError]: (code:any) => `An unrecognized error has occurred. Please contact the developer of the library (https://instagram.com/leko_system).\nError code: ${code}`
+    [YTErrorCodes.UnrecognizedError]: (error:any) => `An unrecognized error has occurred. Please contact the developer of the library (https://instagram.com/leko_system).\nError code: ${error.code}`
 };
 
 export default Messages;

@@ -1,14 +1,11 @@
 /**
- * @typedef {Object} MeteoErrorCodes
-
- * @property {'UnknownID'} UnknownID
+ * @typedef {Object} YTErrorCodes
  *
  * @property {'UnrecognizedError'} UnrecognizedError
  */
 
 export default {
-    UnknownID: 'UnknownID',
     UnrecognizedError: 'UnrecognizedError',
-    PlaceNotFound: 'PlaceNotFound',
-    BadRequest: 'BadRequest'
+    BadRequest: 'BadRequest',
+    FAILED_PRECONDITION: 'FAILED_PRECONDITION',
 }
