@@ -1,48 +1,46 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music, Search, SearchVideo} from "../models/Search";
+import {Music} from "../models/Music";
 
-
-const SearchManager = {
-    search: async (query: string): Promise<any> => {
+export default {
+    search: async (query: string, type: TypeSearch): Promise<Array<Music>> => {
         return requestToYtApi('search', {
             "query": query,
-        }).then((res: any) => {
-            const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-            const resp_data: Array<Search> = []
-            data.forEach((item: any) => {
-                resp_data.push(new Search(item.musicResponsiveListItemRenderer))
-            })
-            return resp_data
-        })
-    },
-
-
-    searchVideo: async (query: string): Promise<any> => {
-        return requestToYtApi('search', {
-            "query": query,
-        }).then((res: any) => {
-            const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-            const resp_data: Array<SearchVideo> = []
-            data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType !== 'MUSIC_VIDEO_TYPE_ATV').forEach((item: any) => {
-                resp_data.push(new SearchVideo(item.musicResponsiveListItemRenderer))
-            })
-            return resp_data
-        })
-    },
-
-    Music: async (query: string): Promise<any> => {
-        return requestToYtApi('search', {
-            "query": query,
-        }).then((res: any) => {
-            const data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
+        }).then(async (res: any) => {
+            let data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
             const resp_data: Array<Music> = []
-            data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType === 'MUSIC_VIDEO_TYPE_ATV').forEach((item: any) => {
-                resp_data.push(new Music(item.musicResponsiveListItemRenderer))
-            })
+            if(type === TypeSearch.MUSIC) {
+                data = data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType === 'MUSIC_VIDEO_TYPE_ATV')
+            }else if(type === TypeSearch.VIDEO) {
+                data = data.filter((item: any) => item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType === 'MUSIC_VIDEO_TYPE_VIDEO')
+            }
+            for (const item of data) {
+                resp_data.push(new Music(await GetData(item.musicResponsiveListItemRenderer.playlistItemData.videoId)))
+            }
             return resp_data
         })
     },
+
+    get: async (id: string): Promise<Music> => {
+        return new Promise(async (resolve, reject) => {
+            return resolve(new Music(await GetData(id)))
+        })
+    }
 }
 
+function GetData(id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        requestToYtApi('next', {
+            "videoId":  id
+        }).then((res: any) => {
+            resolve({
+                browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId,
+                ...res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
+            })
+        }).catch(reject)
+    })
+}
 
-export default SearchManager
+class TypeSearch {
+    public static readonly MUSIC = 'MUSIC'
+    public static readonly VIDEO = 'VIDEO'
+}
