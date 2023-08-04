@@ -4,7 +4,7 @@ exports.Music = void 0;
 const requestManager_1 = require("../utils/requestManager");
 class Music {
     constructor(search_result) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         this.artworks = search_result.thumbnail.thumbnails;
         this.id = search_result.videoId;
         this.name = search_result.title.runs[0].text;
@@ -13,9 +13,9 @@ class Music {
             id: (_d = (_c = (_b = extractArtistData(search_result)) === null || _b === void 0 ? void 0 : _b.navigationEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpoint) === null || _d === void 0 ? void 0 : _d.browseId
         };
         this.length = {
-            inSec: timeToSec(search_result.lengthText.runs[0].text),
-            inText: search_result.lengthText.runs[0].text,
-            label: search_result.lengthText.accessibility.accessibilityData.label
+            inSec: timeToSec(((_g = (_f = (_e = search_result === null || search_result === void 0 ? void 0 : search_result.lengthText) === null || _e === void 0 ? void 0 : _e.runs) === null || _f === void 0 ? void 0 : _f[0]) === null || _g === void 0 ? void 0 : _g.text) || '0:00'),
+            inText: (_k = (_j = (_h = search_result === null || search_result === void 0 ? void 0 : search_result.lengthText) === null || _h === void 0 ? void 0 : _h.runs) === null || _j === void 0 ? void 0 : _j[0]) === null || _k === void 0 ? void 0 : _k.text,
+            label: (_o = (_m = (_l = search_result === null || search_result === void 0 ? void 0 : search_result.lengthText) === null || _l === void 0 ? void 0 : _l.accessibility) === null || _m === void 0 ? void 0 : _m.accessibilityData) === null || _o === void 0 ? void 0 : _o.label
         };
         this.typeVideo = search_result.navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
         this.browseId = search_result.browseId;

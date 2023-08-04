@@ -1,11 +1,18 @@
 {
-	"name": "ytmusic_api",
-	"version": "1.0.0",
+	"name": "ytmusic_api_unofficial",
+	"version": "1.0.6",
 	"description": "A simple API to get music from YouTube Music",
 	"scripts": {
 		"test": "nodemon test.js",
 		"publish": "npm run build && npm publish --access public",
-		"build": "tsc"
+		"build": "tsc",
+		"build_auto": "nodemon --watch src --exec \"npm run build\""
+	},
+	"nodemonConfig": {
+		"ignore": [
+			"*.json"
+		],
+		"ext": "js,json,ts"
 	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",

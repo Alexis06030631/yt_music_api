@@ -39,7 +39,7 @@ function requestToYtApi(url, body, header) {
             })
                 .catch((err) => {
                 var _a, _b, _c, _d, _e;
-                reject((0, errors_1.makeAxiosError)(((_c = (_b = (_a = err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error) === null || _c === void 0 ? void 0 : _c.status) || err.message, (_e = (_d = err.response) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.error));
+                reject((0, errors_1.makeAxiosError)(((_c = (_b = (_a = err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error) === null || _c === void 0 ? void 0 : _c.status) || err.message, err, (_e = (_d = err.response) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.error));
             });
         });
     });

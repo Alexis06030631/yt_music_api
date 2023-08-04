@@ -25,9 +25,9 @@ export class Music {
             id: extractArtistData(search_result)?.navigationEndpoint?.browseEndpoint?.browseId
         }
         this.length = {
-            inSec: timeToSec(search_result.lengthText.runs[0].text),
-            inText: search_result.lengthText.runs[0].text,
-            label: search_result.lengthText.accessibility.accessibilityData.label
+            inSec: timeToSec(search_result?.lengthText?.runs?.[0]?.text || '0:00'),
+            inText: search_result?.lengthText?.runs?.[0]?.text,
+            label: search_result?.lengthText?.accessibility?.accessibilityData?.label
         }
         this.typeVideo = search_result.navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType
         this.browseId = search_result.browseId

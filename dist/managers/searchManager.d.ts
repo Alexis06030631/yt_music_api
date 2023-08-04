@@ -4,7 +4,9 @@ declare const _default: {
     get: (id: string) => Promise<Music>;
 };
 export default _default;
-declare class TypeSearch {
+export declare class TypeSearch {
     static readonly MUSIC = "MUSIC";
     static readonly VIDEO = "VIDEO";
+    static readonly MUSIC_values: string[];
+    static readonly VIDEO_values: string[];
 }

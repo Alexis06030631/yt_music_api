@@ -8,7 +8,7 @@
 ## Installation
 
 ```bash
-npm install ytmusic_api
+npm install ytmusic_api_unofficial
 ```
 
 
@@ -27,7 +27,7 @@ npm install ytmusic_api
 ```javascript
 const {searchManager} = require('ytmusic_api')
 
-searchManager.searchMusic('therapy anne marie').then(console.log)
+searchManager.search('therapy anne marie').then(console.log)
 ```
 
 --- 

@@ -1,1 +1,1 @@
-export declare function makeAxiosError(error: string, ...args: any[]): Error;
+export declare function makeAxiosError(message: string, error: any, ...args: any[]): Error;

@@ -25,7 +25,7 @@ async function requestToYtApi(url: string, body:object, header?: object): Promis
                 resolve(res);
             })
             .catch((err: any) => {
-                reject(makeAxiosError(err.response?.data?.error?.status || err.message, err.response?.data?.error));
+                reject(makeAxiosError(err.response?.data?.error?.status || err.message, err, err.response?.data?.error));
             })
     })
 }

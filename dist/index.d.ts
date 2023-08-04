@@ -1,2 +1,3 @@
 import searchManager from "./managers/searchManager";
-export { searchManager };
+import { TypeSearch } from "./managers/searchManager";
+export { searchManager, TypeSearch };
