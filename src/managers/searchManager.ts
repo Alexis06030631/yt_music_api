@@ -7,16 +7,16 @@ export default {
             "query": query,
         }).then(async (res: any) => {
             let data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-            if(res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0]?.musicCardShelfRenderer) data.unshift({musicResponsiveListItemRenderer:{...res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0].musicCardShelfRenderer.contents.filter((item: any) => !!item?.musicResponsiveListItemRenderer?.trackingParams)[0].musicResponsiveListItemRenderer}})
+            if(res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0]?.musicCardShelfRenderer) data.unshift({musicResponsiveListItemRenderer:{...res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0].musicCardShelfRenderer}})
 
             const resp_data: Array<Music> = []
             if(type === TypeSearch.MUSIC) {
-                data = data.filter((item: any) => TypeSearch.MUSIC_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType))
+                data = data.filter((item: any) => TypeSearch.MUSIC_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType) || TypeSearch.MUSIC_values.includes(item?.musicResponsiveListItemRenderer?.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType))
             }else if(type === TypeSearch.VIDEO) {
-                data = data.filter((item: any) => TypeSearch.VIDEO_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType))
+                data = data.filter((item: any) => TypeSearch.VIDEO_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType) || TypeSearch.VIDEO_values.includes(item?.musicResponsiveListItemRenderer?.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType))
             }
             for (const item of data) {
-                resp_data.push(new Music(await GetData(item.musicResponsiveListItemRenderer.playlistItemData.videoId)))
+                resp_data.push(new Music(await GetData(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId)))
             }
             return resp_data
         })
