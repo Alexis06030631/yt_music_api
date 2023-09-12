@@ -1,36 +1,27 @@
 import {requestToYtApi} from "../utils/requestManager";
+import {Artwork} from "./Artwork";
+import {Artist} from "./Artist";
+import {Duration} from "./Duration";
 
 export class Music {
     public artworks: Array<Artwork>;
     public id: string;
-    public name: string;
-    public artist: {
-        name: string;
-        id: string;
-    };
+    public title: string;
+    public artists: Array<Artist>
     public typeVideo: string
-    public length: {
-        inSec: number;
-        inText: string;
-        label: string;
-    };
+    public duration: Duration
     public browseId: string;
+    public autoMix: boolean;
 
-    constructor(search_result: any) {
-        this.artworks = search_result.thumbnail.thumbnails
-        this.id = search_result.videoId
-        this.name = search_result.title.runs[0].text
-        this.artist = {
-            name: extractArtistData(search_result)?.text,
-            id: extractArtistData(search_result)?.navigationEndpoint?.browseEndpoint?.browseId
-        }
-        this.length = {
-            inSec: timeToSec(search_result?.lengthText?.runs?.[0]?.text || '0:00'),
-            inText: search_result?.lengthText?.runs?.[0]?.text,
-            label: search_result?.lengthText?.accessibility?.accessibilityData?.label
-        }
-        this.typeVideo = search_result.navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType
-        this.browseId = search_result.browseId
+    constructor(data: any, autoMix?: boolean) {
+        this.artworks = data.artworks
+        this.id = data.id
+        this.title = data.title
+        this.artists = data.artists
+        this.duration = data.duration
+        this.typeVideo = data.type
+        this.browseId = data.browseId
+        if(autoMix) this.autoMix = autoMix
     }
 
     getLyrics(): Promise<Lyrics|NoLyrics> {
@@ -39,7 +30,7 @@ export class Music {
                 browseId: this.browseId,
                 context: {client: {clientVersion: "1.20230522.01.00", clientName: "WEB_REMIX"}}
             }).then((res: any) => {
-                if(!res.data.contents?.sectionListRenderer?.contents?.[0]?.musicDescriptionShelfRenderer?.description) return reject(new NoLyrics(res.data.contents?.messageRenderer?.text?.runs?.[0]?.text))
+                if (!res.data.contents?.sectionListRenderer?.contents?.[0]?.musicDescriptionShelfRenderer?.description) return reject(new NoLyrics(res.data.contents?.messageRenderer?.text?.runs?.[0]?.text))
                 else {
                     const resolveData = new Lyrics()
                     resolveData.lyrics = res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.description.runs[0].text
@@ -49,10 +40,17 @@ export class Music {
             }).catch(reject)
         })
     }
+
+
+    getRelative(): Promise<Array<Music>>{
+        return new Promise((resolve, reject) => {
+
+        })
+    }
 }
 
-function extractArtistData(search_result: any):any {
-    return search_result.longBylineText.runs.find((item: any) => item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST')
+function extractArtistData(data: any):any {
+    return data.longBylineText.runs.find((item: any) => item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST')
 }
 
 function timeToSec(time: string) {
@@ -64,11 +62,6 @@ function timeToSec(time: string) {
     return time_sec
 }
 
-class Artwork {
-    url: string;
-    width: number;
-    height: number;
-}
 
 class Lyrics {
     lyrics: string;
