@@ -24,7 +24,7 @@ export function makeAxiosError (message: any, error:any, ...args: any[]): Error 
  * @returns {YTjsError}
  * @ignore
  */
-function makeYTjsErrorError(Base:ErrorConstructor) {
+function makeYTjsErrorError(Base:ErrorConstructor): any {
     return class YTjsError extends Base {
         public code: ErrorCodeType;
         constructor(code:ErrorCodeType, ...args:any[]) {

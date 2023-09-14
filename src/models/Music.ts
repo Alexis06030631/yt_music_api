@@ -11,6 +11,7 @@ export class Music {
     public typeVideo: string
     public duration: Duration
     public browseId: string;
+    public isAudioOnly: boolean;
     public autoMix: boolean;
 
     constructor(data: any, autoMix?: boolean) {
@@ -21,6 +22,7 @@ export class Music {
         this.duration = data.duration
         this.typeVideo = data.type
         this.browseId = data.browseId
+        this.isAudioOnly = data.type.includes('ATV')
         if(autoMix) this.autoMix = autoMix
     }
 

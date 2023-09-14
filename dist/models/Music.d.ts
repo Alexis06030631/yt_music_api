@@ -9,6 +9,7 @@ export declare class Music {
     typeVideo: string;
     duration: Duration;
     browseId: string;
+    isAudioOnly: boolean;
     autoMix: boolean;
     constructor(data: any, autoMix?: boolean);
     getLyrics(): Promise<Lyrics | NoLyrics>;

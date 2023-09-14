@@ -11,6 +11,7 @@ class Music {
         this.duration = data.duration;
         this.typeVideo = data.type;
         this.browseId = data.browseId;
+        this.isAudioOnly = data.type.includes('ATV');
         if (autoMix)
             this.autoMix = autoMix;
     }
