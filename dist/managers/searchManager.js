@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeSearch = void 0;
 const requestManager_1 = require("../utils/requestManager");
@@ -16,6 +19,8 @@ const Home_1 = require("../models/Home");
 const index_1 = require("../index");
 const extract_1 = require("../utils/extract");
 const Playlist_1 = require("../models/Playlist");
+const errors_1 = require("../errors");
+const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 exports.default = {
     search: (query, type) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
@@ -116,8 +121,12 @@ exports.default = {
         }));
     }),
     get: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve) => __awaiter(void 0, void 0, void 0, function* () {
-            return resolve(new Music_1.Music(yield GetData(id)));
+        return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+            GetData(id).then((e) => {
+                return resolve(new Music_1.Music((0, extract_1.extract_dataFromGetData)(e)));
+            }).catch((e) => __awaiter(void 0, void 0, void 0, function* () {
+                reject(e);
+            }));
         }));
     }),
     GetData: (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -177,7 +186,11 @@ function GetData(id) {
         (0, requestManager_1.requestToYtApi)('next', {
             "videoId": id
         }).then((res) => {
-            resolve(Object.assign({ browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId }, res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer));
+            if (res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint) {
+                resolve(Object.assign({ browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId }, res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer));
+            }
+            else
+                reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, id));
         }).catch(reject);
     });
 }

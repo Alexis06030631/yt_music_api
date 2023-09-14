@@ -1,11 +1,3 @@
-/**
- * @typedef {Object} YTErrorCodes
- *
- * @property {'UnrecognizedError'} UnrecognizedError
- */
-declare const _default: {
-    UnrecognizedError: string;
-    BadRequest: string;
-    FAILED_PRECONDITION: string;
-};
-export default _default;
+declare const ErrorCode: any;
+export default ErrorCode;
+export type ErrorCodeType = typeof ErrorCode[keyof typeof ErrorCode];

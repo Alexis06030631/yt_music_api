@@ -4,6 +4,9 @@ import {Home} from "../models/Home";
 import {searchManager} from "../index";
 import {extract_dataFromGetData} from "../utils/extract";
 import {Playlist} from "../models/Playlist";
+import {YTjsErrorError} from "../errors";
+import ErrorCode from "../errors/errorCodes";
+import {rejects} from "assert";
 
 export default {
     search: async (query: string, type: TypeSearch): Promise<Array<Music>> => {
@@ -104,8 +107,12 @@ export default {
     },
 
     get: async (id: string): Promise<Music> => {
-        return new Promise(async (resolve) => {
-            return resolve(new Music(await GetData(id)))
+        return new Promise(async (resolve, reject) => {
+            GetData(id).then((e:any) => {
+                return resolve(new Music(extract_dataFromGetData(e)))
+            }).catch(async (e) => {
+                reject(e)
+            })
         })
     },
 
@@ -163,10 +170,12 @@ function GetData(id: string): Promise<any> {
         requestToYtApi('next', {
             "videoId":  id
         }).then((res: any) => {
-            resolve({
-                browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId,
-                ...res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
-            })
+            if(res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint) {
+                resolve({
+                    browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId,
+                    ...res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
+                })
+            }else reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, id))
         }).catch(reject)
     })
 }

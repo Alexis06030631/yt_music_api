@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.requestToYtApi = void 0;
 const axios_1 = __importDefault(require("axios"));
 const errors_1 = require("../errors");
+const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 let Defaultheaders = {
     'Content-Type': 'application/json',
     'cookie': '',
@@ -38,8 +39,13 @@ function requestToYtApi(url, body, header) {
                 resolve(res);
             })
                 .catch((err) => {
-                var _a, _b, _c, _d, _e;
-                reject((0, errors_1.makeAxiosError)(((_c = (_b = (_a = err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error) === null || _c === void 0 ? void 0 : _c.status) || err.message, err, (_e = (_d = err.response) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.error));
+                var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
+                if ((_c = (_b = (_a = err.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error) === null || _c === void 0 ? void 0 : _c.status) {
+                    if (errorCodes_1.default[(_f = (_e = (_d = err.response) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.error) === null || _f === void 0 ? void 0 : _f.status]) {
+                        return reject(new errors_1.YTjsErrorError((_j = (_h = (_g = err.response) === null || _g === void 0 ? void 0 : _g.data) === null || _h === void 0 ? void 0 : _h.error) === null || _j === void 0 ? void 0 : _j.status, (_p = (_o = (_m = (_l = (_k = err.response) === null || _k === void 0 ? void 0 : _k.data) === null || _l === void 0 ? void 0 : _l.error) === null || _m === void 0 ? void 0 : _m.errors) === null || _o === void 0 ? void 0 : _o[0]) === null || _p === void 0 ? void 0 : _p.message));
+                    }
+                }
+                reject((0, errors_1.makeAxiosError)(((_s = (_r = (_q = err.response) === null || _q === void 0 ? void 0 : _q.data) === null || _r === void 0 ? void 0 : _r.error) === null || _s === void 0 ? void 0 : _s.status) || err.message, err, (_u = (_t = err.response) === null || _t === void 0 ? void 0 : _t.data) === null || _u === void 0 ? void 0 : _u.error));
             });
         });
     });

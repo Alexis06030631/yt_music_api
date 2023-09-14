@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {makeAxiosError} from "../errors";
+import {makeAxiosError, YTjsErrorError} from "../errors";
+import ErrorCode from "../errors/errorCodes";
 
 let Defaultheaders = {
     'Content-Type': 'application/json',
@@ -25,7 +26,11 @@ async function requestToYtApi(url: string, body:object, header?: object): Promis
                 resolve(res);
             })
             .catch((err: any) => {
-                reject(makeAxiosError(err.response?.data?.error?.status || err.message, err, err.response?.data?.error));
+                if(err.response?.data?.error?.status) {
+                    if(ErrorCode[err.response?.data?.error?.status]){
+                        return reject(new YTjsErrorError(err.response?.data?.error?.status, err.response?.data?.error?.errors?.[0]?.message))
+                    }
+                }reject(makeAxiosError(err.response?.data?.error?.status || err.message, err, err.response?.data?.error));
             })
     })
 }
