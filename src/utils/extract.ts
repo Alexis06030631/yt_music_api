@@ -3,13 +3,14 @@ import {Artist} from "../models/Artist";
 import {Album} from "../models/Album";
 import {Artwork} from "../models/Artwork";
 import {Duration} from "../models/Duration";
+import fs from "fs";
 
 export function extract_dataFromGetData(data:any):Music_model {
     let artists:any = [], album:any, date:number
 
     for (let item of data?.longBylineText?.runs || []) {
         // Get Author(s)
-        if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST')) {
+        if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')){
             artists.push(new Artist({
                 name: item.text,
                 id: item.navigationEndpoint?.browseEndpoint?.browseId

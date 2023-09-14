@@ -7,21 +7,21 @@ const Album_1 = require("../models/Album");
 const Artwork_1 = require("../models/Artwork");
 const Duration_1 = require("../models/Duration");
 function extract_dataFromGetData(data) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
     let artists = [], album, date;
     for (let item of ((_a = data === null || data === void 0 ? void 0 : data.longBylineText) === null || _a === void 0 ? void 0 : _a.runs) || []) {
         // Get Author(s)
-        if ((_f = (_e = (_d = (_c = (_b = item.navigationEndpoint) === null || _b === void 0 ? void 0 : _b.browseEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpointContextSupportedConfigs) === null || _d === void 0 ? void 0 : _d.browseEndpointContextMusicConfig) === null || _e === void 0 ? void 0 : _e.pageType) === null || _f === void 0 ? void 0 : _f.includes('ARTIST')) {
+        if (((_f = (_e = (_d = (_c = (_b = item.navigationEndpoint) === null || _b === void 0 ? void 0 : _b.browseEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpointContextSupportedConfigs) === null || _d === void 0 ? void 0 : _d.browseEndpointContextMusicConfig) === null || _e === void 0 ? void 0 : _e.pageType) === null || _f === void 0 ? void 0 : _f.includes('ARTIST')) || ((_l = (_k = (_j = (_h = (_g = item.navigationEndpoint) === null || _g === void 0 ? void 0 : _g.browseEndpoint) === null || _h === void 0 ? void 0 : _h.browseEndpointContextSupportedConfigs) === null || _j === void 0 ? void 0 : _j.browseEndpointContextMusicConfig) === null || _k === void 0 ? void 0 : _k.pageType) === null || _l === void 0 ? void 0 : _l.includes('USER'))) {
             artists.push(new Artist_1.Artist({
                 name: item.text,
-                id: (_h = (_g = item.navigationEndpoint) === null || _g === void 0 ? void 0 : _g.browseEndpoint) === null || _h === void 0 ? void 0 : _h.browseId
+                id: (_o = (_m = item.navigationEndpoint) === null || _m === void 0 ? void 0 : _m.browseEndpoint) === null || _o === void 0 ? void 0 : _o.browseId
             }));
             // Get Album if exists
         }
-        else if ((_m = (_l = (_k = (_j = item.navigationEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpoint) === null || _k === void 0 ? void 0 : _k.browseEndpointContextSupportedConfigs) === null || _l === void 0 ? void 0 : _l.browseEndpointContextMusicConfig) === null || _m === void 0 ? void 0 : _m.pageType.includes('ALBUM')) {
+        else if ((_s = (_r = (_q = (_p = item.navigationEndpoint) === null || _p === void 0 ? void 0 : _p.browseEndpoint) === null || _q === void 0 ? void 0 : _q.browseEndpointContextSupportedConfigs) === null || _r === void 0 ? void 0 : _r.browseEndpointContextMusicConfig) === null || _s === void 0 ? void 0 : _s.pageType.includes('ALBUM')) {
             album = new Album_1.Album({
                 name: item.text,
-                id: (_p = (_o = item.navigationEndpoint) === null || _o === void 0 ? void 0 : _o.browseEndpoint) === null || _p === void 0 ? void 0 : _p.browseId
+                id: (_u = (_t = item.navigationEndpoint) === null || _t === void 0 ? void 0 : _t.browseEndpoint) === null || _u === void 0 ? void 0 : _u.browseId
             });
             // Get Date if exists
         }
@@ -40,8 +40,8 @@ function extract_dataFromGetData(data) {
         album: album,
         date: date,
         duration: new Duration_1.Duration({
-            seconds: timeToSec(((_s = (_r = (_q = data.lengthText) === null || _q === void 0 ? void 0 : _q.runs) === null || _r === void 0 ? void 0 : _r[0]) === null || _s === void 0 ? void 0 : _s.text) || '0:00'),
-            text: (_v = (_u = (_t = data.lengthText) === null || _t === void 0 ? void 0 : _t.runs) === null || _u === void 0 ? void 0 : _u[0]) === null || _v === void 0 ? void 0 : _v.text,
+            seconds: timeToSec(((_x = (_w = (_v = data.lengthText) === null || _v === void 0 ? void 0 : _v.runs) === null || _w === void 0 ? void 0 : _w[0]) === null || _x === void 0 ? void 0 : _x.text) || '0:00'),
+            text: (_0 = (_z = (_y = data.lengthText) === null || _y === void 0 ? void 0 : _y.runs) === null || _z === void 0 ? void 0 : _z[0]) === null || _0 === void 0 ? void 0 : _0.text,
             label: data.lengthText.accessibility.accessibilityData.label
         })
     });
