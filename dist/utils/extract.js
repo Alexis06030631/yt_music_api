@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extract_musicFromPlaylist = exports.extract_dataFromGetData = void 0;
+exports.extract_dataFromGetData = void 0;
 const Music_model_1 = require("../models/Music_model");
 const Artist_1 = require("../models/Artist");
 const Album_1 = require("../models/Album");
@@ -47,9 +47,6 @@ function extract_dataFromGetData(data) {
     });
 }
 exports.extract_dataFromGetData = extract_dataFromGetData;
-function extract_musicFromPlaylist(data) {
-}
-exports.extract_musicFromPlaylist = extract_musicFromPlaylist;
 function timeToSec(time) {
     const time_split = time.split(':');
     let time_sec = 0;

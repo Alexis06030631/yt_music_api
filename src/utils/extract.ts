@@ -43,9 +43,7 @@ export function extract_dataFromGetData(data:any):Music_model {
     })
 }
 
-export function extract_musicFromPlaylist(data:any):Music_model {
 
-}
 
 function timeToSec(time: string) {
     const time_split = time.split(':')

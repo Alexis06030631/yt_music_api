@@ -1,4 +1,4 @@
 declare const Messages: {
-    [x: string]: (error: any) => string;
+    [x: number]: (error: any) => string;
 };
 export default Messages;
