@@ -7,7 +7,6 @@ import fs from "fs";
 
 export function extract_dataFromGetData(data:any):Music_model {
     let artists:any = [], album:any, date:number
-
     for (let item of data?.longBylineText?.runs || []) {
         // Get Author(s)
         if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')){
@@ -26,6 +25,11 @@ export function extract_dataFromGetData(data:any):Music_model {
             if(item.text.match(/([0-9]{4})/g)) date = parseInt(item.text)
         }
     }
+
+    if(artists.length === 0) artists.push(new Artist({
+        name: data?.shortBylineText?.runs?.[0]?.text,
+        id: null
+    }))
 
     return new Music_model({
         artworks: data.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
