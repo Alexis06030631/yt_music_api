@@ -19,6 +19,11 @@ export class Music {
         this.id = data.id
         this.title = data.title
         this.artists = data.artists
+        this.artists.toString = () => {
+            const artists: Array<Artist> = data.artists = [ ...data.artists]
+            // Return the artists in string format with a comma between each artist and if it's the last artist add '&'
+            return artists.map((artist, index) => `${artist.name}${index === artists.length - 1 ? '' : index === artists.length - 2 ? ' &' : ','} `).join('')
+        }
         this.duration = data.duration
         this.typeVideo = data.type
         this.browseId = data.browseId
