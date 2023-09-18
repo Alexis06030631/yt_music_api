@@ -31,19 +31,11 @@ exports.default = {
             return (0, requestManager_1.requestToYtApi)('search', {
                 "query": query,
             }).then((res) => __awaiter(void 0, void 0, void 0, function* () {
-                var _c, _d, _e, _f;
-                let data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Songs'; })[0].musicShelfRenderer.contents;
-                if ((_c = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.subtitle) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Song'; })[0]) === null || _c === void 0 ? void 0 : _c.musicCardShelfRenderer)
-                    data.unshift({ musicResponsiveListItemRenderer: Object.assign({}, res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.subtitle) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Song'; })[0].musicCardShelfRenderer) });
+                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"/gmi).map(videoID => videoID.match(/"(\w*)"/)[1]);
+                ids = [...new Set(ids)];
                 const resp_data = [];
-                if (type === TypeSearch.MUSIC) {
-                    data = data.filter((item) => { var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k; return TypeSearch.MUSIC_values.includes((_j = (_h = (_g = (_f = (_e = (_d = (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.overlay) === null || _b === void 0 ? void 0 : _b.musicItemThumbnailOverlayRenderer) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d.musicPlayButtonRenderer) === null || _e === void 0 ? void 0 : _e.playNavigationEndpoint) === null || _f === void 0 ? void 0 : _f.watchEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpointMusicSupportedConfigs) === null || _h === void 0 ? void 0 : _h.watchEndpointMusicConfig) === null || _j === void 0 ? void 0 : _j.musicVideoType) || TypeSearch.MUSIC_values.includes((_k = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _k === void 0 ? void 0 : _k.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType); });
-                }
-                else if (type === TypeSearch.VIDEO) {
-                    data = data.filter((item) => { var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k; return TypeSearch.VIDEO_values.includes((_j = (_h = (_g = (_f = (_e = (_d = (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.overlay) === null || _b === void 0 ? void 0 : _b.musicItemThumbnailOverlayRenderer) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d.musicPlayButtonRenderer) === null || _e === void 0 ? void 0 : _e.playNavigationEndpoint) === null || _f === void 0 ? void 0 : _f.watchEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpointMusicSupportedConfigs) === null || _h === void 0 ? void 0 : _h.watchEndpointMusicConfig) === null || _j === void 0 ? void 0 : _j.musicVideoType) || TypeSearch.VIDEO_values.includes((_k = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _k === void 0 ? void 0 : _k.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType); });
-                }
-                for (const item of data) {
-                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_e = (_d = item.musicResponsiveListItemRenderer) === null || _d === void 0 ? void 0 : _d.playlistItemData) === null || _e === void 0 ? void 0 : _e.videoId) || ((_f = item.musicResponsiveListItemRenderer) === null || _f === void 0 ? void 0 : _f.onTap.watchEndpoint.videoId)))));
+                for (const id of ids) {
+                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(id))));
                 }
                 return resp_data;
             }));
@@ -65,16 +57,16 @@ exports.default = {
                             for (let x = 0; item.length > x; x++) {
                                 let music = item[x].musicCarouselShelfRenderer;
                                 new Promise((resolve4) => __awaiter(void 0, void 0, void 0, function* () {
-                                    var _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
+                                    var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
                                     for (let x = 0; music.contents.length > x; x++) {
                                         let musicdt = music.contents[x];
                                         if (musicdt) {
-                                            if (!((_h = (_g = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _g === void 0 ? void 0 : _g.playlistItemData) === null || _h === void 0 ? void 0 : _h.videoId)) {
-                                                if ((_l = (_k = (_j = musicdt.musicTwoRowItemRenderer) === null || _j === void 0 ? void 0 : _j.navigationEndpoint) === null || _k === void 0 ? void 0 : _k.browseEndpoint) === null || _l === void 0 ? void 0 : _l.browseId)
-                                                    resp_data.playlist.push(yield getPlaylist((_p = (_o = (_m = musicdt.musicTwoRowItemRenderer) === null || _m === void 0 ? void 0 : _m.navigationEndpoint) === null || _o === void 0 ? void 0 : _o.browseEndpoint) === null || _p === void 0 ? void 0 : _p.browseId));
+                                            if (!((_d = (_c = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId)) {
+                                                if ((_g = (_f = (_e = musicdt.musicTwoRowItemRenderer) === null || _e === void 0 ? void 0 : _e.navigationEndpoint) === null || _f === void 0 ? void 0 : _f.browseEndpoint) === null || _g === void 0 ? void 0 : _g.browseId)
+                                                    resp_data.playlist.push(yield getPlaylist((_k = (_j = (_h = musicdt.musicTwoRowItemRenderer) === null || _h === void 0 ? void 0 : _h.navigationEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpoint) === null || _k === void 0 ? void 0 : _k.browseId));
                                             }
                                             else {
-                                                let title_music_list = (_u = (_t = (_s = (_r = (_q = music === null || music === void 0 ? void 0 : music.header) === null || _q === void 0 ? void 0 : _q.musicCarouselShelfBasicHeaderRenderer) === null || _r === void 0 ? void 0 : _r.title) === null || _s === void 0 ? void 0 : _s.runs) === null || _t === void 0 ? void 0 : _t[0]) === null || _u === void 0 ? void 0 : _u.text;
+                                                let title_music_list = (_q = (_p = (_o = (_m = (_l = music === null || music === void 0 ? void 0 : music.header) === null || _l === void 0 ? void 0 : _l.musicCarouselShelfBasicHeaderRenderer) === null || _m === void 0 ? void 0 : _m.title) === null || _o === void 0 ? void 0 : _o.runs) === null || _p === void 0 ? void 0 : _p[0]) === null || _q === void 0 ? void 0 : _q.text;
                                                 if (!resp_data.music_list.find((e) => e.title === title_music_list))
                                                     resp_data.music_list.push({ title: title_music_list, musics: [] });
                                                 resp_data.music_list.find((e) => e.title === title_music_list).musics.push((0, extract_1.extract_dataFromGetData)(yield index_1.searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId)));
