@@ -31,28 +31,20 @@ exports.default = {
             return (0, requestManager_1.requestToYtApi)('search', {
                 "query": query,
             }).then((res) => __awaiter(void 0, void 0, void 0, function* () {
-                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/gmi).map(videoID => {
-                    return {
-                        id: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[1],
-                        type: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[3]
-                    };
-                });
-                let ids2 = [];
-                // Remove duplicate
-                ids.filter((item, index) => {
-                    return ids2.find((e) => e.id === item.id) ? false : ids2.push(item);
-                });
-                ids = ids2;
+                var _c, _d, _e, _f, _g, _h;
+                let data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Songs'; })[0].musicShelfRenderer.contents;
+                if ((_c = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.subtitle) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Song'; })[0]) === null || _c === void 0 ? void 0 : _c.musicCardShelfRenderer)
+                    data.unshift({ musicResponsiveListItemRenderer: Object.assign({}, res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.subtitle) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Song'; })[0].musicCardShelfRenderer) });
+                const resp_data = [];
                 if (type === TypeSearch.MUSIC) {
-                    ids = ids.filter((e) => TypeSearch.MUSIC_values.includes(e.type));
+                    data = data.filter((item) => { var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k; return TypeSearch.MUSIC_values.includes((_j = (_h = (_g = (_f = (_e = (_d = (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.overlay) === null || _b === void 0 ? void 0 : _b.musicItemThumbnailOverlayRenderer) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d.musicPlayButtonRenderer) === null || _e === void 0 ? void 0 : _e.playNavigationEndpoint) === null || _f === void 0 ? void 0 : _f.watchEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpointMusicSupportedConfigs) === null || _h === void 0 ? void 0 : _h.watchEndpointMusicConfig) === null || _j === void 0 ? void 0 : _j.musicVideoType) || TypeSearch.MUSIC_values.includes((_k = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _k === void 0 ? void 0 : _k.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType); });
                 }
                 else if (type === TypeSearch.VIDEO) {
-                    ids = ids.filter((e) => TypeSearch.VIDEO_values.includes(e.type));
+                    data = data.filter((item) => { var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k; return TypeSearch.VIDEO_values.includes((_j = (_h = (_g = (_f = (_e = (_d = (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.overlay) === null || _b === void 0 ? void 0 : _b.musicItemThumbnailOverlayRenderer) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d.musicPlayButtonRenderer) === null || _e === void 0 ? void 0 : _e.playNavigationEndpoint) === null || _f === void 0 ? void 0 : _f.watchEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpointMusicSupportedConfigs) === null || _h === void 0 ? void 0 : _h.watchEndpointMusicConfig) === null || _j === void 0 ? void 0 : _j.musicVideoType) || TypeSearch.VIDEO_values.includes((_k = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemRenderer) === null || _k === void 0 ? void 0 : _k.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType); });
                 }
-                let resp_data = [];
-                // Filter by type
-                for (const id of ids) {
-                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(id.id))));
+                console.log((_e = (_d = data[0].musicResponsiveListItemRenderer) === null || _d === void 0 ? void 0 : _d.playlistItemData) === null || _e === void 0 ? void 0 : _e.videoId);
+                for (const item of data) {
+                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_g = (_f = item.musicResponsiveListItemRenderer) === null || _f === void 0 ? void 0 : _f.playlistItemData) === null || _g === void 0 ? void 0 : _g.videoId) || ((_h = item.musicResponsiveListItemRenderer) === null || _h === void 0 ? void 0 : _h.onTap.watchEndpoint.videoId)))));
                 }
                 return resp_data;
             }));
@@ -74,16 +66,16 @@ exports.default = {
                             for (let x = 0; item.length > x; x++) {
                                 let music = item[x].musicCarouselShelfRenderer;
                                 new Promise((resolve4) => __awaiter(void 0, void 0, void 0, function* () {
-                                    var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+                                    var _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
                                     for (let x = 0; music.contents.length > x; x++) {
                                         let musicdt = music.contents[x];
                                         if (musicdt) {
-                                            if (!((_d = (_c = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId)) {
-                                                if ((_g = (_f = (_e = musicdt.musicTwoRowItemRenderer) === null || _e === void 0 ? void 0 : _e.navigationEndpoint) === null || _f === void 0 ? void 0 : _f.browseEndpoint) === null || _g === void 0 ? void 0 : _g.browseId)
-                                                    resp_data.playlist.push(yield getPlaylist((_k = (_j = (_h = musicdt.musicTwoRowItemRenderer) === null || _h === void 0 ? void 0 : _h.navigationEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpoint) === null || _k === void 0 ? void 0 : _k.browseId));
+                                            if (!((_k = (_j = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _j === void 0 ? void 0 : _j.playlistItemData) === null || _k === void 0 ? void 0 : _k.videoId)) {
+                                                if ((_o = (_m = (_l = musicdt.musicTwoRowItemRenderer) === null || _l === void 0 ? void 0 : _l.navigationEndpoint) === null || _m === void 0 ? void 0 : _m.browseEndpoint) === null || _o === void 0 ? void 0 : _o.browseId)
+                                                    resp_data.playlist.push(yield getPlaylist((_r = (_q = (_p = musicdt.musicTwoRowItemRenderer) === null || _p === void 0 ? void 0 : _p.navigationEndpoint) === null || _q === void 0 ? void 0 : _q.browseEndpoint) === null || _r === void 0 ? void 0 : _r.browseId));
                                             }
                                             else {
-                                                let title_music_list = (_q = (_p = (_o = (_m = (_l = music === null || music === void 0 ? void 0 : music.header) === null || _l === void 0 ? void 0 : _l.musicCarouselShelfBasicHeaderRenderer) === null || _m === void 0 ? void 0 : _m.title) === null || _o === void 0 ? void 0 : _o.runs) === null || _p === void 0 ? void 0 : _p[0]) === null || _q === void 0 ? void 0 : _q.text;
+                                                let title_music_list = (_w = (_v = (_u = (_t = (_s = music === null || music === void 0 ? void 0 : music.header) === null || _s === void 0 ? void 0 : _s.musicCarouselShelfBasicHeaderRenderer) === null || _t === void 0 ? void 0 : _t.title) === null || _u === void 0 ? void 0 : _u.runs) === null || _v === void 0 ? void 0 : _v[0]) === null || _w === void 0 ? void 0 : _w.text;
                                                 if (!resp_data.music_list.find((e) => e.title === title_music_list))
                                                     resp_data.music_list.push({ title: title_music_list, musics: [] });
                                                 resp_data.music_list.find((e) => e.title === title_music_list).musics.push((0, extract_1.extract_dataFromGetData)(yield index_1.searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId)));
