@@ -17,12 +17,30 @@ export default {
             return requestToYtApi('search', {
                 "query": query,
             }).then(async (res: any) => {
-                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"/gmi).map(videoID => videoID.match(/"(\w*)"/)[1])
-                ids = [...new Set(ids)]
+                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/gmi).map(videoID => {
+                    return {
+                        id: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[1],
+                        type: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[3]
+                    }
+                })
+                let ids2:any = []
+                // Remove duplicate
+                ids.filter((item, index) => {
+                    return ids2.find((e:any) => e.id === item.id) ? false : ids2.push(item)
+                })
+                ids = ids2
 
-                const resp_data: Array<Music> = []
+                if (type === TypeSearch.MUSIC) {
+                    ids = ids.filter((e: any) => TypeSearch.MUSIC_values.includes(e.type))
+                } else if (type === TypeSearch.VIDEO) {
+                    ids = ids.filter((e: any) => TypeSearch.VIDEO_values.includes(e.type))
+                }
+
+
+                let resp_data: Array<Music> = []
+                // Filter by type
                 for (const id of ids) {
-                    resp_data.push(new Music(extract_dataFromGetData(await GetData(id))))
+                    resp_data.push(new Music(extract_dataFromGetData(await GetData(id.id))))
                 }
                 return resp_data
             })

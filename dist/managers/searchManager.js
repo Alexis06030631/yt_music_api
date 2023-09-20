@@ -31,11 +31,28 @@ exports.default = {
             return (0, requestManager_1.requestToYtApi)('search', {
                 "query": query,
             }).then((res) => __awaiter(void 0, void 0, void 0, function* () {
-                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"/gmi).map(videoID => videoID.match(/"(\w*)"/)[1]);
-                ids = [...new Set(ids)];
-                const resp_data = [];
+                let ids = JSON.stringify(res.data).match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/gmi).map(videoID => {
+                    return {
+                        id: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[1],
+                        type: videoID.match(/videoId\W+"(\w*)"([\n|\w|\W]?)+?musicVideoType\W+"(\w*)/mi)[3]
+                    };
+                });
+                let ids2 = [];
+                // Remove duplicate
+                ids.filter((item, index) => {
+                    return ids2.find((e) => e.id === item.id) ? false : ids2.push(item);
+                });
+                ids = ids2;
+                if (type === TypeSearch.MUSIC) {
+                    ids = ids.filter((e) => TypeSearch.MUSIC_values.includes(e.type));
+                }
+                else if (type === TypeSearch.VIDEO) {
+                    ids = ids.filter((e) => TypeSearch.VIDEO_values.includes(e.type));
+                }
+                let resp_data = [];
+                // Filter by type
                 for (const id of ids) {
-                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(id))));
+                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(id.id))));
                 }
                 return resp_data;
             }));
