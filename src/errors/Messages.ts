@@ -8,6 +8,10 @@ const Messages = {
     [ErrorCodes.UnrecognizedError]: (error:any) => `An unrecognized error has occurred. Please contact the developer of the library (https://instagram.com/leko_system).\nError code: ${error.code}`,
     [ErrorCodes.VIDEO_NOT_FOUND]: (error:any) => `The video was not found. ID: ${error.id}`,
     [ErrorCodes.INVALID_ARGUMENT]: (message:string) => `The argument was invalid. Message: ${message}`,
+    [ErrorCodes.INVALID_TYPE_SEARCH]: (error:any) => `The type of search was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
+    [ErrorCodes.INVALID_TYPE_DOWNLOAD]: (error:any) => `The type of download was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
+    [ErrorCodes.INVALID_TYPE_QUALITY]: (error:any) => `The type of quality was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
+    [ErrorCodes.DOWNLOAD_LINK_NOT_FOUND]: (error:any) => `The download link was not found for the parameters Type: ${error.typeRequested} and Quality: ${error.qualityRequested}`,
 };
 
 export default Messages;

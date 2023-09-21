@@ -2,7 +2,7 @@ import { Music } from "../models/Music";
 import { Home } from "../models/Home";
 import { Playlist } from "../models/Playlist";
 declare const _default: {
-    search: (query: string, type: TypeSearch) => Promise<Array<Music>>;
+    search: (query: string, type: TypeSearch_param) => Promise<Array<Music>>;
     getHomePage: () => Promise<Home>;
     relative: (ID: string) => Promise<Array<Music>>;
     get: (id: string) => Promise<Music>;
@@ -10,9 +10,9 @@ declare const _default: {
     getPlaylist: (id: string) => Promise<Playlist>;
 };
 export default _default;
+declare const TypeSearch_arr: string[];
+type TypeSearch_param = typeof TypeSearch_arr[number];
 export declare class TypeSearch {
-    static readonly MUSIC = "MUSIC";
-    static readonly VIDEO = "VIDEO";
-    static readonly MUSIC_values: string[];
-    static readonly VIDEO_values: string[];
+    static MUSIC: TypeSearch_param;
+    static VIDEO: TypeSearch_param;
 }

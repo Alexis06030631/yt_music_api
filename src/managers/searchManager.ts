@@ -6,32 +6,36 @@ import {extract_dataFromGetData} from "../utils/extract";
 import {Playlist} from "../models/Playlist";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
-import {rejects} from "assert";
-import fs from "fs";
+
 
 export default {
-    search: async (query: string, type: TypeSearch): Promise<Array<Music>> => {
+    search: async (query: string, type: TypeSearch_param): Promise<Array<Music>> => {
+        // Check If type is valid with TypeSearch
+        if(!TypeSearch_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch_arr})
         if(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
             return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]))]
         }else {
-            return requestToYtApi('search', {
-                "query": query,
-            }).then(async (res: any) => {
-                let data = res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-                if(res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0]?.musicCardShelfRenderer) data.unshift({musicResponsiveListItemRenderer:{...res.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.subtitle?.runs[0]?.text === 'Song')[0].musicCardShelfRenderer}})
-
-                const resp_data: Array<Music> = []
+            let data:any
+            const resp_data: Array<Music> = []
+            if(type === TypeSearch.MUSIC || type === TypeSearch.VIDEO) {
                 if(type === TypeSearch.MUSIC) {
-                    data = data.filter((item: any) => TypeSearch.MUSIC_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType) || TypeSearch.MUSIC_values.includes(item?.musicResponsiveListItemRenderer?.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType))
+                    const music_data:any = await requestToYtApi('search', {
+                        "query": query,
+                        "params": MUSIC_param,
+                    })
+                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
                 }else if(type === TypeSearch.VIDEO) {
-                    data = data.filter((item: any) => TypeSearch.VIDEO_values.includes(item?.musicResponsiveListItemRenderer?.overlay?.musicItemThumbnailOverlayRenderer?.content?.musicPlayButtonRenderer?.playNavigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType) || TypeSearch.VIDEO_values.includes(item?.musicResponsiveListItemRenderer?.title.runs[0].navigationEndpoint.watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType))
+                    const music_data:any = await requestToYtApi('search', {
+                        "query": query,
+                        "params": VIDEO_param,
+                    })
+                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Videos')[0].musicShelfRenderer.contents
                 }
-                console.log(data[0].musicResponsiveListItemRenderer?.playlistItemData?.videoId)
                 for (const item of data) {
                     resp_data.push(new Music(extract_dataFromGetData(await GetData(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
                 }
-                return resp_data
-            })
+            }
+            return resp_data
         }
     },
 
@@ -182,9 +186,13 @@ function GetData(id: string): Promise<any> {
     })
 }
 
+
+const TypeSearch_arr = ['MUSIC', 'VIDEO']
+type TypeSearch_param = typeof TypeSearch_arr[number]
+
 export class TypeSearch {
-    public static readonly MUSIC = 'MUSIC'
-    public static readonly VIDEO = 'VIDEO'
-    public static readonly MUSIC_values = ['MUSIC_VIDEO_TYPE_ATV', 'MUSIC_VIDEO_TYPE_OMV', 'MUSIC_VIDEO_TYPE_SONG']
-    public static readonly VIDEO_values = ['MUSIC_VIDEO_TYPE_VIDEO', 'MUSIC_VIDEO_TYPE_CONCERT', 'MUSIC_VIDEO_TYPE_COVER', 'MUSIC_VIDEO_TYPE_PARODY', 'MUSIC_VIDEO_TYPE_PERFORMANCE', 'MUSIC_VIDEO_TYPE_REMIX', 'MUSIC_VIDEO_TYPE_USER_GENERATED', 'MUSIC_VIDEO_TYPE_VIDEO_CLIP', 'MUSIC_VIDEO_TYPE_VIDEO_OTHER', 'MUSIC_VIDEO_TYPE_VIDEO_WITH_MUSIC', 'MUSIC_VIDEO_TYPE_VISUALIZER']
+    static MUSIC: TypeSearch_param = 'MUSIC'
+    static VIDEO: TypeSearch_param = 'VIDEO'
 }
+const MUSIC_param= 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
+    VIDEO_param= 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D'

@@ -15,5 +15,10 @@
   "exclude": [
     "dist",
     "node_modules"
+  ],
+  "include": [
+    "src/index.ts",
+    "src/*.ts",
+    "src/**/*.ts",
   ]
 }

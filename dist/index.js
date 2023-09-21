@@ -1,4 +1,7 @@
 "use strict";
+/*
+!> **Warning** This module is not yet stable and is subject to change.
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

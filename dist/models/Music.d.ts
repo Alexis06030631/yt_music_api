@@ -1,6 +1,9 @@
+/// <reference types="node" />
 import { Artwork } from "./Artwork";
 import { Artist } from "./Artist";
 import { Duration } from "./Duration";
+import { DownloadType_param } from "../types/DownloadType";
+import { DownloadQuality_param } from "../types/DownloadQuality";
 export declare class Music {
     artworks: Array<Artwork>;
     id: string;
@@ -13,7 +16,7 @@ export declare class Music {
     autoMix: boolean;
     constructor(data: any, autoMix?: boolean);
     getLyrics(): Promise<Lyrics | NoLyrics>;
-    getRelative(): Promise<Array<Music>>;
+    download(type: DownloadType_param, quality?: DownloadQuality_param): Promise<Buffer>;
 }
 declare class Lyrics {
     lyrics: string;
