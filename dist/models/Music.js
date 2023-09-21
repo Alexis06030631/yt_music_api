@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Music = void 0;
 const requestManager_1 = require("../utils/requestManager");
+const downloadManager_1 = __importDefault(require("../managers/downloadManager"));
 class Music {
     constructor(data, autoMix) {
         this.artworks = data.artworks;
@@ -38,23 +42,13 @@ class Music {
             }).catch(reject);
         });
     }
-    getRelative() {
+    download(type, quality) {
         return new Promise((resolve, reject) => {
+            downloadManager_1.default.download(this.id, type, quality).then(resolve).catch(reject);
         });
     }
 }
 exports.Music = Music;
-function extractArtistData(data) {
-    return data.longBylineText.runs.find((item) => { var _a, _b, _c, _d; return ((_d = (_c = (_b = (_a = item.navigationEndpoint) === null || _a === void 0 ? void 0 : _a.browseEndpoint) === null || _b === void 0 ? void 0 : _b.browseEndpointContextSupportedConfigs) === null || _c === void 0 ? void 0 : _c.browseEndpointContextMusicConfig) === null || _d === void 0 ? void 0 : _d.pageType) === 'MUSIC_PAGE_TYPE_ARTIST'; });
-}
-function timeToSec(time) {
-    const time_split = time.split(':');
-    let time_sec = 0;
-    for (let i = 0; i < time_split.length; i++) {
-        time_sec += parseInt(time_split[i]) * Math.pow(60, time_split.length - i - 1);
-    }
-    return time_sec;
-}
 class Lyrics {
 }
 class NoLyrics {

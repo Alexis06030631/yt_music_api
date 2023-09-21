@@ -2,7 +2,9 @@ import {requestToYtApi} from "../utils/requestManager";
 import {Artwork} from "./Artwork";
 import {Artist} from "./Artist";
 import {Duration} from "./Duration";
-
+import downloadManager from "../managers/downloadManager";
+import {DownloadType_param} from "../types/DownloadType";
+import {DownloadQuality_param} from "../types/DownloadQuality";
 export class Music {
     public artworks: Array<Artwork>;
     public id: string;
@@ -48,25 +50,11 @@ export class Music {
         })
     }
 
-
-    getRelative(): Promise<Array<Music>>{
+    download(type:DownloadType_param, quality?:DownloadQuality_param): Promise<Buffer> {
         return new Promise((resolve, reject) => {
-
+            downloadManager.download(this.id, type, quality).then(resolve).catch(reject)
         })
     }
-}
-
-function extractArtistData(data: any):any {
-    return data.longBylineText.runs.find((item: any) => item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST')
-}
-
-function timeToSec(time: string) {
-    const time_split = time.split(':')
-    let time_sec = 0
-    for (let i = 0; i < time_split.length; i++) {
-        time_sec += parseInt(time_split[i]) * Math.pow(60, time_split.length - i - 1)
-    }
-    return time_sec
 }
 
 
