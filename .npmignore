@@ -7,3 +7,5 @@ package-lock.json
 .Ds_Store
 .github
 /src
+/docs
+api-extractor.json
