@@ -12,7 +12,7 @@ export class Download {
     public expireDate: Date;
 
     constructor(data:any) {
-        this.url = data.url+'&range=0-1000000000';
+        this.url = data.url;
         this.type = data.mimeType;
         this.bitrate = data.bitrate;
         this.averageBitrate = data.averageBitrate;
