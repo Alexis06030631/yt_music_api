@@ -1,0 +1,9 @@
+:root {
+	--base-background-color: #091a28;
+
+	--base-font-family: PT Sans, sans-serif;
+	--code-font-family: Roboto Mono, Monaco, courier, monospace;
+	--base-font-size: 17px;
+
+	--code-theme-background: #0e2233;
+}
