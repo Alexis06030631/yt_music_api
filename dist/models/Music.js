@@ -57,3 +57,4 @@ class NoLyrics {
         this.status = false;
     }
 }
+//# sourceMappingURL=Music.js.map

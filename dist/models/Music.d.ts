@@ -28,3 +28,4 @@ declare class NoLyrics {
     constructor(message: string);
 }
 export {};
+//# sourceMappingURL=Music.d.ts.map

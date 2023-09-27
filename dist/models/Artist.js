@@ -8,3 +8,4 @@ class Artist {
     }
 }
 exports.Artist = Artist;
+//# sourceMappingURL=Artist.js.map

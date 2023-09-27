@@ -64,3 +64,4 @@ function makeHeaders(headers) {
 function makeBody(params) {
     return Object.assign(Object.assign({}, Defaultbody), params);
 }
+//# sourceMappingURL=requestManager.js.map

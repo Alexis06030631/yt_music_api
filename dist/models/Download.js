@@ -17,3 +17,4 @@ class Download {
     }
 }
 exports.Download = Download;
+//# sourceMappingURL=Download.js.map

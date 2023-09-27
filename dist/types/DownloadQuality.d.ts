@@ -5,3 +5,4 @@ export declare class DownloadQuality {
     static medium: DownloadQuality_param;
     static high: DownloadQuality_param;
 }
+//# sourceMappingURL=DownloadQuality.d.ts.map

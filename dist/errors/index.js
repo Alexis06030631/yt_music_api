@@ -62,3 +62,4 @@ function message(code, args) {
     return String(...args);
 }
 exports.YTjsErrorError = makeYTjsErrorError(Error);
+//# sourceMappingURL=index.js.map

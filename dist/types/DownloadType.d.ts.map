@@ -1,0 +1,1 @@
+{"version":3,"file":"DownloadType.d.ts","sourceRoot":"","sources":["../../src/types/DownloadType.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,gBAAgB,UAAkB,CAAA;AAC/C,MAAM,MAAM,kBAAkB,GAAG,OAAO,gBAAgB,CAAC,MAAM,CAAC,CAAA;AAChE,qBAAa,YAAY;IACrB,MAAM,CAAC,GAAG,EAAE,kBAAkB,CAAS;IACvC,MAAM,CAAC,IAAI,EAAE,kBAAkB,CAAU;CAC5C"}

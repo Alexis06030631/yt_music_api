@@ -7,3 +7,4 @@ class DownloadType {
 DownloadType.mp3 = '.mp3';
 DownloadType.webm = '.webm';
 exports.DownloadType = DownloadType;
+//# sourceMappingURL=DownloadType.js.map

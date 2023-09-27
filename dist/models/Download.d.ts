@@ -12,3 +12,4 @@ export declare class Download {
     expireDate: Date;
     constructor(data: any);
 }
+//# sourceMappingURL=Download.d.ts.map

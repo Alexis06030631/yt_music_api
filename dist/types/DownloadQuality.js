@@ -8,3 +8,4 @@ DownloadQuality.low = 'low';
 DownloadQuality.medium = 'medium';
 DownloadQuality.high = 'high';
 exports.DownloadQuality = DownloadQuality;
+//# sourceMappingURL=DownloadQuality.js.map

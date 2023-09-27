@@ -9,3 +9,4 @@ class Duration {
     }
 }
 exports.Duration = Duration;
+//# sourceMappingURL=Duration.js.map

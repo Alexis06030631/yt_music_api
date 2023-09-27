@@ -45,3 +45,4 @@ class SearchVideo extends Music {
 exports.SearchVideo = SearchVideo;
 class Artwork {
 }
+//# sourceMappingURL=Search.js.map

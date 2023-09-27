@@ -4,3 +4,4 @@ export declare class Music_list {
     musics: Array<Music>;
     constructor(album: any);
 }
+//# sourceMappingURL=Music_list.d.ts.map

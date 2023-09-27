@@ -12,3 +12,4 @@ const ErrorCode = {
     DOWNLOAD_LINK_NOT_FOUND: 'DOWNLOAD_LINK_NOT_FOUND',
 };
 exports.default = ErrorCode;
+//# sourceMappingURL=errorCodes.js.map

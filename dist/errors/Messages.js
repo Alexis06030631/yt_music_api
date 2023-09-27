@@ -16,3 +16,4 @@ const Messages = {
     [errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND]: (error) => `The download link was not found for the parameters Type: ${error.typeRequested} and Quality: ${error.qualityRequested}`,
 };
 exports.default = Messages;
+//# sourceMappingURL=Messages.js.map

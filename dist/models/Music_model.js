@@ -15,3 +15,4 @@ class Music_model {
     }
 }
 exports.Music_model = Music_model;
+//# sourceMappingURL=Music_model.js.map

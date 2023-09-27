@@ -24,3 +24,4 @@ declare class Artwork {
     height: number;
 }
 export {};
+//# sourceMappingURL=Search.d.ts.map

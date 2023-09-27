@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TypeSearch = void 0;
+exports.TypeSearch = exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getHomePage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const Music_1 = require("../models/Music");
 const Home_1 = require("../models/Home");
@@ -21,9 +21,9 @@ const extract_1 = require("../utils/extract");
 const Playlist_1 = require("../models/Playlist");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
-exports.default = {
-    search: (query, type) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e;
+function search(query, type) {
+    var _a, _b, _c, _d, _e;
+    return __awaiter(this, void 0, void 0, function* () {
         // Check If type is valid with TypeSearch
         if (!TypeSearch_arr.includes(type))
             throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_arr });
@@ -54,33 +54,36 @@ exports.default = {
             }
             return resp_data;
         }
-    }),
-    getHomePage: () => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve) => __awaiter(void 0, void 0, void 0, function* () {
+    });
+}
+exports.search = search;
+function getHomePage() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             (0, requestManager_1.requestToYtApi)('browse', {
                 "browseId": "FEmusic_home"
-            }).then((res) => __awaiter(void 0, void 0, void 0, function* () {
+            }).then((res) => __awaiter(this, void 0, void 0, function* () {
                 const resp_data = {
                     music_list: [],
                     playlist: []
                 };
-                new Promise((resolve2) => __awaiter(void 0, void 0, void 0, function* () {
+                new Promise((resolve2) => __awaiter(this, void 0, void 0, function* () {
                     for (let i = 0; res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length > i; i++) {
                         let item = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents;
-                        yield new Promise((resolve3) => __awaiter(void 0, void 0, void 0, function* () {
+                        yield new Promise((resolve3) => __awaiter(this, void 0, void 0, function* () {
                             for (let x = 0; item.length > x; x++) {
                                 let music = item[x].musicCarouselShelfRenderer;
-                                new Promise((resolve4) => __awaiter(void 0, void 0, void 0, function* () {
-                                    var _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+                                new Promise((resolve4) => __awaiter(this, void 0, void 0, function* () {
+                                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
                                     for (let x = 0; music.contents.length > x; x++) {
                                         let musicdt = music.contents[x];
                                         if (musicdt) {
-                                            if (!((_g = (_f = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _f === void 0 ? void 0 : _f.playlistItemData) === null || _g === void 0 ? void 0 : _g.videoId)) {
-                                                if ((_k = (_j = (_h = musicdt.musicTwoRowItemRenderer) === null || _h === void 0 ? void 0 : _h.navigationEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpoint) === null || _k === void 0 ? void 0 : _k.browseId)
-                                                    resp_data.playlist.push(yield getPlaylist((_o = (_m = (_l = musicdt.musicTwoRowItemRenderer) === null || _l === void 0 ? void 0 : _l.navigationEndpoint) === null || _m === void 0 ? void 0 : _m.browseEndpoint) === null || _o === void 0 ? void 0 : _o.browseId));
+                                            if (!((_b = (_a = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId)) {
+                                                if ((_e = (_d = (_c = musicdt.musicTwoRowItemRenderer) === null || _c === void 0 ? void 0 : _c.navigationEndpoint) === null || _d === void 0 ? void 0 : _d.browseEndpoint) === null || _e === void 0 ? void 0 : _e.browseId)
+                                                    resp_data.playlist.push(yield getPlaylist((_h = (_g = (_f = musicdt.musicTwoRowItemRenderer) === null || _f === void 0 ? void 0 : _f.navigationEndpoint) === null || _g === void 0 ? void 0 : _g.browseEndpoint) === null || _h === void 0 ? void 0 : _h.browseId));
                                             }
                                             else {
-                                                let title_music_list = (_t = (_s = (_r = (_q = (_p = music === null || music === void 0 ? void 0 : music.header) === null || _p === void 0 ? void 0 : _p.musicCarouselShelfBasicHeaderRenderer) === null || _q === void 0 ? void 0 : _q.title) === null || _r === void 0 ? void 0 : _r.runs) === null || _s === void 0 ? void 0 : _s[0]) === null || _t === void 0 ? void 0 : _t.text;
+                                                let title_music_list = (_o = (_m = (_l = (_k = (_j = music === null || music === void 0 ? void 0 : music.header) === null || _j === void 0 ? void 0 : _j.musicCarouselShelfBasicHeaderRenderer) === null || _k === void 0 ? void 0 : _k.title) === null || _l === void 0 ? void 0 : _l.runs) === null || _m === void 0 ? void 0 : _m[0]) === null || _o === void 0 ? void 0 : _o.text;
                                                 if (!resp_data.music_list.find((e) => e.title === title_music_list))
                                                     resp_data.music_list.push({ title: title_music_list, musics: [] });
                                                 resp_data.music_list.find((e) => e.title === title_music_list).musics.push((0, extract_1.extract_dataFromGetData)(yield index_1.searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId)));
@@ -104,12 +107,15 @@ exports.default = {
                 });
             }));
         }));
-    }),
-    relative: (ID) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve) => __awaiter(void 0, void 0, void 0, function* () {
+    });
+}
+exports.getHomePage = getHomePage;
+function relative(ID) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             (0, requestManager_1.requestToYtApi)('next', {
                 "videoId": ID,
-            }).then((res) => __awaiter(void 0, void 0, void 0, function* () {
+            }).then((res) => __awaiter(this, void 0, void 0, function* () {
                 const autoMix = res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[1].automixPreviewVideoRenderer.content.automixPlaylistVideoRenderer.navigationEndpoint.watchPlaylistEndpoint;
                 (0, requestManager_1.requestToYtApi)('https://music.youtube.com/youtubei/v1/next?key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30&prettyPrint=false', {
                     "params": autoMix.params,
@@ -125,25 +131,21 @@ exports.default = {
                 });
             }));
         }));
-    }),
-    get: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+    });
+}
+exports.relative = relative;
+function get(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             GetData(id).then((e) => {
                 return resolve(new Music_1.Music((0, extract_1.extract_dataFromGetData)(e)));
-            }).catch((e) => __awaiter(void 0, void 0, void 0, function* () {
+            }).catch((e) => __awaiter(this, void 0, void 0, function* () {
                 reject(e);
             }));
         }));
-    }),
-    GetData: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve) => __awaiter(void 0, void 0, void 0, function* () {
-            return resolve(yield GetData(id));
-        }));
-    }),
-    getPlaylist: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield getPlaylist(id);
-    })
-};
+    });
+}
+exports.get = get;
 function getPlaylist(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
@@ -170,6 +172,7 @@ function getPlaylist(id) {
         }));
     });
 }
+exports.getPlaylist = getPlaylist;
 function recursiveGetRelative(data, i = 0) {
     return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
@@ -200,6 +203,7 @@ function GetData(id) {
         }).catch(reject);
     });
 }
+exports.GetData = GetData;
 const TypeSearch_arr = ['MUSIC', 'VIDEO'];
 class TypeSearch {
 }
@@ -207,3 +211,4 @@ TypeSearch.MUSIC = 'MUSIC';
 TypeSearch.VIDEO = 'VIDEO';
 exports.TypeSearch = TypeSearch;
 const MUSIC_param = 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D', VIDEO_param = 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D';
+//# sourceMappingURL=searchManager.js.map

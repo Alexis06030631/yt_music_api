@@ -3,3 +3,4 @@ export declare class Artist {
     id: number;
     constructor(artist: any);
 }
+//# sourceMappingURL=Artist.d.ts.map

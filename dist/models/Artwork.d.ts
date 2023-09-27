@@ -4,3 +4,4 @@ export declare class Artwork {
     height: number;
     constructor(artwork: any);
 }
+//# sourceMappingURL=Artwork.d.ts.map

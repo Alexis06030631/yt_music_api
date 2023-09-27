@@ -4,3 +4,4 @@ export declare class Duration {
     label: string;
     constructor(duration: any);
 }
+//# sourceMappingURL=Duration.d.ts.map

@@ -9,3 +9,4 @@ class Artwork {
     }
 }
 exports.Artwork = Artwork;
+//# sourceMappingURL=Artwork.js.map

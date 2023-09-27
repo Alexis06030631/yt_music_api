@@ -4,3 +4,4 @@ export declare class DownloadType {
     static mp3: DownloadType_param;
     static webm: DownloadType_param;
 }
+//# sourceMappingURL=DownloadType.d.ts.map

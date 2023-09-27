@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.download = exports.getMp3 = exports.getWebm = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const decodeCipher_1 = require("../utils/decodeCipher");
 const DownloadQuality_1 = require("../types/DownloadQuality");
@@ -19,9 +20,9 @@ const DownloadType_1 = require("../types/DownloadType");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const Download_1 = require("../models/Download");
-exports.default = {
-    getWebm: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+function getWebm(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             getPlayer(id).then((res) => {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
@@ -30,9 +31,12 @@ exports.default = {
                 resolve(webm);
             });
         }));
-    }),
-    getMp3: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+    });
+}
+exports.getWebm = getWebm;
+function getMp3(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             getPlayer(id).then((res) => {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
@@ -41,8 +45,11 @@ exports.default = {
                 resolve(mp3);
             });
         }));
-    }),
-    download(id, type = 'mp3', quality) {
+    });
+}
+exports.getMp3 = getMp3;
+function download(id, type = 'mp3', quality) {
+    return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             if (!DownloadType_1.DownloadType_arr.includes(type))
                 throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_DOWNLOAD, { typeRequested: type, typesAvailable: DownloadType_1.DownloadType_arr });
@@ -75,8 +82,9 @@ exports.default = {
                 resolve(new Download_1.Download(download));
             });
         }));
-    }
-};
+    });
+}
+exports.download = download;
 function getPlayer(videoId, body = {}) {
     return new Promise((resolve, reject) => {
         (0, requestManager_1.requestToYtApi)('player?key=', Object.assign({ videoId: videoId, context: {
@@ -94,3 +102,4 @@ function getPlayer(videoId, body = {}) {
         }).catch(reject);
     });
 }
+//# sourceMappingURL=downloadManager.js.map

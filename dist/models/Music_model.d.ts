@@ -14,3 +14,4 @@ export declare class Music_model {
     album: Album;
     constructor(music: any);
 }
+//# sourceMappingURL=Music_model.d.ts.map

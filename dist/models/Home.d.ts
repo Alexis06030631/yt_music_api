@@ -5,3 +5,4 @@ export declare class Home {
     playlist: Array<Playlist>;
     constructor(home: any);
 }
+//# sourceMappingURL=Home.d.ts.map
