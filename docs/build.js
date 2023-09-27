@@ -1,7 +1,8 @@
-const { readdir, createReadStream, writeFile } = require("fs-extra");
+const { copySync, readdir, createReadStream, writeFile } = require("fs-extra");
 const { createInterface } = require("readline");
 const { join, parse } = require("path");
 const { exec} = require("child_process");
+const {readFileSync} = require("fs");
 
 // This script is not part of faast.js, but rather a tool to rewrite some parts
 // of the generated docs from api-generator and api-documenter so they work with
@@ -10,7 +11,7 @@ const { exec} = require("child_process");
 async function main() {
 	await new Promise((resolve, reject) =>
 		exec(
-			"api-extractor run --local && api-documenter markdown -i dist -o docs/src",
+			"api-extractor run --local --verbose && api-documenter markdown --input-folder=./temp/ --output-folder=./docs/src && rm -rf ./temp",
 			(err, stdout, stderr) => {
 				console.log(stdout);
 				console.error(stderr);
@@ -23,40 +24,65 @@ async function main() {
 		)
 	);
 
-	const types = []
-	const models = []
-	const managers = []
 	const dir = "./docs/src";
+	const defaultDir = "./docs/default";
 	const docFiles = await readdir(dir);
+	const Methods = [];
+	const Classes = [];
+	const Types = [];
+	const module_name = require('../package.json').name
+
+	// Copy content folder defaultDir to dir without use foreach
+	copySync(defaultDir, dir, { overwrite: true });
+
 	for (const docFile of docFiles) {
 		try {
 			const { name: id, ext } = parse(docFile);
-			if (ext !== ".md") {
-				continue;
-			}
+			if (ext !== ".md") continue;
 
 			const docPath = join(dir, docFile);
-			const input = createReadStream(docPath);
-			const output = [];
-			const lines = createInterface({
-				input,
-				crlfDelay: Infinity
-			});
+			let content = readFileSync(docPath, "utf8");
+			content = content.replace(/^\[.+\]\(.+\)$/m, "");
 
-			lines.on("line", line => {
-				line = line.replace(/^\[.+\]\(.+\)$/m, "");
-				output.push(line);
-			});
+			// Get Details from title
+			const details = content.match(/## (?<constructor>.+?)\.(?<name>.+?) (?<type>.+)/)
+			if(details){
+				const { constructor, name, type } = details.groups
+				if(constructor.includes('Manager')){
+					// Check if manager already exists
+					const manager = Methods.find(m => m.constructor === constructor)
+					if(!manager)Methods.push({constructor, url:`${module_name}.${constructor}.md`})
+				}else if(type === 'class'){
+					Classes.push({constructor, name, type, url:`${module_name}.${constructor}.${name}.md`})
+				}else if(type === 'type'){
+					Types.push({constructor, name, type, url:`${module_name}.${constructor}.${name}.md`})
+				}else {
+					console.log(`Unknown type ${type} for ${constructor}.${name}`)
+				}
+			}
 
-			await new Promise(resolve => lines.once("close", resolve));
-			input.close();
-
-
-			await writeFile(docPath, [].concat(output).join('\n'));
+			await writeFile(docPath, content);
 		} catch (err) {
 			console.error(`Could not process ${docFile}: ${err}`);
 		}
 	}
+	// Get Methods
+	console.log(Methods)
+
+	// Create Sidebar file
+	const sidebar = '- [Introduction](README)\n' +
+		'- **Methods**' +
+		Methods.map(m => `\n  - [${m.constructor}](./${m.url})`).join('') +
+		'\n- **Classes**' +
+		Classes.map(c => `\n  - [${c.name}](./${c.url}.md)`).join('') +
+		'\n- **Interfaces**' +
+		Types.map(t => `\n  - [${t.name}](./${t.url}.md)`).join('') +
+		'- **Links**\n' +
+		'- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)\n' +
+		'- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)\n' +
+		'- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)'
+
+	await writeFile(join(dir, 'sidebar.md'), sidebar)
 }
 
 main();
