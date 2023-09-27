@@ -4,10 +4,10 @@
 
 ## interfaces namespace
 
-## Type Aliases
+## Namespaces
 
-|  Type Alias | Description |
+|  Namespace | Description |
 |  --- | --- |
-|  [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.downloadquality_param.md) |  |
-|  [DownloadType\_param](./ytmusic_api_unofficial.interfaces.downloadtype_param.md) |  |
+|  [DownloadQuality](./ytmusic_api_unofficial.interfaces.downloadquality.md) |  |
+|  [DownloadType](./ytmusic_api_unofficial.interfaces.downloadtype.md) |  |
 

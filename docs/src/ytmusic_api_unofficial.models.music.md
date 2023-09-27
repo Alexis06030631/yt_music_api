@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare class Music 
 ```
 
@@ -24,7 +24,7 @@ export declare class Music
 |  [artworks](./ytmusic_api_unofficial.models.music.artworks.md) |  | Array&lt;[Artwork](./ytmusic_api_unofficial.models.artwork.md)<!-- -->&gt; |  |
 |  [autoMix](./ytmusic_api_unofficial.models.music.automix.md) |  | boolean |  |
 |  [browseId](./ytmusic_api_unofficial.models.music.browseid.md) |  | string |  |
-|  [duration](./ytmusic_api_unofficial.models.music.duration.md) |  | Duration |  |
+|  [duration](./ytmusic_api_unofficial.models.music.duration.md) |  | [Duration](./ytmusic_api_unofficial.duration.md) |  |
 |  [id](./ytmusic_api_unofficial.models.music.id.md) |  | string |  |
 |  [isAudioOnly](./ytmusic_api_unofficial.models.music.isaudioonly.md) |  | boolean |  |
 |  [title](./ytmusic_api_unofficial.models.music.title.md) |  | string |  |

@@ -2,7 +2,7 @@ import {requestToYtApi} from "../utils/requestManager";
 import {Artwork} from "./Artwork";
 import {Artist} from "./Artist";
 import {Duration} from "./Duration";
-import downloadManager from "../managers/downloadManager";
+import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
 export class Music {

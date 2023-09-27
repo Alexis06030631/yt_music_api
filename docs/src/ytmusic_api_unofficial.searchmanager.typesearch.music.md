@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 static MUSIC: TypeSearch_param;
 ```

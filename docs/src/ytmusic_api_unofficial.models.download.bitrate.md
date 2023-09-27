@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 bitrate: number;
 ```

@@ -3,6 +3,8 @@
   - [downloadManager](./ytmusic_api_unofficial.downloadManager.md)
   - [searchManager](./ytmusic_api_unofficial.searchManager.md)
 - **Classes**
+  - [DownloadQuality](./ytmusic_api_unofficial.DownloadQuality.DownloadQuality.md.md)
+  - [DownloadType](./ytmusic_api_unofficial.DownloadType.DownloadType.md.md)
   - [Album](./ytmusic_api_unofficial.models.Album.md.md)
   - [Artist](./ytmusic_api_unofficial.models.Artist.md.md)
   - [Artwork](./ytmusic_api_unofficial.models.Artwork.md.md)
@@ -13,8 +15,9 @@
   - [Playlist](./ytmusic_api_unofficial.models.Playlist.md.md)
   - [Search](./ytmusic_api_unofficial.models.Search.md.md)
 - **Interfaces**
-  - [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.DownloadQuality\_param.md.md)
-  - [DownloadType\_param](./ytmusic_api_unofficial.interfaces.DownloadType\_param.md.md)- **Links**
+  - [DownloadQuality](./ytmusic_api_unofficial.interfaces.DownloadQuality.DownloadQuality.md.md)
+  - [DownloadType](./ytmusic_api_unofficial.interfaces.DownloadType.DownloadType.md.md)
+- **Links**
 - [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)
 - [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)
 - [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)

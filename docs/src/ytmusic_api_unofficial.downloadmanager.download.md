@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function download(id: string, type?: DownloadType_param, quality?: DownloadQuality_param): Promise<any>;
 ```
 
@@ -15,8 +15,8 @@ export declare function download(id: string, type?: DownloadType_param, quality?
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  id | string |  |
-|  type | [DownloadType\_param](./ytmusic_api_unofficial.interfaces.downloadtype_param.md) | _(Optional)_ |
-|  quality | [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.downloadquality_param.md) | _(Optional)_ |
+|  type | [DownloadType\_param](./ytmusic_api_unofficial.interfaces.downloadtype.downloadtype_param.md) | _(Optional)_ |
+|  quality | [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.downloadquality.downloadquality_param.md) | _(Optional)_ |
 
 **Returns:**
 

@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare class Artwork 
 ```
 

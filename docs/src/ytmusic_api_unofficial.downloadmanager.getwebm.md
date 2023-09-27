@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function getWebm(id: string): Promise<any>;
 ```
 

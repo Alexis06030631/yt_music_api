@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 music_list: Array<Music_list>;
 ```

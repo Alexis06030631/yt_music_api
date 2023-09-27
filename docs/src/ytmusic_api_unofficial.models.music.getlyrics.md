@@ -6,10 +6,10 @@
 
 **Signature:**
 
-```typescript
+```javascript
 getLyrics(): Promise<Lyrics | NoLyrics>;
 ```
 **Returns:**
 
-Promise&lt;Lyrics \| NoLyrics&gt;
+Promise&lt;[Lyrics](./ytmusic_api_unofficial.lyrics.md) \| [NoLyrics](./ytmusic_api_unofficial.nolyrics.md)<!-- -->&gt;
 

@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function relative(ID: string): Promise<Array<Music>>;
 ```
 

@@ -8,7 +8,7 @@ Constructs a new instance of the `Download` class
 
 **Signature:**
 
-```typescript
+```javascript
 constructor(data: any);
 ```
 

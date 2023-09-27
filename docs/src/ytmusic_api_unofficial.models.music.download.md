@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 download(type: DownloadType_param, quality?: DownloadQuality_param): Promise<Buffer>;
 ```
 
@@ -14,8 +14,8 @@ download(type: DownloadType_param, quality?: DownloadQuality_param): Promise<Buf
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [DownloadType\_param](./ytmusic_api_unofficial.interfaces.downloadtype_param.md) |  |
-|  quality | [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.downloadquality_param.md) | _(Optional)_ |
+|  type | [DownloadType\_param](./ytmusic_api_unofficial.interfaces.downloadtype.downloadtype_param.md) |  |
+|  quality | [DownloadQuality\_param](./ytmusic_api_unofficial.interfaces.downloadquality.downloadquality_param.md) | _(Optional)_ |
 
 **Returns:**
 

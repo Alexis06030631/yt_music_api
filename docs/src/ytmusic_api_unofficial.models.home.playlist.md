@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 playlist: Array<Playlist>;
 ```

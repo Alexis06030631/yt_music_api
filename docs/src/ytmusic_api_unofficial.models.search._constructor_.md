@@ -8,7 +8,7 @@ Constructs a new instance of the `Search` class
 
 **Signature:**
 
-```typescript
+```javascript
 constructor(search_result: any);
 ```
 

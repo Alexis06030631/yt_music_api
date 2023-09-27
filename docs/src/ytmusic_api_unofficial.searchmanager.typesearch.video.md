@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 static VIDEO: TypeSearch_param;
 ```

@@ -8,7 +8,7 @@ Constructs a new instance of the `Artist` class
 
 **Signature:**
 
-```typescript
+```javascript
 constructor(artist: any);
 ```
 

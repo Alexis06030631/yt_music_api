@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare class TypeSearch 
 ```
 
@@ -14,6 +14,6 @@ export declare class TypeSearch
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [MUSIC](./ytmusic_api_unofficial.searchmanager.typesearch.music.md) | <code>static</code> | TypeSearch\_param |  |
-|  [VIDEO](./ytmusic_api_unofficial.searchmanager.typesearch.video.md) | <code>static</code> | TypeSearch\_param |  |
+|  [MUSIC](./ytmusic_api_unofficial.searchmanager.typesearch.music.md) | <code>static</code> | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
+|  [VIDEO](./ytmusic_api_unofficial.searchmanager.typesearch.video.md) | <code>static</code> | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
 

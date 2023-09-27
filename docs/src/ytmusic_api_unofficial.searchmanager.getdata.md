@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function GetData(id: string): Promise<any>;
 ```
 

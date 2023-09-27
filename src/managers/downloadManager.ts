@@ -11,6 +11,10 @@ import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {Download} from "../models/Download";
 
+/*
+* This function is used to get the download link of a music in Webm format
+* @deprecated This function is deprecated, use download() instead
+ */
 export async function getWebm (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         getPlayer(id).then((res: any) => {

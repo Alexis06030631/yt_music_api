@@ -6,10 +6,10 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare class Search extends Music 
 ```
-**Extends:** Music
+**Extends:** [Music](./ytmusic_api_unofficial.music_2.md)
 
 ## Constructors
 

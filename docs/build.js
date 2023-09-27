@@ -11,7 +11,7 @@ const {readFileSync} = require("fs");
 async function main() {
 	await new Promise((resolve, reject) =>
 		exec(
-			"api-extractor run --local --verbose && api-documenter markdown --input-folder=./temp/ --output-folder=./docs/src && rm -rf ./temp",
+			"api-extractor run --local --verbose && api-documenter markdown --input-folder=./temp/ --output-folder=./docs/src",
 			(err, stdout, stderr) => {
 				console.log(stdout);
 				console.error(stderr);
@@ -43,21 +43,24 @@ async function main() {
 			const docPath = join(dir, docFile);
 			let content = readFileSync(docPath, "utf8");
 			content = content.replace(/^\[.+\]\(.+\)$/m, "");
+			// Replace all ```typescript by ```js
+			content = content.replace(/```typescript/g, "```javascript");
+			// Remove Modifiers column for every table in .md file
+			content = content.replace(/\| Modifier \|/g, "|");
 
 			// Get Details from title
 			const details = content.match(/## (?<constructor>.+?)\.(?<name>.+?) (?<type>.+)/)
 			if(details){
 				const { constructor, name, type } = details.groups
 				if(constructor.includes('Manager')){
-					// Check if manager already exists
 					const manager = Methods.find(m => m.constructor === constructor)
 					if(!manager)Methods.push({constructor, url:`${module_name}.${constructor}.md`})
+				}else if(constructor.includes('interfaces')) {
+					if(type === 'class') {
+						Types.push({name: name.split('.')[1], constructor, url: `${module_name}.${constructor}.${name}.md`})
+					}
 				}else if(type === 'class'){
 					Classes.push({constructor, name, type, url:`${module_name}.${constructor}.${name}.md`})
-				}else if(type === 'type'){
-					Types.push({constructor, name, type, url:`${module_name}.${constructor}.${name}.md`})
-				}else {
-					console.log(`Unknown type ${type} for ${constructor}.${name}`)
 				}
 			}
 
@@ -67,7 +70,7 @@ async function main() {
 		}
 	}
 	// Get Methods
-	console.log(Methods)
+	console.log(Types)
 
 	// Create Sidebar file
 	const sidebar = '- [Introduction](README)\n' +
@@ -77,7 +80,7 @@ async function main() {
 		Classes.map(c => `\n  - [${c.name}](./${c.url}.md)`).join('') +
 		'\n- **Interfaces**' +
 		Types.map(t => `\n  - [${t.name}](./${t.url}.md)`).join('') +
-		'- **Links**\n' +
+		'\n- **Links**\n' +
 		'- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)\n' +
 		'- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)\n' +
 		'- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)'

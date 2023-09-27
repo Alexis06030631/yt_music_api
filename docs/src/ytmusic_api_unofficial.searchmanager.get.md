@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function get(id: string): Promise<Music>;
 ```
 

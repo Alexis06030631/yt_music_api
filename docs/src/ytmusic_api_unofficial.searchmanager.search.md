@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function search(query: string, type: TypeSearch_param): Promise<Array<Music>>;
 ```
 
@@ -15,7 +15,7 @@ export declare function search(query: string, type: TypeSearch_param): Promise<A
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  query | string |  |
-|  type | TypeSearch\_param |  |
+|  type | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
 
 **Returns:**
 

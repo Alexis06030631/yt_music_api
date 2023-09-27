@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 averageBitrate: number;
 ```

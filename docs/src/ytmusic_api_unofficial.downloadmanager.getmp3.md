@@ -6,7 +6,7 @@
 
 **Signature:**
 
-```typescript
+```javascript
 export declare function getMp3(id: string): Promise<any>;
 ```
 

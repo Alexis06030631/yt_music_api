@@ -1,7 +1,7 @@
-import {DownloadType_param} from './DownloadType'
-import {DownloadQuality_param} from './DownloadQuality'
+import * as DownloadType from './DownloadType'
+import * as DownloadQuality from './DownloadQuality'
 
 export {
-    DownloadType_param,
-    DownloadQuality_param
+    DownloadType,
+    DownloadQuality
 }

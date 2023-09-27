@@ -6,6 +6,6 @@
 
 **Signature:**
 
-```typescript
+```javascript
 artists: Array<Artist>;
 ```

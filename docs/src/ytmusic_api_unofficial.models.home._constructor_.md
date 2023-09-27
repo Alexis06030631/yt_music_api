@@ -8,7 +8,7 @@ Constructs a new instance of the `Home` class
 
 **Signature:**
 
-```typescript
+```javascript
 constructor(home: any);
 ```
 
