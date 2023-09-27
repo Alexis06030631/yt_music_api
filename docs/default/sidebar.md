@@ -1,0 +1,24 @@
+<!-- markdownlint-disable-next-line first-line-heading -->
+- [Introduction](README)
+- **Methods**
+- [Search](search)
+- [Download](download)
+- **Classes**
+- [Album](album)
+- [Artist](song)
+- [Artworks](themes)
+- [Download](customization)
+- [Duration](options)
+- [Home](plugin-authors)
+- [Music](markdown)
+- [Music_list](changelog)
+- [Playlist](changelog)
+- [Search](changelog)
+- **Interfaces**
+- [DownloadQuality](downloadquality)
+- [DownloadType](downloadtype)
+- [SearchType](searchtype)
+- **Links**
+- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)
+- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)
+- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)

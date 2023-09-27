@@ -1,41 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>YTMusicApi</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <!-- Themes (light + dark) -->
-  <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
-
+  <!-- Stylesheets -->
+  <link rel="stylesheet" data-style-group="themeable" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <link rel="stylesheet" data-style-group="themeable" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <link rel="stylesheet" href="/src/assets/css/theme_edit.css">
 </head>
+
 <body>
-  <div id="app">Please wait...</div>
-  <script>
-    window.$docsify = {
-      homepage: '/index.md',
-      basePath: '/src',
-      name: 'YTmusicApi',
-      repo: 'https://github.com/Alexis06030631/yt_music_api',
-      themeColor: '#FFFFFF',
-      loadSidebar: true,
-      alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'
+<div id="app"></div>
+
+<script>
+  // 4. Docsify Configuration
+  window.$docsify = {
+    // GENERAL
+    // -----------------------------------------------------------------
+    name       : 'YTMusic',
+    repo       : 'https://github.com/Alexis06030631/yt_music_api',
+    coverpage  : 'coverpage.md',
+    homepage   : 'README.md',
+    loadSidebar: 'sidebar.md',
+    basePath: '/src',
+
+    // NAVIGATION
+    // -----------------------------------------------------------------
+    alias: {
+      '.*?/changelog': 'https://raw.githubusercontent.com/Alexis06030631/yt_music_api/master/CHANGELOG.md',
+    },
+    auto2top   : true,
+    maxLevel   : 3,
+    subMaxLevel: 3,
+
+    // PLUGINS
+    // -----------------------------------------------------------------
+    ethicalAds: {
+      eaPublisher: 'Alexis06030631-github-io',
+    },
+    executeScript: true,
+    search: {
+      depth      : 3,
+      noData     : 'No results!',
+      placeholder: 'Search...'
+    },
+    plugins: [
+      // Restores initial <title>
+      function persistTitle(hook, vm) {
+        var titleElm = document.querySelector('title');
+        var rootTitle = titleElm && titleElm.textContent;
+        var pageTitlePrefix = window.$docsify.name ? window.$docsify.name + ' - ' : '';
+
+        if (rootTitle) {
+          hook.doneEach(function () {
+            var currentTitle = titleElm.textContent;
+            var isRoot = !/\/[a-z]/.test(location.hash);
+            var newTitle = isRoot ? rootTitle : pageTitlePrefix + currentTitle;
+
+            titleElm.textContent = newTitle;
+          });
+        }
       }
-    }
-  </script>
+    ]
+  };
+</script>
 
-  <!-- Docsify v4 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <!-- Theme -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
-
-  <!-- Recommended -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
-  <script src="https://unpkg.com/docsify-copy-code@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-plugin-ethicalads@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1/dist/docsify-tabs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/external-script.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
 </html>

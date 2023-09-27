@@ -1,15 +1,14 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
 	"mainEntryPointFilePath": "<projectFolder>/dist/index.d.ts",
-	"bundledPackages": ["library2"],
+	"bundledPackages": [],
 	"compiler": {
 	},
 	"apiReport": {
 		"enabled": false
 	},
 	"docModel": {
-		"enabled": true,
-		"apiJsonFilePath": "dist/ytMusic.api.json"
+		"enabled": true
 	},
 	"dtsRollup": {
 		"enabled": false
