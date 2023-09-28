@@ -10,4 +10,5 @@
 |  --- | --- |
 |  [DownloadQuality](./ytmusic_api_unofficial.interfaces.downloadquality.md) |  |
 |  [DownloadType](./ytmusic_api_unofficial.interfaces.downloadtype.md) |  |
+|  [TypeSearch](./ytmusic_api_unofficial.interfaces.typesearch.md) |  |
 

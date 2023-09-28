@@ -4,12 +4,6 @@
 
 ## searchManager namespace
 
-## Classes
-
-|  Class | Description |
-|  --- | --- |
-|  [TypeSearch](./ytmusic_api_unofficial.searchmanager.typesearch.md) |  |
-
 ## Functions
 
 |  Function | Description |

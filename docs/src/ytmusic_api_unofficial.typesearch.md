@@ -2,18 +2,23 @@
 
 
 
-## TypeSearch class
+## TypeSearch namespace
 
-**Signature:**
+## Classes
 
-```javascript
-export declare class TypeSearch 
-```
+|  Class | Description |
+|  --- | --- |
+|  [TypeSearch](./ytmusic_api_unofficial.typesearch.typesearch.md) |  |
 
-## Properties
+## Variables
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [MUSIC](./ytmusic_api_unofficial.typesearch.music.md) | <code>static</code> | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
-|  [VIDEO](./ytmusic_api_unofficial.typesearch.video.md) | <code>static</code> | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
+|  Variable | Description |
+|  --- | --- |
+|  [TypeSearch\_arr](./ytmusic_api_unofficial.typesearch.typesearch_arr.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [TypeSearch\_param](./ytmusic_api_unofficial.typesearch.typesearch_param.md) |  |
 

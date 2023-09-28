@@ -26,13 +26,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.interfaces = exports.models = exports.TypeSearch = exports.downloadManager = exports.searchManager = void 0;
+exports.interfaces = exports.models = exports.downloadManager = exports.searchManager = void 0;
 const searchManager = __importStar(require("./managers/searchManager"));
 exports.searchManager = searchManager;
 const downloadManager = __importStar(require("./managers/downloadManager"));
 exports.downloadManager = downloadManager;
-const searchManager_1 = require("./managers/searchManager");
-Object.defineProperty(exports, "TypeSearch", { enumerable: true, get: function () { return searchManager_1.TypeSearch; } });
 const models = __importStar(require("./models"));
 exports.models = models;
 const interfaces = __importStar(require("./types"));

@@ -2,10 +2,10 @@
 
 
 
-## searchManager.TypeSearch.MUSIC property
+## Playlist.title property
 
 **Signature:**
 
 ```javascript
-static MUSIC: TypeSearch_param;
+title: string;
 ```

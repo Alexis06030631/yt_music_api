@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Search = exports.Playlist = exports.Music_list = exports.Music = exports.Home = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
+exports.Search = exports.Playlist = exports.Music_list = exports.Music = exports.Home = exports.Duration = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
 const Album_1 = require("./Album");
 Object.defineProperty(exports, "Album", { enumerable: true, get: function () { return Album_1.Album; } });
 const Artist_1 = require("./Artist");
@@ -9,6 +9,8 @@ const Artwork_1 = require("./Artwork");
 Object.defineProperty(exports, "Artwork", { enumerable: true, get: function () { return Artwork_1.Artwork; } });
 const Download_1 = require("./Download");
 Object.defineProperty(exports, "Download", { enumerable: true, get: function () { return Download_1.Download; } });
+const Duration_1 = require("./Duration");
+Object.defineProperty(exports, "Duration", { enumerable: true, get: function () { return Duration_1.Duration; } });
 const Home_1 = require("./Home");
 Object.defineProperty(exports, "Home", { enumerable: true, get: function () { return Home_1.Home; } });
 const Music_1 = require("./Music");

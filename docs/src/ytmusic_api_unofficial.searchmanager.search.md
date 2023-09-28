@@ -15,7 +15,7 @@ export declare function search(query: string, type: TypeSearch_param): Promise<A
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  query | string |  |
-|  type | [TypeSearch\_param](./ytmusic_api_unofficial.typesearch_param.md) |  |
+|  type | [TypeSearch\_param](./ytmusic_api_unofficial.interfaces.typesearch.typesearch_param.md) |  |
 
 **Returns:**
 

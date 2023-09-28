@@ -12,6 +12,7 @@
 |  [Artist](./ytmusic_api_unofficial.models.artist.md) |  |
 |  [Artwork](./ytmusic_api_unofficial.models.artwork.md) |  |
 |  [Download](./ytmusic_api_unofficial.models.download.md) |  |
+|  [Duration](./ytmusic_api_unofficial.models.duration.md) |  |
 |  [Home](./ytmusic_api_unofficial.models.home.md) |  |
 |  [Music\_list](./ytmusic_api_unofficial.models.music_list.md) |  |
 |  [Music](./ytmusic_api_unofficial.models.music.md) |  |

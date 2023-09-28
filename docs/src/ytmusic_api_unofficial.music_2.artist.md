@@ -2,10 +2,13 @@
 
 
 
-## TypeSearch.MUSIC property
+## Music\_2.artist property
 
 **Signature:**
 
 ```javascript
-static MUSIC: TypeSearch_param;
+artist: {
+        name: string;
+        id: string;
+    };
 ```

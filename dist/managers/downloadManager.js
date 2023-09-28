@@ -20,6 +20,10 @@ const DownloadType_1 = require("../types/DownloadType");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const Download_1 = require("../models/Download");
+/*
+* This function is used to get the download link of a music in Webm format
+* @deprecated This function is deprecated, use download() instead
+ */
 function getWebm(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {

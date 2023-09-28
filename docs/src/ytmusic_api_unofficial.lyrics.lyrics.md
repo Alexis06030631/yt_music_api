@@ -2,10 +2,10 @@
 
 
 
-## searchManager.TypeSearch.VIDEO property
+## Lyrics.lyrics property
 
 **Signature:**
 
 ```javascript
-static VIDEO: TypeSearch_param;
+lyrics: string;
 ```

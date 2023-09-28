@@ -24,7 +24,7 @@
 |  [NoLyrics](./ytmusic_api_unofficial.nolyrics.md) |  |
 |  [Playlist](./ytmusic_api_unofficial.playlist.md) |  |
 |  [Search](./ytmusic_api_unofficial.search.md) |  |
-|  [TypeSearch](./ytmusic_api_unofficial.typesearch.md) |  |
+|  [TypeSearch\_2](./ytmusic_api_unofficial.typesearch_2.md) |  |
 
 ## Functions
 
@@ -50,6 +50,7 @@
 |  [interfaces](./ytmusic_api_unofficial.interfaces.md) |  |
 |  [models](./ytmusic_api_unofficial.models.md) |  |
 |  [searchManager](./ytmusic_api_unofficial.searchmanager.md) |  |
+|  [TypeSearch](./ytmusic_api_unofficial.typesearch.md) |  |
 
 ## Variables
 

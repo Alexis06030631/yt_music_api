@@ -1,4 +1,5 @@
 import * as DownloadType from './DownloadType';
 import * as DownloadQuality from './DownloadQuality';
-export { DownloadType, DownloadQuality };
+import * as TypeSearch from './TypeSearch';
+export { DownloadType, DownloadQuality, TypeSearch };
 //# sourceMappingURL=index.d.ts.map

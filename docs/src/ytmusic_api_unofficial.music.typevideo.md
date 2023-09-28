@@ -2,10 +2,10 @@
 
 
 
-## TypeSearch.VIDEO property
+## Music.typeVideo property
 
 **Signature:**
 
 ```javascript
-static VIDEO: TypeSearch_param;
+typeVideo: string;
 ```
