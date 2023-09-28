@@ -1,9 +1,72 @@
 :root {
-	--base-background-color: #091a28;
+	/*
+	 * The following variables are used to generate the theme colors.
+	 */
+	--primary-color: #FFFFFF;
+	--secondary-color: #CCCCCC;
+	--tertiary-color: #444444;
 
-	--base-font-family: PT Sans, sans-serif;
-	--code-font-family: Roboto Mono, Monaco, courier, monospace;
-	--base-font-size: 17px;
+	--bg-primary-color: #000000;
+	--bg-secondary-color: #212121;
+	--bg-tertiary-color: #333333;
 
-	--code-theme-background: #0e2233;
+	--link-primary-color: #FF0000;
+	--link-secondary-color: #0077FF;
+}
+
+:root {
+	--base-font-size: 14px;
+}
+
+/* Base
+============================================================================= */
+:root {
+	--base-background-color: var(--bg-primary-color);
+	--base-font-family     : PT Sans, sans-serif;
+	--base-font-size       : 17px;
+
+	--sidebar-background: var(--bg-secondary-color);
+
+	--search-input-background-color: var(--bg-primary-color);
+
+	--navbar-root-border-color: var(--bg-tertiary-color);
+	--table-cell-border-color: var(--bg-tertiary-color);
+	--table-body-border-color: var(--bg-tertiary-color);
+	--table-head-border-color: var(--bg-tertiary-color);
+	--cover-border-color: var(--bg-tertiary-color);
+	--navbar-menu-border-color: var(--bg-tertiary-color);
+	--navbar-menu-link-border-color: var(--bg-tertiary-color);
+	--sidebar-border-color: var(--bg-tertiary-color);
+	--search-input-border-color: var(--bg-tertiary-color);
+	--heading-h2-border-color: var(--bg-tertiary-color);
+	--heading-h3-border-color: var(--bg-tertiary-color);
+	--heading-h4-border-color: var(--bg-tertiary-color);
+	--pagination-border-top: 1px solid var(--bg-tertiary-color);
+
+	--sidebar-name-color: var(--link-primary-color);
+
+	--code-block-border-radius: 10px;
+	--code-theme-background: var(--bg-secondary-color);
+
+	--table-head-background: var(--bg-secondary-color);
+	--table-row-even-background: var(--bg-secondary-color);
+	--table-row-odd-background: var(--bg-tertiary-color);
+	--table-body-border-color: var(--bg-tertiary-color);
+	--table-body-border-width: 1px;
+	--table-head-border-color: var(--bg-tertiary-color);
+	--table-head-border-width: 1px;
+
+	--copycode-background: var(--bg-tertiary-color);
+	--copycode-color: var(--primary-color);
+}
+
+.github-corner svg {
+	fill: var(--link-secondary-color);
+}
+
+#version {
+	padding: 7px;
+	border-radius: 10px;
+	background: var(--link-primary-color);
+	color: var(--primary-color);
 }
