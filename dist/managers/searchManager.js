@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TypeSearch = exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getHomePage = exports.search = void 0;
+exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getHomePage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const Music_1 = require("../models/Music");
 const Home_1 = require("../models/Home");
@@ -21,27 +21,28 @@ const extract_1 = require("../utils/extract");
 const Playlist_1 = require("../models/Playlist");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
+const TypeSearch_1 = require("../types/TypeSearch");
 function search(query, type) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         // Check If type is valid with TypeSearch
-        if (!TypeSearch_arr.includes(type))
-            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_arr });
+        if (!TypeSearch_1.TypeSearch_arr.includes(type))
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch_arr });
         if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
             return [new Music_1.Music(yield GetData((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]))];
         }
         else {
             let data;
             const resp_data = [];
-            if (type === TypeSearch.MUSIC || type === TypeSearch.VIDEO) {
-                if (type === TypeSearch.MUSIC) {
+            if (type === TypeSearch_1.TypeSearch.MUSIC || type === TypeSearch_1.TypeSearch.VIDEO) {
+                if (type === TypeSearch_1.TypeSearch.MUSIC) {
                     const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
                         "query": query,
                         "params": MUSIC_param,
                     });
                     data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Songs'; })[0].musicShelfRenderer.contents;
                 }
-                else if (type === TypeSearch.VIDEO) {
+                else if (type === TypeSearch_1.TypeSearch.VIDEO) {
                     const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
                         "query": query,
                         "params": VIDEO_param,
@@ -204,11 +205,5 @@ function GetData(id) {
     });
 }
 exports.GetData = GetData;
-const TypeSearch_arr = ['MUSIC', 'VIDEO'];
-class TypeSearch {
-}
-TypeSearch.MUSIC = 'MUSIC';
-TypeSearch.VIDEO = 'VIDEO';
-exports.TypeSearch = TypeSearch;
 const MUSIC_param = 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D', VIDEO_param = 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D';
 //# sourceMappingURL=searchManager.js.map

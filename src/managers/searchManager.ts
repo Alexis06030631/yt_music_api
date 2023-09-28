@@ -6,6 +6,7 @@ import {extract_dataFromGetData} from "../utils/extract";
 import {Playlist} from "../models/Playlist";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
+import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';
 
 
 export async function search (query: string, type: TypeSearch_param): Promise<Array<Music>> {
@@ -174,13 +175,5 @@ export function GetData(id: string): Promise<any> {
     })
 }
 
-
-const TypeSearch_arr = ['MUSIC', 'VIDEO']
-type TypeSearch_param = typeof TypeSearch_arr[number]
-
-export class TypeSearch {
-    static MUSIC: TypeSearch_param = 'MUSIC'
-    static VIDEO: TypeSearch_param = 'VIDEO'
-}
 const MUSIC_param= 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
     VIDEO_param= 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D'
