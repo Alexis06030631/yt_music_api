@@ -30,7 +30,9 @@ async function main() {
 	const Methods = [];
 	const Classes = [];
 	const Types = [];
-	const module_name = require('../package.json').name
+	const package = require('../package.json')
+	const version = package.version
+	const module_name = package.name
 
 	// Copy content folder defaultDir to dir without use foreach
 	copySync(defaultDir, dir, { overwrite: true });
@@ -69,11 +71,10 @@ async function main() {
 			console.error(`Could not process ${docFile}: ${err}`);
 		}
 	}
-	// Get Methods
-	console.log(Types)
 
 	// Create Sidebar file
-	const sidebar = '- [Introduction](README)\n' +
+	const sidebar = `- **Version: ${version}**\n` +
+		'- [Introduction](README)\n' +
 		'- **Methods**' +
 		Methods.map(m => `\n  - [${m.constructor}](./${m.url})`).join('') +
 		'\n- **Classes**' +

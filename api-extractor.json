@@ -11,6 +11,10 @@
 		"enabled": true,
 		"includeForgottenExports": true
 	},
+	"tsdocMetadata": {
+		"enabled": true,
+		"tsdocMetadataFilePath": "<projectFolder>/temp/tsdoc-metadata.json"
+	},
 	"dtsRollup": {
 		"enabled": false
 	},
