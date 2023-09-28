@@ -2,6 +2,7 @@ import {Album} from './Album';
 import {Artist} from './Artist';
 import {Artwork} from './Artwork';
 import {Download} from './Download';
+import {Duration} from './Duration';
 import {Home} from './Home';
 import {Music} from './Music';
 import {Music_list} from './Music_list';
@@ -13,6 +14,7 @@ export {
     Artist,
     Artwork,
     Download,
+    Duration,
     Home,
     Music,
     Music_list,
