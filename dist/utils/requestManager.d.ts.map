@@ -1,1 +1,0 @@
-{"version":3,"file":"requestManager.d.ts","sourceRoot":"","sources":["../../src/utils/requestManager.ts"],"names":[],"mappings":"AAAA,OAAc,EAAC,UAAU,EAAsB,aAAa,EAAC,MAAM,OAAO,CAAC;AAqB3E,iBAAe,cAAc,CAAC,GAAG,EAAE,MAAM,EAAE,IAAI,EAAC,MAAM,EAAE,MAAM,CAAC,EAAE,MAAM,GAAG,OAAO,CAAC,aAAa,GAAC,UAAU,CAAC,CAc1G;AAgBD,OAAO,EACH,cAAc,GACjB,CAAA"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"DownloadQuality.d.ts","sourceRoot":"","sources":["../../src/types/DownloadQuality.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,mBAAmB,UAA4B,CAAA;AAC5D,MAAM,MAAM,qBAAqB,GAAG,OAAO,mBAAmB,CAAC,MAAM,CAAC,CAAA;AACtE,qBAAa,eAAe;IACxB,MAAM,CAAC,GAAG,EAAE,qBAAqB,CAAQ;IACzC,MAAM,CAAC,MAAM,EAAE,qBAAqB,CAAW;IAC/C,MAAM,CAAC,IAAI,EAAE,qBAAqB,CAAS;CAC9C"}
