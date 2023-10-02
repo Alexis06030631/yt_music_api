@@ -4,4 +4,6 @@ test.js
 .idea/
 temp
 
-/docs/docs
+docs/.vitepress/cache/
+docs/docs/
+docs/.vitepress/dist/

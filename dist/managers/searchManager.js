@@ -22,6 +22,11 @@ const Playlist_1 = require("../models/Playlist");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
+/**
+ * Search music, video or other with query
+ * @param query Query to search
+ * @param type Type of search
+ */
 function search(query, type) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {

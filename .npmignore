@@ -9,3 +9,6 @@ package-lock.json
 /src
 /docs
 api-extractor.json
+/temp
+tsdoc.json
+.github/

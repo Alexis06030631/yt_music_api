@@ -1,5 +1,5 @@
 <!-- markdownlint-disable-next-line first-line-heading -->
-- [Introduction](README)
+- [Introduction](index)
 - **Methods**
 - [Search](search)
 - [Download](download)

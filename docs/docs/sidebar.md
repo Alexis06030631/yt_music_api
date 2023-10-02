@@ -1,0 +1,28 @@
+- **Version: 1.1.0-beta.2.0.0**
+- [Introduction](README)
+- **Methods**
+  - [downloadManager](/method/downloadManager)
+  - [searchManager](/method/searchManager)
+- **Classes**
+  - [Album](/class/Album.md)
+  - [Artist](/class/Artist.md)
+  - [Artwork_2](/class/Artwork_2.md)
+  - [Artwork](/class/Artwork.md)
+  - [Download](/class/Download.md)
+  - [Duration](/class/Duration.md)
+  - [Home](/class/Home.md)
+  - [Lyrics](/class/Lyrics.md)
+  - [Music_2](/class/Music_2.md)
+  - [Music_list](/class/Music_list.md)
+  - [Music](/class/Music.md)
+  - [NoLyrics](/class/NoLyrics.md)
+  - [Playlist](/class/Playlist.md)
+  - [Search](/class/Search.md)
+- **Interfaces**
+  - [DownloadQuality_2](/interface/DownloadQuality_2.md)
+  - [DownloadType_2](/interface/DownloadType_2.md)
+  - [TypeSearch_2](/interface/TypeSearch_2.md)
+- **Links**
+- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)
+- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)
+- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)

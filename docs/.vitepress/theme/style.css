@@ -1,0 +1,46 @@
+
+details {
+	width: 100%
+}
+
+details > summary {
+	padding: 4px 10px;
+	min-width: 15em;
+	background-color: var(--bg-secondary-color);
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+details > p {
+	border-radius: 0 0 10px 10px;
+	background-color: var(--bg-tertiary-color);
+	padding: 5px 16px;
+	margin: 0px !important;
+}
+
+details > p > code {
+	background-color: var(--bg-tertiary-color);
+}
+
+
+details[open] > summary {
+	background-color: var(--bg-tertiary-color);
+	border-radius: 5px 5px 0 0;
+	border-bottom: var(--tertiary-color) 1px solid;
+}
+
+th, td {
+	vertical-align:top;
+}
+
+th {
+	width: 50vw
+}
+
+.flex_return {
+	display: flex;
+}
+
+.flex_return > a {
+	display: contents;
+}

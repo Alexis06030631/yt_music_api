@@ -1,0 +1,37 @@
+name: Build and push website to GitHub page
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish to the retype branch
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: download deps
+        run: npm ci
+
+      - name: Install @microsoft/api-extractor && @microsoft/api-documenter
+        run: npm install -g @microsoft/api-extractor && npm install -g @microsoft/api-documenter
+
+      - name: Update docs files
+        run: npm run docs:build
+
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: docs # The branch name where you want to push the assets
+          FOLDER: docs/dist # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message

@@ -9,6 +9,11 @@ import ErrorCode from "../errors/errorCodes";
 import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';
 
 
+/**
+ * Search music, video or other with query
+ * @param query Query to search
+ * @param type Type of search
+ */
 export async function search (query: string, type: TypeSearch_param): Promise<Array<Music>> {
     // Check If type is valid with TypeSearch
     if(!TypeSearch_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch_arr})

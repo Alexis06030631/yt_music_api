@@ -5,6 +5,8 @@ import {Duration} from "./Duration";
 import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
+import {Lyrics} from "./Lyrics";
+import {NoLyrics} from "./NoLyrics";
 export class Music {
     public artworks: Array<Artwork>;
     public id: string;
@@ -41,9 +43,10 @@ export class Music {
             }).then((res: any) => {
                 if (!res.data.contents?.sectionListRenderer?.contents?.[0]?.musicDescriptionShelfRenderer?.description) return reject(new NoLyrics(res.data.contents?.messageRenderer?.text?.runs?.[0]?.text))
                 else {
-                    const resolveData = new Lyrics()
-                    resolveData.lyrics = res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.description.runs[0].text
-                    resolveData.source = res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.footer.runs[0].text.replace('Source: ', '')
+                    const resolveData = new Lyrics({
+                        lyrics: res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.description.runs[0].text,
+                        source: res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.footer.runs[0].text.replace('Source: ', '')
+                    })
                     resolve(resolveData)
                 }
             }).catch(reject)
@@ -54,20 +57,5 @@ export class Music {
         return new Promise((resolve, reject) => {
             downloadManager.download(this.id, type, quality).then(resolve).catch(reject)
         })
-    }
-}
-
-
-class Lyrics {
-    lyrics: string;
-    source: string;
-}
-
-class NoLyrics {
-    message: string;
-    status: boolean;
-    constructor(message:string) {
-        this.message = message
-        this.status = false
     }
 }
