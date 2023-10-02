@@ -8,7 +8,7 @@
 		"build": "tsc",
 		"build_auto": "nodemon --watch src --exec \"npm run build\"",
 		"docs:dev": "node docs/generateMd.js && vitepress dev docs",
-		"docs:build": "node docs/generateMd.js && vitepress build docs/"
+		"docs:build": "tsc && api-extractor run --local --verbose && node docs/generateMd.js && vitepress build docs/"
 	},
 	"nodemonConfig": {
 		"ignore": [
