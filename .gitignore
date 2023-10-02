@@ -1,9 +1,0 @@
-node_modules/
-test.js
-.Ds_Store
-.idea/
-temp
-
-docs/.vitepress/cache/
-docs/docs/
-docs/.vitepress/dist/
