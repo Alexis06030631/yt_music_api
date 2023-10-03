@@ -1,7 +1,6 @@
-import {Music_list} from "./Music_list";
-import {Playlist} from "./Playlist";
+import {Music_list, Playlist} from "./";
 
-export class Home {
+export default class Home {
     public music_list: Array<Music_list> = []
     public playlist: Array<Playlist> = []
 

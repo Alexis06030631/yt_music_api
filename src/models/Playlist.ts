@@ -1,7 +1,6 @@
-import {Artwork} from "./Artwork";
-import {Music} from "./Music";
+import {Artwork, Music} from "./";
 
-export class Playlist {
+export default class Playlist {
     public title: string;
     public description: string;
     public id: string;

@@ -1,4 +1,4 @@
-export class Artist {
+export default class Artist {
     public name: string;
     public id: number;
 

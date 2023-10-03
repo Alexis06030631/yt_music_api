@@ -1,9 +1,4 @@
-import {Music_model} from "../models/Music_model";
-import {Artist} from "../models/Artist";
-import {Album} from "../models/Album";
-import {Artwork} from "../models/Artwork";
-import {Duration} from "../models/Duration";
-import fs from "fs";
+import {Music_model, Artist, Album, Artwork, Duration} from "../models/";
 
 export function extract_dataFromGetData(data:any):Music_model {
     let artists:any = [], album:any, date:number

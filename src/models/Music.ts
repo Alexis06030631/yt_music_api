@@ -1,13 +1,10 @@
 import {requestToYtApi} from "../utils/requestManager";
-import {Artwork} from "./Artwork";
-import {Artist} from "./Artist";
-import {Duration} from "./Duration";
+import {Artwork, Artist, Duration, Lyrics, NoLyrics} from "./";
 import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
-import {Lyrics} from "./Lyrics";
-import {NoLyrics} from "./NoLyrics";
-export class Music {
+
+export default class Music {
     public artworks: Array<Artwork>;
     public id: string;
     public title: string;

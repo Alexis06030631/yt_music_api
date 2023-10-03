@@ -1,4 +1,4 @@
-export class Lyrics {
+export default class Lyrics {
     lyrics: string;
     source: string;
 

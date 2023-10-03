@@ -1,4 +1,4 @@
-export class NoLyrics {
+export default class NoLyrics {
     message: string;
     status: boolean;
     constructor(message:string) {

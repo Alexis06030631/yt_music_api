@@ -1,7 +1,8 @@
 import {promises} from "dns";
 import {requestToYtApi} from "../utils/requestManager";
+import {Artwork} from "./";
 
-export class Music {
+export default class Music {
     public artworks: Array<Artwork>;
     public id: string;
     public name: string;
@@ -38,22 +39,4 @@ export class Music {
     getLink(): string {
         return `https://music.youtube.com/watch?v=${this.id}`
     }
-}
-// Search = SearchMusic
-export class Search extends Music {
-    constructor(search_result: any) {
-        super(search_result);
-    }
-}
-
-export class SearchVideo extends Music {
-    constructor(search_result: any) {
-        super(search_result);
-    }
-}
-
-class Artwork {
-    url: string;
-    width: number;
-    height: number;
 }

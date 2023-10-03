@@ -1,4 +1,4 @@
-export class Download {
+export default class Download {
     public url: string;
     public type: string;
     public bitrate: number;

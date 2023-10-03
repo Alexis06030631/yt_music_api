@@ -1,4 +1,4 @@
-export class Duration {
+export default class Duration {
     public seconds: number;
     public text: string;
     public label: string;

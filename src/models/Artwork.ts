@@ -1,4 +1,4 @@
-export class Artwork {
+export default class Artwork {
     public url: string;
     public width: number;
     public height: number;

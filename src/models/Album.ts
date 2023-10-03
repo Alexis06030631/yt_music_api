@@ -1,4 +1,4 @@
-export class Album {
+export default class Album {
     public name: string;
     public id: string;
 

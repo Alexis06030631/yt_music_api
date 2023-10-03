@@ -1,9 +1,7 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music} from "../models/Music";
-import {Home} from "../models/Home";
+import {Music, Playlist ,Home} from "../models/";
 import {searchManager} from "../index";
 import {extract_dataFromGetData} from "../utils/extract";
-import {Playlist} from "../models/Playlist";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';

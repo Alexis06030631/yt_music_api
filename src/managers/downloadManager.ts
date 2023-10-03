@@ -1,5 +1,5 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music} from "../models/Music";
+import {Music} from "../models/";
 import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
@@ -9,7 +9,7 @@ import {DownloadQuality, DownloadQuality_arr, DownloadQuality_param} from "../ty
 import {DownloadType, DownloadType_arr, DownloadType_param} from "../types/DownloadType";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
-import {Download} from "../models/Download";
+import {Download} from "../models/";
 
 /*
 * This function is used to get the download link of a music in Webm format

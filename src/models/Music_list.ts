@@ -1,6 +1,6 @@
-import {Music} from "./Music";
+import {Music} from "./";
 
-export class Music_list {
+export default class Music_list {
     public title: string;
     public musics: Array<Music>;
 
