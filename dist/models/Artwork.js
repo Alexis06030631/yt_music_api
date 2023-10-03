@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Artwork = void 0;
 class Artwork {
     constructor(artwork) {
         this.url = artwork.url;
@@ -8,5 +7,5 @@ class Artwork {
         this.height = artwork.height;
     }
 }
-exports.Artwork = Artwork;
+exports.default = Artwork;
 //# sourceMappingURL=Artwork.js.map

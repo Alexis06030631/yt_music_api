@@ -1,4 +1,4 @@
-export declare class Artist {
+export default class Artist {
     name: string;
     id: number;
     constructor(artist: any);

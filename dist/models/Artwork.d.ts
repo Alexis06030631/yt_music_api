@@ -1,4 +1,4 @@
-export declare class Artwork {
+export default class Artwork {
     url: string;
     width: number;
     height: number;

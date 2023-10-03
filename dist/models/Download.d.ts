@@ -1,4 +1,4 @@
-export declare class Download {
+export default class Download {
     url: string;
     type: string;
     bitrate: number;

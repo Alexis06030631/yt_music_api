@@ -1,8 +1,5 @@
-import { Artist } from "./Artist";
-import { Artwork } from "./Artwork";
-import { Duration } from "./Duration";
-import { Album } from "./Album";
-export declare class Music_model {
+import { Artist, Artwork, Duration, Album } from "./";
+export default class Music_model {
     id: string;
     browseId: string;
     title: string;

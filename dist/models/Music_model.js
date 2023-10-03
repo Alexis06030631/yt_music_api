@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Music_model = void 0;
 class Music_model {
     constructor(music) {
         this.id = music.id || null;
@@ -14,5 +13,5 @@ class Music_model {
         this.album = music.album || null;
     }
 }
-exports.Music_model = Music_model;
+exports.default = Music_model;
 //# sourceMappingURL=Music_model.js.map

@@ -1,6 +1,5 @@
-import { Artwork } from "./Artwork";
-import { Music } from "./Music";
-export declare class Playlist {
+import { Artwork, Music } from "./";
+export default class Playlist {
     title: string;
     description: string;
     id: string;

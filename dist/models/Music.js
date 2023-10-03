@@ -23,11 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Music = void 0;
 const requestManager_1 = require("../utils/requestManager");
+const _1 = require("./");
 const downloadManager = __importStar(require("../managers/downloadManager"));
-const Lyrics_1 = require("./Lyrics");
-const NoLyrics_1 = require("./NoLyrics");
 class Music {
     constructor(data, autoMix) {
         this.artworks = data.artworks;
@@ -54,9 +52,9 @@ class Music {
             }).then((res) => {
                 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
                 if (!((_e = (_d = (_c = (_b = (_a = res.data.contents) === null || _a === void 0 ? void 0 : _a.sectionListRenderer) === null || _b === void 0 ? void 0 : _b.contents) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.musicDescriptionShelfRenderer) === null || _e === void 0 ? void 0 : _e.description))
-                    return reject(new NoLyrics_1.NoLyrics((_k = (_j = (_h = (_g = (_f = res.data.contents) === null || _f === void 0 ? void 0 : _f.messageRenderer) === null || _g === void 0 ? void 0 : _g.text) === null || _h === void 0 ? void 0 : _h.runs) === null || _j === void 0 ? void 0 : _j[0]) === null || _k === void 0 ? void 0 : _k.text));
+                    return reject(new _1.NoLyrics((_k = (_j = (_h = (_g = (_f = res.data.contents) === null || _f === void 0 ? void 0 : _f.messageRenderer) === null || _g === void 0 ? void 0 : _g.text) === null || _h === void 0 ? void 0 : _h.runs) === null || _j === void 0 ? void 0 : _j[0]) === null || _k === void 0 ? void 0 : _k.text));
                 else {
-                    const resolveData = new Lyrics_1.Lyrics({
+                    const resolveData = new _1.Lyrics({
                         lyrics: res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.description.runs[0].text,
                         source: res.data.contents.sectionListRenderer.contents[0].musicDescriptionShelfRenderer.footer.runs[0].text.replace('Source: ', '')
                     });
@@ -71,5 +69,5 @@ class Music {
         });
     }
 }
-exports.Music = Music;
+exports.default = Music;
 //# sourceMappingURL=Music.js.map

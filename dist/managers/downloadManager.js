@@ -19,7 +19,7 @@ const DownloadQuality_1 = require("../types/DownloadQuality");
 const DownloadType_1 = require("../types/DownloadType");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
-const Download_1 = require("../models/Download");
+const models_1 = require("../models/");
 /*
 * This function is used to get the download link of a music in Webm format
 * @deprecated This function is deprecated, use download() instead
@@ -83,7 +83,7 @@ function download(id, type = 'mp3', quality) {
                     return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
                 download.url = (0, decodeCipher_1.decode)(download);
                 download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);
-                resolve(new Download_1.Download(download));
+                resolve(new models_1.Download(download));
             });
         }));
     });

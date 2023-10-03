@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Download = void 0;
 class Download {
     constructor(data) {
         this.url = data.url;
@@ -16,5 +15,5 @@ class Download {
         this.expireDate = data.expireDate;
     }
 }
-exports.Download = Download;
+exports.default = Download;
 //# sourceMappingURL=Download.js.map

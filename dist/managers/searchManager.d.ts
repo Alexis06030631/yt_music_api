@@ -1,6 +1,4 @@
-import { Music } from "../models/Music";
-import { Home } from "../models/Home";
-import { Playlist } from "../models/Playlist";
+import { Music, Playlist, Home } from "../models/";
 import { TypeSearch_param } from '../types/TypeSearch';
 /**
  * Search music, video or other with query

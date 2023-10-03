@@ -14,11 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getHomePage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
-const Music_1 = require("../models/Music");
-const Home_1 = require("../models/Home");
+const models_1 = require("../models/");
 const index_1 = require("../index");
 const extract_1 = require("../utils/extract");
-const Playlist_1 = require("../models/Playlist");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
@@ -34,7 +32,7 @@ function search(query, type) {
         if (!TypeSearch_1.TypeSearch_arr.includes(type))
             throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch_arr });
         if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
-            return [new Music_1.Music(yield GetData((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]))];
+            return [new models_1.Music(yield GetData((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]))];
         }
         else {
             let data;
@@ -55,7 +53,7 @@ function search(query, type) {
                     data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Videos'; })[0].musicShelfRenderer.contents;
                 }
                 for (const item of data) {
-                    resp_data.push(new Music_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_d = (_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId) || ((_e = item.musicResponsiveListItemRenderer) === null || _e === void 0 ? void 0 : _e.onTap.watchEndpoint.videoId)))));
+                    resp_data.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_d = (_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId) || ((_e = item.musicResponsiveListItemRenderer) === null || _e === void 0 ? void 0 : _e.onTap.watchEndpoint.videoId)))));
                 }
             }
             return resp_data;
@@ -109,7 +107,7 @@ function getHomePage() {
                         });
                     }
                 })).then(() => {
-                    return resolve(new Home_1.Home(resp_data));
+                    return resolve(new models_1.Home(resp_data));
                 });
             }));
         }));
@@ -131,7 +129,7 @@ function relative(ID) {
                 }).then((e) => {
                     const resp_data = [];
                     for (const item of e.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.map((e) => e.playlistPanelVideoRenderer)) {
-                        resp_data.push(new Music_1.Music(item, true));
+                        resp_data.push(new models_1.Music(item, true));
                     }
                     return resolve(resp_data);
                 });
@@ -144,7 +142,7 @@ function get(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             GetData(id).then((e) => {
-                return resolve(new Music_1.Music((0, extract_1.extract_dataFromGetData)(e)));
+                return resolve(new models_1.Music((0, extract_1.extract_dataFromGetData)(e)));
             }).catch((e) => __awaiter(this, void 0, void 0, function* () {
                 reject(e);
             }));
@@ -167,7 +165,7 @@ function getPlaylist(id) {
                             resolve(null);
                     }
                 }));
-                return resolve(new Playlist_1.Playlist({
+                return resolve(new models_1.Playlist({
                     title: res.data.header.musicDetailHeaderRenderer.title.runs[0].text,
                     description: res.data.header.musicDetailHeaderRenderer.description.runs[0].text,
                     id: id,

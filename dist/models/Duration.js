@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Duration = void 0;
 class Duration {
     constructor(duration) {
         this.seconds = duration.seconds;
@@ -8,5 +7,5 @@ class Duration {
         this.label = duration.label;
     }
 }
-exports.Duration = Duration;
+exports.default = Duration;
 //# sourceMappingURL=Duration.js.map

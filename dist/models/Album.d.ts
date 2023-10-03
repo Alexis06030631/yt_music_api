@@ -1,4 +1,4 @@
-export declare class Album {
+export default class Album {
     name: string;
     id: string;
     constructor(album: any);

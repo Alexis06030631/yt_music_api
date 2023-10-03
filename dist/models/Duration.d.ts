@@ -1,4 +1,4 @@
-export declare class Duration {
+export default class Duration {
     seconds: number;
     text: string;
     label: string;
