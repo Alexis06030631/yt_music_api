@@ -1,1 +1,0 @@
-import{_ as e,o as a,c as t,Q as o}from"./chunks/framework.a0756b30.js";const m=JSON.parse('{"title":"YT_Music_API","description":"","frontmatter":{},"headers":[],"relativePath":"coverpage.md","filePath":"coverpage.md"}'),s={name:"coverpage.md"},r=o("",4),i=[r];function c(n,l,_,p,u,d){return a(),t("div",null,i)}const f=e(s,[["render",c]]);export{m as __pageData,f as default};
