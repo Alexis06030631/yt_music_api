@@ -25,7 +25,7 @@ searchManager.get(id)
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/docs/class//Music)&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/docs/class/Music)&gt;</span>
 ## Function GetData():
 
 **Builder**:
@@ -51,7 +51,7 @@ searchManager.getHomePage()
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Home](/docs/class//Home)&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Home](/docs/class/Home)&gt;</span>
 ## Function getPlaylist():
 
 **Builder**:
@@ -66,7 +66,7 @@ searchManager.getPlaylist(id)
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Playlist](/docs/class//Playlist)&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Playlist](/docs/class/Playlist)&gt;</span>
 ## Function relative():
 
 **Builder**:
@@ -81,7 +81,7 @@ searchManager.relative(ID)
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class//Music)&gt;&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class/Music)&gt;&gt;</span>
 ## Function search():
 Search music, video or other with query
 
@@ -94,8 +94,8 @@ searchManager.search(query, type)
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | query | string | Query to search | 𐄂 |
-| type | [TypeSearch_param](/docs/interface//TypeSearch_param) | Type of search | 𐄂 |
+| type | [TypeSearch_param](/docs/param/TypeSearch_param) | Type of search | 𐄂 |
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class//Music)&gt;&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class/Music)&gt;&gt;</span>

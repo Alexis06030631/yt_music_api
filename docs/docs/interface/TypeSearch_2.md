@@ -15,9 +15,9 @@
 
 
 **Returns:**
-<span class="flex_return">[TypeSearch_param](/docs/interface//TypeSearch_param)</span>
+<span class="flex_return">[TypeSearch_param](/docs/param/TypeSearch_param)</span>
 ## VIDEO:
 
 
 **Returns:**
-<span class="flex_return">[TypeSearch_param](/docs/interface//TypeSearch_param)</span>
+<span class="flex_return">[TypeSearch_param](/docs/param/TypeSearch_param)</span>

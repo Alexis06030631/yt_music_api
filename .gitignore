@@ -7,3 +7,4 @@ temp
 docs/.vitepress/cache/
 docs/docs/
 docs/.vitepress/dist/
+dist/

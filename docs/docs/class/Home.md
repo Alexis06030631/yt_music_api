@@ -15,9 +15,9 @@
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music_list](/docs/class//Music_list)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music_list](/docs/class/Music_list)&gt;</span>
 ## playlist:
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Playlist](/docs/class//Playlist)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Playlist](/docs/class/Playlist)&gt;</span>

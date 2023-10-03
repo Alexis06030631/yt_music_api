@@ -15,7 +15,7 @@
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artwork](/docs/class//Artwork)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artwork](/docs/class/Artwork)&gt;</span>
 ## description:
 
 
@@ -30,7 +30,7 @@
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class//Music)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Music](/docs/class/Music)&gt;</span>
 ## title:
 
 

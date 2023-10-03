@@ -22,8 +22,8 @@ downloadManager.download(id, type, quality)
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | id | string |  | 𐄂 |
-| type | [DownloadType_param](/docs/interface//DownloadType_param) |  | ✓ |
-| quality | [DownloadQuality_param](/docs/interface//DownloadQuality_param) |  | ✓ |
+| type | [DownloadType_param](/docs/param/DownloadType_param) |  | ✓ |
+| quality | [DownloadQuality_param](/docs/param/DownloadQuality_param) |  | ✓ |
 
 
 **Returns:**

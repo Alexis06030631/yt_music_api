@@ -21,8 +21,8 @@ Music.download(type, quality)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| type | [DownloadType_param](/docs/interface//DownloadType_param) |  | 𐄂 |
-| quality | [DownloadQuality_param](/docs/interface//DownloadQuality_param) |  | ✓ |
+| type | [DownloadType_param](/docs/param/DownloadType_param) |  | 𐄂 |
+| quality | [DownloadQuality_param](/docs/param/DownloadQuality_param) |  | ✓ |
 
 
 **Returns:**
@@ -37,7 +37,7 @@ Music.getLyrics()
 
 
 **Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Lyrics](/docs/class//Lyrics) | [NoLyrics](/docs/class//NoLyrics)&gt;</span>
+<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Lyrics](/docs/class/Lyrics) | [NoLyrics](/docs/class/NoLyrics)&gt;</span>
 
 
  # Properties
@@ -47,12 +47,12 @@ Music.getLyrics()
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/docs/class//Artist)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/docs/class/Artist)&gt;</span>
 ## artworks:
 
 
 **Returns:**
-<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artwork](/docs/class//Artwork)&gt;</span>
+<span class="flex_return">[array![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artwork](/docs/class/Artwork)&gt;</span>
 ## autoMix:
 
 
@@ -67,7 +67,7 @@ Music.getLyrics()
 
 
 **Returns:**
-<span class="flex_return">[Duration](/docs/class//Duration)</span>
+<span class="flex_return">[Duration](/docs/class/Duration)</span>
 ## id:
 
 

@@ -15,14 +15,14 @@
 
 
 **Returns:**
-<span class="flex_return">[DownloadQuality_param](/docs/interface//DownloadQuality_param)</span>
+<span class="flex_return">[DownloadQuality_param](/docs/param/DownloadQuality_param)</span>
 ## low:
 
 
 **Returns:**
-<span class="flex_return">[DownloadQuality_param](/docs/interface//DownloadQuality_param)</span>
+<span class="flex_return">[DownloadQuality_param](/docs/param/DownloadQuality_param)</span>
 ## medium:
 
 
 **Returns:**
-<span class="flex_return">[DownloadQuality_param](/docs/interface//DownloadQuality_param)</span>
+<span class="flex_return">[DownloadQuality_param](/docs/param/DownloadQuality_param)</span>

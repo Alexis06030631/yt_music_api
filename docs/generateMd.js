@@ -44,6 +44,13 @@ const types = {
 		data: [],
 		url: '/docs/interface/',
 		name: 'Interfaces'
+	},
+	Param: {
+		pos:4,
+		path:path.join(__dirname, `../${dir}/param/`),
+		data:[],
+		url: '/docs/param/',
+		name: 'Params'
 	}
 }
 //Clear folder
@@ -140,7 +147,7 @@ function subMembers(members){
 		functions: [],
 	}
 
-	members.forEach(member => {
+	members && members.forEach(member => {
 		const {kind, name, docComment, summary, returns, parameters, fileUrlPath, typeParameters, decorators, signatures, members} = member;
 		switch (kind) {
 			case 'Property':
@@ -193,6 +200,7 @@ function attributeType(method, v2=false){
 			if(method.name.includes('Manager')) return 'Method'
 			return method.kind
 		case 'TypeAlias':
+			if(method.name.includes('_param')) return 'Param'
 			if(v2 && method.fileUrlPath.includes('src/types')) return 'Interface'
 			else return method.kind
 		default:
@@ -214,7 +222,7 @@ function typeUrlGenerator(type, isSingle = false){
 	}else {
 		const dt = ApiDocumenter.members[0].members.find(e=>e.canonicalReference.includes(`~${type.text}:`))
 		if(dt && attributeType(dt, true)){
-			return `[${type.text}](${types[attributeType(dt, true)].url}/${type.text})`
+			return `[${type.text}](${path.join(types[attributeType(dt, true)].url, type.text)})`
 		}else return `[${type.text}![Link](../assets/img/external_link.svg)](https://www.google.com/search?q=${type.text})`
 	}
 }
@@ -241,7 +249,7 @@ function generateSidebar(){
 		'- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)\n' +
 		'- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)'
 
-	writeFileSync(join(dir, 'sidebar.md'), sidebar)
+	//writeFileSync(join(dir, 'sidebar.md'), sidebar)
 
 	// Open vitepressConfig file
 	let config = fs.readFileSync(vitepressConfig, 'utf8')

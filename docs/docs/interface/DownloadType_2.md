@@ -15,9 +15,9 @@
 
 
 **Returns:**
-<span class="flex_return">[DownloadType_param](/docs/interface//DownloadType_param)</span>
+<span class="flex_return">[DownloadType_param](/docs/param/DownloadType_param)</span>
 ## webm:
 
 
 **Returns:**
-<span class="flex_return">[DownloadType_param](/docs/interface//DownloadType_param)</span>
+<span class="flex_return">[DownloadType_param](/docs/param/DownloadType_param)</span>

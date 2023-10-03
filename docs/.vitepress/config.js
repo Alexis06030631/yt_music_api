@@ -2,9 +2,8 @@ export default {
   "title": "YTMusic",
   "description": "A simple API to get music from YouTube Music",
   "base": "/yt_music_api",
-  "srcDir": "./docs",
+  "srcDir": "./",
   "outDir": "./dist",
-  "ignoreDeadLinks": true,
   "cleanUrls": true,
   "markdown": {
     "attrs": {
@@ -45,10 +44,6 @@ export default {
             "link": "/docs/class/Artist"
           },
           {
-            "text": "Artwork_2",
-            "link": "/docs/class/Artwork_2"
-          },
-          {
             "text": "Artwork",
             "link": "/docs/class/Artwork"
           },
@@ -77,6 +72,10 @@ export default {
             "link": "/docs/class/Music_list"
           },
           {
+            "text": "Music_model",
+            "link": "/docs/class/Music_model"
+          },
+          {
             "text": "Music",
             "link": "/docs/class/Music"
           },
@@ -87,10 +86,6 @@ export default {
           {
             "text": "Playlist",
             "link": "/docs/class/Playlist"
-          },
-          {
-            "text": "Search",
-            "link": "/docs/class/Search"
           }
         ]
       },
@@ -108,6 +103,23 @@ export default {
           {
             "text": "TypeSearch_2",
             "link": "/docs/interface/TypeSearch_2"
+          }
+        ]
+      },
+      {
+        "text": "Params",
+        "items": [
+          {
+            "text": "DownloadQuality_param",
+            "link": "/docs/param/DownloadQuality_param"
+          },
+          {
+            "text": "DownloadType_param",
+            "link": "/docs/param/DownloadType_param"
+          },
+          {
+            "text": "TypeSearch_param",
+            "link": "/docs/param/TypeSearch_param"
           }
         ]
       }
