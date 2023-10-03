@@ -1,4 +1,4 @@
-# Documentation available [here](https://alexis06030631.github.io/ytmusic_api_unofficial/)
+# [Documentation available here](https://alexis06030631.github.io/yt_music_api/)
 
 
 # Ytmusic API
