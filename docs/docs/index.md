@@ -32,14 +32,24 @@ You can soon:
 npm install ytmusic_api_unofficial
 ```
 
-
-## Usage
+## Examples
 
 ```javascript
-const ytmusic = require('ytmusic_api_unofficial');
+const {searchManager,downloadManager} = require('ytmusic_api_unofficial')
 
-ytmusic.search('hello', 'song').then((result) => {
-    console.log(result);
+// Return a list of songs with the name 'hello'
+searchManager.search('hello', 'MUSIC').then((result) => {
+	console.log(result);
+});
+
+// Return a song by id
+searchManager.get('ID').then((result) => {
+	console.log(result);
+});
+
+// Download a song by id
+downloadManager.download('ID', 'mp3', high).then((result) => {
+	console.log(result);
 });
 ```
 
