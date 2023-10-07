@@ -25,8 +25,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.interfaces = exports.models = exports.downloadManager = exports.searchManager = void 0;
+exports.ErrorMessage = exports.ErrorCode = exports.interfaces = exports.models = exports.downloadManager = exports.searchManager = void 0;
 const searchManager = __importStar(require("./managers/searchManager"));
 exports.searchManager = searchManager;
 const downloadManager = __importStar(require("./managers/downloadManager"));
@@ -35,4 +38,8 @@ const models = __importStar(require("./models"));
 exports.models = models;
 const interfaces = __importStar(require("./types"));
 exports.interfaces = interfaces;
+const errorCodes_1 = __importDefault(require("./errors/errorCodes"));
+exports.ErrorCode = errorCodes_1.default;
+const Messages_1 = __importDefault(require("./errors/Messages"));
+exports.ErrorMessage = Messages_1.default;
 //# sourceMappingURL=index.js.map
