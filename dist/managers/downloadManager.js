@@ -91,17 +91,23 @@ function download(id, type = 'mp3', quality) {
 exports.download = download;
 function getPlayer(videoId, body = {}) {
     return new Promise((resolve, reject) => {
-        (0, requestManager_1.requestToYtApi)('player?key=', Object.assign({ videoId: videoId, context: {
+        let time = Math.floor(new Date((new Date(new Date().toUTCString())).getTime() - 9 * 3600 * 1000).getTime() / 1000);
+        (0, requestManager_1.requestToYtApi)('player?key=', {
+            videoId: videoId,
+            context: {
                 client: {
                     userAgent: "",
                     clientName: "WEB_REMIX",
-                    clientVersion: "1.20230821.01.01",
-                },
-            }, playbackContext: {
-                contentPlaybackContext: {
-                    signatureTimestamp: 19597
+                    clientVersion: "1.20231004.01.00",
                 }
-            } }, body)).then((res) => {
+            },
+            "playbackContext": {
+                "contentPlaybackContext": {
+                    "referer": `https://music.youtube.com/watch?v=${videoId}`,
+                    "signatureTimestamp": time.toString()[0] + time.toString()[2] + time.toString()[3] + (Number(time.toString()[3]) - 3) + (Number(time.toString()[3]) - 2),
+                }
+            }
+        }).then((res) => {
             resolve(res.data);
         }).catch(reject);
     });

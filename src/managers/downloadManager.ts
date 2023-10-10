@@ -1,12 +1,7 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music} from "../models/";
-import puppeteer from "puppeteer";
-import fs from "fs";
-import path from "path";
-import axios from "axios";
 import {decode} from "../utils/decodeCipher";
-import {DownloadQuality, DownloadQuality_arr, DownloadQuality_param} from "../types/DownloadQuality";
-import {DownloadType, DownloadType_arr, DownloadType_param} from "../types/DownloadType";
+import { DownloadQuality_arr, DownloadQuality_param} from "../types/DownloadQuality";
+import { DownloadType_arr, DownloadType_param} from "../types/DownloadType";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {Download} from "../models/";
@@ -74,21 +69,22 @@ export async function download(id: string, type:DownloadType_param='mp3', qualit
 
 function getPlayer(videoId:string, body:any={}):any{
     return new Promise((resolve, reject) => {
+        let time = Math.floor(new Date((new Date(new Date().toUTCString())).getTime() - 9 * 3600 * 1000 ).getTime() / 1000)
         requestToYtApi('player?key=', {
             videoId: videoId,
             context: {
                 client: {
                     userAgent: "",
                     clientName: "WEB_REMIX",
-                    clientVersion: "1.20230821.01.01",
-                },
-            },
-            playbackContext: {
-                contentPlaybackContext: {
-                    signatureTimestamp: 19597
+                    clientVersion: "1.20231004.01.00",
                 }
             },
-            ...body
+            "playbackContext": {
+                "contentPlaybackContext": {
+                    "referer": `https://music.youtube.com/watch?v=${videoId}`,
+                    "signatureTimestamp": time.toString()[0] + time.toString()[2] + time.toString()[3] + (Number(time.toString()[3])-3) + (Number(time.toString()[3])-2),
+                }
+            }
         }).then((res: any) => {
             resolve(res.data)
         }).catch(reject)
