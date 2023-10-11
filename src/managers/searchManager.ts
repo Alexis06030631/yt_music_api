@@ -1,10 +1,11 @@
 import {requestToYtApi} from '../utils/requestManager';
 import {Music, Playlist ,Home} from "../models/";
 import {searchManager} from "../index";
-import {extract_dataFromGetData} from "../utils/extract";
+import {extract_dataFromGetData, extract_dataFromListItemRenderer} from "../utils/extract";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';
+import * as fs from "fs";
 
 
 /**
@@ -43,17 +44,26 @@ export async function search (query: string, type: TypeSearch_param): Promise<Ar
 }
 
 export async function getHomePage(): Promise<Home> {
+    throw new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED)
     return new Promise(async (resolve) => {
         requestToYtApi('browse', {
-            "browseId": "FEmusic_home"
+            "browseId": "FEmusic_explore"
         }).then(async (res: any) => {
+            // Save res as file
+            fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2))
             const resp_data: any = {
                 music_list:[],
                 playlist:[]
             }
             new Promise(async (resolve2) => {
-                for (let i=0; res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length > i; i++){
-                    let item = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents
+                for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents){
+                    if(item.musicCarouselShelfRenderer?.contents?.length){
+                        for(let musicComponent of item.musicCarouselShelfRenderer?.contents){
+                            if(musicComponent.musicResponsiveListItemRenderer) console.log(extract_dataFromListItemRenderer(musicComponent.musicResponsiveListItemRenderer))
+                        }
+                    }
+
+                    /*
                     await new Promise(async (resolve3) => {
                         for(let x=0; item.length > x; x++){
                             let music = item[x].musicCarouselShelfRenderer
@@ -64,7 +74,7 @@ export async function getHomePage(): Promise<Home> {
                                         if (!musicdt?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) {
                                             if (musicdt.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId)
                                                 resp_data.playlist.push(
-                                                    await getPlaylist(musicdt.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId)
+                                                    //await getPlaylist(musicdt.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId)
                                                 )
                                         } else {
                                             let title_music_list = music?.header?.musicCarouselShelfBasicHeaderRenderer?.title?.runs?.[0]?.text
@@ -83,8 +93,10 @@ export async function getHomePage(): Promise<Home> {
 
                         }
                     }).then(() => {
-                        if(i+1 === res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length) resolve2(null)
+                        //if(i+1 === res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length) resolve2(null)
                     })
+
+                     */
                 }
             }).then(() => {
                 return resolve(new Home(resp_data))
@@ -107,7 +119,7 @@ export async function relative (ID: string): Promise<Array<Music>> {
             }).then((e:any) => {
                 const resp_data: Array<Music> = []
                 for (const item of e.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.map((e:any) => e.playlistPanelVideoRenderer)) {
-                    resp_data.push(new Music(item, true))
+                    resp_data.push(new Music(extract_dataFromGetData(item), true))
                 }
                 return resolve(resp_data)
             })

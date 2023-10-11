@@ -43,6 +43,34 @@ export function extract_dataFromGetData(data:any):Music_model {
     })
 }
 
+export function extract_dataFromListItemRenderer(data:any):Music_model {
+    let artists:any = [], album:any, date:number, title:string, id:string, type:string
+    for (let item of data?.flexColumns || []) {
+        if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId){
+            title = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
+            id = item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint.watchEndpoint?.videoId
+            type = item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType
+        }else if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.browseEndpoint?.browseId){
+            artists.push(new Artist({
+                name: item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text,
+                id: item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.browseEndpoint?.browseId
+            }))
+        }
+    }
+
+    return new Music_model({
+        artworks: data.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
+        title: title,
+        browseId: null,
+        id: data.playlistItemData.videoId,
+        type: type,
+        artists: artists,
+        album: album,
+        date: date,
+        duration: null
+    })
+}
+
 
 
 function timeToSec(time: string) {

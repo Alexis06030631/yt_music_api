@@ -2,6 +2,7 @@ import {Artwork, Music} from "./";
 
 export default class Playlist {
     public title: string;
+    public type: string;
     public description: string;
     public id: string;
     public artworks: Array<Artwork>
@@ -10,6 +11,7 @@ export default class Playlist {
     constructor(playlist: any) {
         this.title = playlist.title
         this.description = playlist.description
+        this.type = playlist.type
         this.id = playlist.id
         this.artworks = playlist.artworks.map((e:any)=> new Artwork(e))
         this.musics = playlist.musics.map((e:any)=> new Music(e))

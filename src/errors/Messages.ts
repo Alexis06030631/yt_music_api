@@ -12,6 +12,8 @@ const Messages = {
     [ErrorCodes.INVALID_TYPE_DOWNLOAD]: (error:any) => `The type of download was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
     [ErrorCodes.INVALID_TYPE_QUALITY]: (error:any) => `The type of quality was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
     [ErrorCodes.DOWNLOAD_LINK_NOT_FOUND]: (error:any) => `The download link was not found for the parameters Type: ${error.typeRequested} and Quality: ${error.qualityRequested}`,
+
+    [ErrorCodes.CURRENTLY_NOT_SUPPORTED]: () => `This feature is currently not supported. Please contact the developer of the library (https://instagram.com/leko_system).`,
 };
 
 export default Messages;

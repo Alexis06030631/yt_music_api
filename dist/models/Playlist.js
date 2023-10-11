@@ -5,6 +5,7 @@ class Playlist {
     constructor(playlist) {
         this.title = playlist.title;
         this.description = playlist.description;
+        this.type = playlist.type;
         this.id = playlist.id;
         this.artworks = playlist.artworks.map((e) => new _1.Artwork(e));
         this.musics = playlist.musics.map((e) => new _1.Music(e));

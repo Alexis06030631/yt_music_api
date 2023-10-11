@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -20,6 +43,7 @@ const extract_1 = require("../utils/extract");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
+const fs = __importStar(require("fs"));
 /**
  * Search music, video or other with query
  * @param query Query to search
@@ -63,48 +87,60 @@ function search(query, type) {
 exports.search = search;
 function getHomePage() {
     return __awaiter(this, void 0, void 0, function* () {
+        throw new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED);
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             (0, requestManager_1.requestToYtApi)('browse', {
-                "browseId": "FEmusic_home"
+                "browseId": "FEmusic_explore"
             }).then((res) => __awaiter(this, void 0, void 0, function* () {
+                // Save res as file
+                fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2));
                 const resp_data = {
                     music_list: [],
                     playlist: []
                 };
                 new Promise((resolve2) => __awaiter(this, void 0, void 0, function* () {
-                    for (let i = 0; res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length > i; i++) {
-                        let item = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents;
-                        yield new Promise((resolve3) => __awaiter(this, void 0, void 0, function* () {
-                            for (let x = 0; item.length > x; x++) {
-                                let music = item[x].musicCarouselShelfRenderer;
-                                new Promise((resolve4) => __awaiter(this, void 0, void 0, function* () {
-                                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
-                                    for (let x = 0; music.contents.length > x; x++) {
-                                        let musicdt = music.contents[x];
-                                        if (musicdt) {
-                                            if (!((_b = (_a = musicdt === null || musicdt === void 0 ? void 0 : musicdt.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId)) {
-                                                if ((_e = (_d = (_c = musicdt.musicTwoRowItemRenderer) === null || _c === void 0 ? void 0 : _c.navigationEndpoint) === null || _d === void 0 ? void 0 : _d.browseEndpoint) === null || _e === void 0 ? void 0 : _e.browseId)
-                                                    resp_data.playlist.push(yield getPlaylist((_h = (_g = (_f = musicdt.musicTwoRowItemRenderer) === null || _f === void 0 ? void 0 : _f.navigationEndpoint) === null || _g === void 0 ? void 0 : _g.browseEndpoint) === null || _h === void 0 ? void 0 : _h.browseId));
-                                            }
-                                            else {
-                                                let title_music_list = (_o = (_m = (_l = (_k = (_j = music === null || music === void 0 ? void 0 : music.header) === null || _j === void 0 ? void 0 : _j.musicCarouselShelfBasicHeaderRenderer) === null || _k === void 0 ? void 0 : _k.title) === null || _l === void 0 ? void 0 : _l.runs) === null || _m === void 0 ? void 0 : _m[0]) === null || _o === void 0 ? void 0 : _o.text;
-                                                if (!resp_data.music_list.find((e) => e.title === title_music_list))
-                                                    resp_data.music_list.push({ title: title_music_list, musics: [] });
-                                                resp_data.music_list.find((e) => e.title === title_music_list).musics.push((0, extract_1.extract_dataFromGetData)(yield index_1.searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId)));
+                    var _a, _b, _c;
+                    for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
+                        if ((_b = (_a = item.musicCarouselShelfRenderer) === null || _a === void 0 ? void 0 : _a.contents) === null || _b === void 0 ? void 0 : _b.length) {
+                            for (let musicComponent of (_c = item.musicCarouselShelfRenderer) === null || _c === void 0 ? void 0 : _c.contents) {
+                                if (musicComponent.musicResponsiveListItemRenderer)
+                                    console.log((0, extract_1.extract_dataFromListItemRenderer)(musicComponent.musicResponsiveListItemRenderer));
+                            }
+                        }
+                        /*
+                        await new Promise(async (resolve3) => {
+                            for(let x=0; item.length > x; x++){
+                                let music = item[x].musicCarouselShelfRenderer
+                                new Promise(async (resolve4) => {
+                                    for(let x=0; music.contents.length > x; x++) {
+                                        let musicdt = music.contents[x]
+                                        if(musicdt){
+                                            if (!musicdt?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) {
+                                                if (musicdt.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId)
+                                                    resp_data.playlist.push(
+                                                        //await getPlaylist(musicdt.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId)
+                                                    )
+                                            } else {
+                                                let title_music_list = music?.header?.musicCarouselShelfBasicHeaderRenderer?.title?.runs?.[0]?.text
+                                                if (!resp_data.music_list.find((e: any) => e.title === title_music_list))
+                                                    resp_data.music_list.push({title: title_music_list, musics: []})
+                                                resp_data.music_list.find((e: any) => e.title === title_music_list).musics.push(
+                                                    extract_dataFromGetData(await searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId))
+                                                )
                                             }
                                         }
-                                        if (x + 1 === music.contents.length)
-                                            resolve4(null);
+                                        if (x+1 === music.contents.length) resolve4(null)
                                     }
-                                })).then(() => {
-                                    if (x + 1 === item.length)
-                                        resolve3(null);
-                                });
+                                }).then(()=>{
+                                    if (x+1 === item.length) resolve3(null)
+                                })
+    
                             }
-                        })).then(() => {
-                            if (i + 1 === res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length)
-                                resolve2(null);
-                        });
+                        }).then(() => {
+                            //if(i+1 === res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.length) resolve2(null)
+                        })
+    
+                         */
                     }
                 })).then(() => {
                     return resolve(new models_1.Home(resp_data));
@@ -129,7 +165,7 @@ function relative(ID) {
                 }).then((e) => {
                     const resp_data = [];
                     for (const item of e.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.map((e) => e.playlistPanelVideoRenderer)) {
-                        resp_data.push(new models_1.Music(item, true));
+                        resp_data.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(item), true));
                     }
                     return resolve(resp_data);
                 });
