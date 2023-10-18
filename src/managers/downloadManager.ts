@@ -58,7 +58,11 @@ export async function download(id: string, type:DownloadType_param='mp3', qualit
             }
 
             if(!download) return reject(new YTjsErrorError(ErrorCode.DOWNLOAD_LINK_NOT_FOUND, {typeRequested:type, qualityRequested:quality||'default'}))
-            download.url = decode(download)
+            try{
+                download.url = decode(download)
+            }catch (e) {
+                return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, {error:e}))
+            }
             download.expireDate =  new Date(parseInt(download.url.split('expire=')[1].split('&')[0])*1000)
 
             resolve(new Download(download))
@@ -69,20 +73,13 @@ export async function download(id: string, type:DownloadType_param='mp3', qualit
 
 function getPlayer(videoId:string, body:any={}):any{
     return new Promise((resolve, reject) => {
-        let time = Math.floor(new Date((new Date(new Date().toUTCString())).getTime() - 9 * 3600 * 1000 ).getTime() / 1000)
+        let time = (new Date()).getTime().toString()
         requestToYtApi('player?key=', {
             videoId: videoId,
-            context: {
-                client: {
-                    userAgent: "",
-                    clientName: "WEB_REMIX",
-                    clientVersion: "1.20231004.01.00",
-                }
-            },
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": time.toString()[0] + time.toString()[2] + time.toString()[3] + (Number(time.toString()[3])-3) + (Number(time.toString()[3])-2),
+                    "signatureTimestamp": time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString() //19641 (13 october 2023 - 15h)
                 }
             }
         }).then((res: any) => {
