@@ -12,8 +12,11 @@ const Messages = {
     [ErrorCodes.INVALID_TYPE_DOWNLOAD]: (error:any) => `The type of download was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
     [ErrorCodes.INVALID_TYPE_QUALITY]: (error:any) => `The type of quality was invalid. Type Available: ${error.typesAvailable}. Type Requested: ${error.typeRequested}`,
     [ErrorCodes.DOWNLOAD_LINK_NOT_FOUND]: (error:any) => `The download link was not found for the parameters Type: ${error.typeRequested} and Quality: ${error.qualityRequested}`,
+    [ErrorCodes.DECHIPHER_ERROR]: (error:any) => `An error occurred while deciphering the download link. Message: ${error.message}\nPlease contact the developer of the library (https://instagram.com/leko_system).`,
 
     [ErrorCodes.CURRENTLY_NOT_SUPPORTED]: () => `This feature is currently not supported. Please contact the developer of the library (https://instagram.com/leko_system).`,
+    [ErrorCodes.INVALID_TYPE_BUILDER]: (type:string) => `The type of builder ${type} was invalid. Please contact the developer of the library (https://instagram.com/leko_system).`,
+    [ErrorCodes.INVALID_TYPE_PAGE]: (types:any[]) => `The type of page was invalid. Type Available: ${types}`,
 };
 
 export default Messages;
