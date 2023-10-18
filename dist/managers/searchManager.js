@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getHomePage = exports.search = void 0;
+exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getPage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const models_1 = require("../models/");
 const index_1 = require("../index");
@@ -43,13 +20,13 @@ const extract_1 = require("../utils/extract");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
-const fs = __importStar(require("fs"));
+const typeBuilder_1 = require("../utils/typeBuilder");
 /**
  * Search music, video or other with query
  * @param query Query to search
  * @param type Type of search
  */
-function search(query, type) {
+function search(query, type = TypeSearch_1.TypeSearch.MUSIC) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         // Check If type is valid with TypeSearch
@@ -85,28 +62,44 @@ function search(query, type) {
     });
 }
 exports.search = search;
-function getHomePage() {
+function getPage(type) {
     return __awaiter(this, void 0, void 0, function* () {
         throw new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED);
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+            const idsearch = (0, typeBuilder_1.normalizeObjectUnits)('typePage', type);
+            if (!idsearch)
+                throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_PAGE, (0, typeBuilder_1.getAllObjects)('typePage'));
             (0, requestManager_1.requestToYtApi)('browse', {
-                "browseId": "FEmusic_explore"
+                "browseId": idsearch
             }).then((res) => __awaiter(this, void 0, void 0, function* () {
                 // Save res as file
-                fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2));
+                //fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2))
+                const title = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.title;
+                console.log(title);
                 const resp_data = {
                     music_list: [],
                     playlist: []
                 };
                 new Promise((resolve2) => __awaiter(this, void 0, void 0, function* () {
-                    var _a, _b, _c;
+                    var _a, _b, _c, _d, _e, _f, _g;
                     for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
                         if ((_b = (_a = item.musicCarouselShelfRenderer) === null || _a === void 0 ? void 0 : _a.contents) === null || _b === void 0 ? void 0 : _b.length) {
-                            for (let musicComponent of (_c = item.musicCarouselShelfRenderer) === null || _c === void 0 ? void 0 : _c.contents) {
-                                if (musicComponent.musicResponsiveListItemRenderer)
-                                    console.log((0, extract_1.extract_dataFromListItemRenderer)(musicComponent.musicResponsiveListItemRenderer));
-                            }
+                            const pl_title = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text;
+                            const pl_subtitle = ((_e = (_d = (_c = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.strapline) === null || _c === void 0 ? void 0 : _c.runs) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.text) || false;
+                            const id = (_g = (_f = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.moreContentButton) === null || _f === void 0 ? void 0 : _f.buttonRenderer) === null || _g === void 0 ? void 0 : _g.navigationEndpoint.watchPlaylistEndpoint.playlistId;
+                            console.log(new models_1.Playlist({
+                                title: pl_title,
+                                id: id,
+                                description: pl_subtitle,
+                                artworks: [],
+                                musics: [],
+                            }));
                         }
+                        //if(item.musicCarouselShelfRenderer?.contents?.length){
+                        //    for(let musicComponent of item.musicCarouselShelfRenderer?.contents){
+                        //        if(musicComponent.musicResponsiveListItemRenderer) console.log(extract_dataFromListItemRenderer(musicComponent.musicResponsiveListItemRenderer))
+                        //    }
+                        //}
                         /*
                         await new Promise(async (resolve3) => {
                             for(let x=0; item.length > x; x++){
@@ -149,7 +142,7 @@ function getHomePage() {
         }));
     });
 }
-exports.getHomePage = getHomePage;
+exports.getPage = getPage;
 function relative(ID) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {

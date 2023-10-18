@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Artwork, Artist, Duration, Lyrics, NoLyrics } from "./";
+import { Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model } from "./";
 import { DownloadType_param } from "../types/DownloadType";
 import { DownloadQuality_param } from "../types/DownloadQuality";
 export default class Music {
@@ -12,7 +12,10 @@ export default class Music {
     browseId: string;
     isAudioOnly: boolean;
     autoMix: boolean;
-    constructor(data: any, autoMix?: boolean);
+    album?: Album;
+    date?: number;
+    isExplicit: boolean;
+    constructor(data: Music_model, autoMix?: boolean);
     getLyrics(): Promise<Lyrics | NoLyrics>;
     download(type: DownloadType_param, quality?: DownloadQuality_param): Promise<Buffer>;
 }

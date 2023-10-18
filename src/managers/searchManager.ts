@@ -6,6 +6,8 @@ import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';
 import * as fs from "fs";
+import {getAllObjects, normalizeObjectUnits} from "../utils/typeBuilder";
+import {TypeunitOfTime} from "../types/TypePage";
 
 
 /**
@@ -13,7 +15,7 @@ import * as fs from "fs";
  * @param query Query to search
  * @param type Type of search
  */
-export async function search (query: string, type: TypeSearch_param): Promise<Array<Music>> {
+export async function search (query: string, type: TypeSearch_param = TypeSearch.MUSIC): Promise<Array<Music>> {
     // Check If type is valid with TypeSearch
     if(!TypeSearch_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch_arr})
     if(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
@@ -43,14 +45,18 @@ export async function search (query: string, type: TypeSearch_param): Promise<Ar
     }
 }
 
-export async function getHomePage(): Promise<Home> {
+export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
     throw new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED)
     return new Promise(async (resolve) => {
+        const idsearch = normalizeObjectUnits('typePage', type)
+        if(!idsearch) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_PAGE, getAllObjects('typePage'))
         requestToYtApi('browse', {
-            "browseId": "FEmusic_explore"
+            "browseId": idsearch
         }).then(async (res: any) => {
             // Save res as file
-            fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2))
+            //fs.writeFileSync('test.json', JSON.stringify(res.data, null, 2))
+            const title = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.title
+            console.log(title)
             const resp_data: any = {
                 music_list:[],
                 playlist:[]
@@ -58,10 +64,22 @@ export async function getHomePage(): Promise<Home> {
             new Promise(async (resolve2) => {
                 for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents){
                     if(item.musicCarouselShelfRenderer?.contents?.length){
-                        for(let musicComponent of item.musicCarouselShelfRenderer?.contents){
-                            if(musicComponent.musicResponsiveListItemRenderer) console.log(extract_dataFromListItemRenderer(musicComponent.musicResponsiveListItemRenderer))
-                        }
+                        const pl_title = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text
+                        const pl_subtitle = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.strapline?.runs?.[0]?.text || false
+                        const id = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.moreContentButton?.buttonRenderer?.navigationEndpoint.watchPlaylistEndpoint.playlistId
+                        console.log(new Playlist({
+                            title: pl_title,
+                            id: id,
+                            description: pl_subtitle,
+                            artworks: [],
+                            musics: [],
+                        }))
                     }
+                    //if(item.musicCarouselShelfRenderer?.contents?.length){
+                    //    for(let musicComponent of item.musicCarouselShelfRenderer?.contents){
+                    //        if(musicComponent.musicResponsiveListItemRenderer) console.log(extract_dataFromListItemRenderer(musicComponent.musicResponsiveListItemRenderer))
+                    //    }
+                    //}
 
                     /*
                     await new Promise(async (resolve3) => {

@@ -37,10 +37,13 @@ class Music {
             // Return the artists in string format with a comma between each artist and if it's the last artist add '&'
             return artists.map((artist, index) => `${artist.name}${index === artists.length - 1 ? '' : index === artists.length - 2 ? ' &' : ','} `).join('');
         };
+        this.album = data.album;
         this.duration = data.duration;
         this.typeVideo = data.type;
         this.browseId = data.browseId;
         this.isAudioOnly = data.type.includes('ATV');
+        this.date = data.date;
+        this.isExplicit = data.explicit;
         if (autoMix)
             this.autoMix = autoMix;
     }

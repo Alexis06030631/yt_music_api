@@ -9,6 +9,7 @@ export default class Music_model {
     date: number;
     duration: Duration;
     album: Album;
+    explicit: boolean;
     constructor(music: any);
 }
 //# sourceMappingURL=Music_model.d.ts.map

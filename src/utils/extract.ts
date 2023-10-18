@@ -1,6 +1,9 @@
 import {Music_model, Artist, Album, Artwork, Duration} from "../models/";
+import * as fs from "fs";
+
 
 export function extract_dataFromGetData(data:any):Music_model {
+    fs.writeFileSync('test.json', JSON.stringify(data, null, 2))
     let artists:any = [], album:any, date:number
     for (let item of data?.longBylineText?.runs || []) {
         // Get Author(s)
@@ -25,7 +28,6 @@ export function extract_dataFromGetData(data:any):Music_model {
         name: data?.shortBylineText?.runs?.[0]?.text,
         id: null
     }))
-
     return new Music_model({
         artworks: data.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
         title: data.title.runs[0].text,
@@ -35,6 +37,7 @@ export function extract_dataFromGetData(data:any):Music_model {
         artists: artists,
         album: album,
         date: date,
+        explicit: data?.badges?.find((e)=>e.musicInlineBadgeRenderer?.icon?.iconType === 'MUSIC_EXPLICIT_BADGE').musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE'
         duration: new Duration({
             seconds: timeToSec(data.lengthText?.runs?.[0]?.text || '0:00'),
             text: data.lengthText?.runs?.[0]?.text,

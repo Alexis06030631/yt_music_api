@@ -10,6 +10,7 @@ export default class Music_model {
     public date: number
     public duration: Duration
     public album: Album
+    public explicit: boolean
 
     constructor(music: any) {
         this.id = music.id || null
@@ -21,6 +22,7 @@ export default class Music_model {
         this.date = music.date || null
         this.duration = music.duration || null
         this.album = music.album || null
+        this.explicit = music.explicit || false
 
     }
 }

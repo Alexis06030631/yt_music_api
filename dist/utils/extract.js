@@ -1,9 +1,34 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extract_dataFromListItemRenderer = exports.extract_dataFromGetData = void 0;
 const models_1 = require("../models/");
+const fs = __importStar(require("fs"));
 function extract_dataFromGetData(data) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
+    fs.writeFileSync('test.json', JSON.stringify(data, null, 2));
     let artists = [], album, date;
     for (let item of ((_a = data === null || data === void 0 ? void 0 : data.longBylineText) === null || _a === void 0 ? void 0 : _a.runs) || []) {
         // Get Author(s)
@@ -40,9 +65,10 @@ function extract_dataFromGetData(data) {
         artists: artists,
         album: album,
         date: date,
+        explicit: ((_y = data === null || data === void 0 ? void 0 : data.badges) === null || _y === void 0 ? void 0 : _y.find((e) => { var _a, _b; return ((_b = (_a = e.musicInlineBadgeRenderer) === null || _a === void 0 ? void 0 : _a.icon) === null || _b === void 0 ? void 0 : _b.iconType) === 'MUSIC_EXPLICIT_BADGE'; }).musicInlineBadgeRenderer.icon.iconType) === 'MUSIC_EXPLICIT_BADGE',
         duration: new models_1.Duration({
-            seconds: timeToSec(((_0 = (_z = (_y = data.lengthText) === null || _y === void 0 ? void 0 : _y.runs) === null || _z === void 0 ? void 0 : _z[0]) === null || _0 === void 0 ? void 0 : _0.text) || '0:00'),
-            text: (_3 = (_2 = (_1 = data.lengthText) === null || _1 === void 0 ? void 0 : _1.runs) === null || _2 === void 0 ? void 0 : _2[0]) === null || _3 === void 0 ? void 0 : _3.text,
+            seconds: timeToSec(((_1 = (_0 = (_z = data.lengthText) === null || _z === void 0 ? void 0 : _z.runs) === null || _0 === void 0 ? void 0 : _0[0]) === null || _1 === void 0 ? void 0 : _1.text) || '0:00'),
+            text: (_4 = (_3 = (_2 = data.lengthText) === null || _2 === void 0 ? void 0 : _2.runs) === null || _3 === void 0 ? void 0 : _3[0]) === null || _4 === void 0 ? void 0 : _4.text,
             label: data.lengthText.accessibility.accessibilityData.label
         })
     });

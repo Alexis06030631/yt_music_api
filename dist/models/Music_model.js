@@ -11,6 +11,7 @@ class Music_model {
         this.date = music.date || null;
         this.duration = music.duration || null;
         this.album = music.album || null;
+        this.explicit = music.explicit || false;
     }
 }
 exports.default = Music_model;

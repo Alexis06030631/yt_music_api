@@ -1,5 +1,5 @@
 import {requestToYtApi} from "../utils/requestManager";
-import {Artwork, Artist, Duration, Lyrics, NoLyrics} from "./";
+import {Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model} from "./";
 import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
@@ -14,8 +14,11 @@ export default class Music {
     public browseId: string;
     public isAudioOnly: boolean;
     public autoMix: boolean;
+    public album?: Album
+    public date?: number
+    public isExplicit: boolean
 
-    constructor(data: any, autoMix?: boolean) {
+    constructor(data: Music_model, autoMix?: boolean) {
         this.artworks = data.artworks
         this.id = data.id
         this.title = data.title
@@ -25,10 +28,13 @@ export default class Music {
             // Return the artists in string format with a comma between each artist and if it's the last artist add '&'
             return artists.map((artist, index) => `${artist.name}${index === artists.length - 1 ? '' : index === artists.length - 2 ? ' &' : ','} `).join('')
         }
+        this.album = data.album
         this.duration = data.duration
         this.typeVideo = data.type
         this.browseId = data.browseId
         this.isAudioOnly = data.type.includes('ATV')
+        this.date = data.date
+        this.isExplicit = data.explicit
         if(autoMix) this.autoMix = autoMix
     }
 
