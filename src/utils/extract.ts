@@ -37,7 +37,7 @@ export function extract_dataFromGetData(data:any):Music_model {
         artists: artists,
         album: album,
         date: date,
-        explicit: data?.badges?.find((e)=>e.musicInlineBadgeRenderer?.icon?.iconType === 'MUSIC_EXPLICIT_BADGE').musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE'
+        explicit: data?.badges?.find((e)=>e.musicInlineBadgeRenderer?.icon?.iconType === 'MUSIC_EXPLICIT_BADGE').musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE',
         duration: new Duration({
             seconds: timeToSec(data.lengthText?.runs?.[0]?.text || '0:00'),
             text: data.lengthText?.runs?.[0]?.text,
