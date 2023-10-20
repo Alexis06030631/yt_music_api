@@ -5,6 +5,7 @@ export default {
   "srcDir": "./",
   "outDir": "./dist",
   "cleanUrls": true,
+  "ignoreDeadLinks": true
   "markdown": {
     "attrs": {
       "disable": true
@@ -12,7 +13,7 @@ export default {
   },
   "themeConfig": {
     "editLink": {
-      "pattern": "https://github.com/Alexis06030631/ytmusic_api/edit/main/docs/:path",
+      "pattern": "https://github.com/Alexis06030631/yt_music_api/edit/main/docs/:path",
       "text": "Edit this page on GitHub"
     },
     "footer": {
