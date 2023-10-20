@@ -1,5 +1,5 @@
 import {requestToYtApi} from "../utils/requestManager";
-import {Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model} from "./";
+import {Download, Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model} from "./";
 import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
@@ -56,7 +56,7 @@ export default class Music {
         })
     }
 
-    download(type:DownloadType_param, quality?:DownloadQuality_param): Promise<Buffer> {
+    download(type:DownloadType_param, quality?:DownloadQuality_param): Promise<Download> {
         return new Promise((resolve, reject) => {
             downloadManager.download(this.id, type, quality).then(resolve).catch(reject)
         })
