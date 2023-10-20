@@ -15,9 +15,9 @@
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## status:
 
 
 **Returns:**
-<span class="flex_return">boolean</span>
+<span class="flex_return">[boolean![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>

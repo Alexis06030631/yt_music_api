@@ -3,7 +3,7 @@
 
 
 ---
-| <details open><summary>Properties</summary><p>[artists](#artists)<br>[artworks](#artworks)<br>[autoMix](#automix)<br>[browseId](#browseid)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[title](#title)<br>[typeVideo](#typevideo)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)</p></details> |
+| <details open><summary>Properties</summary><p>[album](#album)<br>[artists](#artists)<br>[artworks](#artworks)<br>[autoMix](#automix)<br>[browseId](#browseid)<br>[date](#date)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[isExplicit](#isexplicit)<br>[title](#title)<br>[typeVideo](#typevideo)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)</p></details> |
 | --- | --- |
 
 
@@ -11,7 +11,8 @@
  # Functions
 
 
-## Function download():
+## Function download(): 
+
 
 **Builder**:
 ````javascript
@@ -25,9 +26,10 @@ Music.download(type, quality)
 | quality | [DownloadQuality_param](/docs/param/DownloadQuality_param) |  | ✓ |
 
 
-**Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[buffer![Link](../assets/img/external_link.svg)](https://nodejs.org/api/buffer.html)&gt;</span>
-## Function getLyrics():
+<span class="flex_return">**Returns:**&nbsp;
+[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[buffer![Link](../assets/img/external_link.svg)](https://nodejs.org/api/buffer.html)&gt;</span>
+## Function getLyrics(): 
+
 
 **Builder**:
 ````javascript
@@ -36,13 +38,18 @@ Music.getLyrics()
 
 
 
-**Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Lyrics](/docs/class/Lyrics) | [NoLyrics](/docs/class/NoLyrics)&gt;</span>
+<span class="flex_return">**Returns:**&nbsp;
+[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Lyrics](/docs/class/Lyrics) | [NoLyrics](/docs/class/NoLyrics)&gt;</span>
 
 
  # Properties
 
 
+## album:
+
+
+**Returns:**
+<span class="flex_return">[Album](/docs/class/Album)</span>
 ## artists:
 
 
@@ -57,12 +64,17 @@ Music.getLyrics()
 
 
 **Returns:**
-<span class="flex_return">boolean</span>
+<span class="flex_return">[boolean![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
 ## browseId:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+## date:
+
+
+**Returns:**
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## duration:
 
 
@@ -72,19 +84,24 @@ Music.getLyrics()
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## isAudioOnly:
 
 
 **Returns:**
-<span class="flex_return">boolean</span>
+<span class="flex_return">[boolean![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
+## isExplicit:
+
+
+**Returns:**
+<span class="flex_return">[boolean![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
 ## title:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## typeVideo:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>

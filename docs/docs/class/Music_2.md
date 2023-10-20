@@ -11,7 +11,8 @@
  # Functions
 
 
-## Function extractArtistData():
+## Function extractArtistData(): 
+
 
 **Builder**:
 ````javascript
@@ -21,12 +22,13 @@ Music_2.extractArtistData(search_result)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| search_result | any |  | 𐄂 |
+| search_result | [any![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/any) |  | 𐄂 |
 
 
-**Returns:**
-<span class="flex_return">any</span>
-## Function getLink():
+<span class="flex_return">**Returns:**&nbsp;
+[any![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/any)</span>
+## Function getLink(): 
+
 
 **Builder**:
 ````javascript
@@ -35,8 +37,8 @@ Music_2.getLink()
 
 
 
-**Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">**Returns:**&nbsp;
+[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 
 
  # Properties
@@ -59,14 +61,14 @@ Music_2.getLink()
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## name:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## typeVideo:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>

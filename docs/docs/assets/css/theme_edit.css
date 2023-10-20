@@ -104,3 +104,12 @@ details[open] > summary {
 th, td {
 	vertical-align:top;
 }
+
+tread > tr > th {
+	width: 100vh;
+}
+
+tr, td, a {
+	display: flex;
+	justify-content: center;
+}

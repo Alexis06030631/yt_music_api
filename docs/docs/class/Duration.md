@@ -15,14 +15,14 @@
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## seconds:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## text:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>

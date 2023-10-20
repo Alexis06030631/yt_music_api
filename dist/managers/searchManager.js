@@ -23,8 +23,8 @@ const TypeSearch_1 = require("../types/TypeSearch");
 const typeBuilder_1 = require("../utils/typeBuilder");
 /**
  * Search music, video or other with query
- * @param query Query to search
- * @param type Type of search
+ * @param query - Query to search
+ * @param type - Type of search
  */
 function search(query, type = TypeSearch_1.TypeSearch.MUSIC) {
     var _a, _b, _c, _d, _e;
@@ -33,7 +33,7 @@ function search(query, type = TypeSearch_1.TypeSearch.MUSIC) {
         if (!TypeSearch_1.TypeSearch_arr.includes(type))
             throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch_arr });
         if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
-            return [new models_1.Music(yield GetData((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]))];
+            return [new models_1.Music(yield GetData(((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || ''))];
         }
         else {
             let data;
@@ -62,6 +62,11 @@ function search(query, type = TypeSearch_1.TypeSearch.MUSIC) {
     });
 }
 exports.search = search;
+/**
+ * Get the home page (NOT WORKING)
+ * @param type - Type of page to get
+ * @beta
+ */
 function getPage(type) {
     return __awaiter(this, void 0, void 0, function* () {
         throw new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED);
@@ -143,6 +148,10 @@ function getPage(type) {
     });
 }
 exports.getPage = getPage;
+/**
+ * Get the relative musics of a music
+ * @param ID - The id of the music
+ */
 function relative(ID) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
@@ -167,6 +176,10 @@ function relative(ID) {
     });
 }
 exports.relative = relative;
+/**
+ * Get the music by id
+ * @param id - The id of the music
+ */
 function get(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
@@ -179,6 +192,10 @@ function get(id) {
     });
 }
 exports.get = get;
+/**
+ * Get the playlist by id
+ * @param id - The id of the playlist
+ */
 function getPlaylist(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {

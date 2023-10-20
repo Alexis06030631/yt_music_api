@@ -1,3 +1,13 @@
+.github-corner svg {
+	fill: var(--link-secondary-color);
+}
+
+#version {
+	padding: 7px;
+	border-radius: 10px;
+	background: var(--link-primary-color);
+	color: var(--primary-color);
+}
 
 details {
 	width: 100%
@@ -33,8 +43,13 @@ th, td {
 	vertical-align:top;
 }
 
-th {
-	width: 50vw
+tread > tr > th {
+	width: 100vh;
+}
+
+table > tbody > tr > td > a {
+	display: flex;
+	justify-content: center;
 }
 
 .flex_return {
@@ -42,5 +57,5 @@ th {
 }
 
 .flex_return > a {
-	display: contents;
+	display: flex;
 }

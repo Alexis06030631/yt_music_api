@@ -12,14 +12,14 @@ import {TypeunitOfTime} from "../types/TypePage";
 
 /**
  * Search music, video or other with query
- * @param query Query to search
- * @param type Type of search
+ * @param query - Query to search
+ * @param type - Type of search
  */
 export async function search (query: string, type: TypeSearch_param = TypeSearch.MUSIC): Promise<Array<Music>> {
     // Check If type is valid with TypeSearch
     if(!TypeSearch_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch_arr})
     if(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
-        return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]))]
+        return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))]
     }else {
         let data:any
         const resp_data: Array<Music> = []
@@ -45,6 +45,11 @@ export async function search (query: string, type: TypeSearch_param = TypeSearch
     }
 }
 
+/**
+ * Get the home page (NOT WORKING)
+ * @param type - Type of page to get
+ * @beta
+ */
 export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
     throw new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED)
     return new Promise(async (resolve) => {
@@ -123,6 +128,10 @@ export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
     })
 }
 
+/**
+ * Get the relative musics of a music
+ * @param ID - The id of the music
+ */
 export async function relative (ID: string): Promise<Array<Music>> {
     return new Promise(async (resolve) => {
         requestToYtApi('next', {
@@ -145,6 +154,10 @@ export async function relative (ID: string): Promise<Array<Music>> {
     })
 }
 
+/**
+ * Get the music by id
+ * @param id - The id of the music
+ */
 export async function get (id: string): Promise<Music> {
     return new Promise(async (resolve, reject) => {
         GetData(id).then((e:any) => {
@@ -155,7 +168,10 @@ export async function get (id: string): Promise<Music> {
     })
 }
 
-
+/**
+ * Get the playlist by id
+ * @param id - The id of the playlist
+ */
 export async function getPlaylist(id: string): Promise<Playlist> {
     return new Promise(async (resolve) => {
         requestToYtApi('browse', {

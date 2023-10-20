@@ -20,13 +20,16 @@ const DownloadType_1 = require("../types/DownloadType");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const models_1 = require("../models/");
-/*
-* This function is used to get the download link of a music in Webm format
-* @deprecated This function is deprecated, use download() instead
+const deprecate_1 = require("../utils/deprecate");
+/**
+ * This function is used to get the download link of a music in Webm format
+ * @deprecated This function is deprecated, use download() instead
+ * @param id - The id of the music
  */
 function getWebm(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            (0, deprecate_1.deprecated)('getWebm', 'download');
             getPlayer(id).then((res) => {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
@@ -38,9 +41,14 @@ function getWebm(id) {
     });
 }
 exports.getWebm = getWebm;
+/**
+ * @deprecated This function has been replaced by `download(ID, 'mp3')`
+ * @param id - The id of the music
+ */
 function getMp3(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            (0, deprecate_1.deprecated)('getMp3', 'download');
             getPlayer(id).then((res) => {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
@@ -52,46 +60,50 @@ function getMp3(id) {
     });
 }
 exports.getMp3 = getMp3;
+/**
+ * This function is used to get the download link of a music
+ * @param id - The id of the music
+ * @param type - The type of the music (available: DownloadType_param)
+ * @param quality - The quality of the music (available: DownloadQuality_param)
+ */
 function download(id, type = 'mp3', quality) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            if (!DownloadType_1.DownloadType_arr.includes(type))
-                throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_DOWNLOAD, { typeRequested: type, typesAvailable: DownloadType_1.DownloadType_arr });
-            if (quality && !DownloadQuality_1.DownloadQuality_arr.includes(quality))
-                throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, { typeRequested: quality, typesAvailable: DownloadQuality_1.DownloadQuality_arr });
-            type = type.replace('mp3', 'mp4');
-            getPlayer(id).then((res) => {
-                if (!res.streamingData)
-                    return reject(res.playabilityStatus);
-                let download = res.streamingData.adaptiveFormats.filter((item) => {
-                    if ((type === 'mp4' || type === 'webm') && !!item.audioQuality)
-                        return item.mimeType.includes(type);
-                });
-                if (quality === 'high') {
-                    download = download.sort((a, b) => b.bitrate - a.bitrate)[0];
-                }
-                else if (quality === 'low') {
-                    download = download.sort((a, b) => a.bitrate - b.bitrate)[0];
-                }
-                else if (quality === 'medium') {
-                    download = download.sort((a, b) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1];
-                }
-                else {
-                    download = download.sort((a, b) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1];
-                }
-                if (!download)
-                    return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
-                try {
-                    download.url = (0, decodeCipher_1.decode)(download);
-                }
-                catch (e) {
-                    return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, { error: e }));
-                }
-                download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);
-                resolve(new models_1.Download(download));
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        if (!DownloadType_1.DownloadType_arr.includes(type))
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_DOWNLOAD, { typeRequested: type, typesAvailable: DownloadType_1.DownloadType_arr });
+        if (quality && !DownloadQuality_1.DownloadQuality_arr.includes(quality))
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, { typeRequested: quality, typesAvailable: DownloadQuality_1.DownloadQuality_arr });
+        type = type.replace('mp3', 'mp4');
+        getPlayer(id).then((res) => {
+            if (!res.streamingData)
+                return reject(res.playabilityStatus);
+            let download = res.streamingData.adaptiveFormats.filter((item) => {
+                if ((type === 'mp4' || type === 'webm') && !!item.audioQuality)
+                    return item.mimeType.includes(type);
             });
-        }));
-    });
+            if (quality === 'high') {
+                download = download.sort((a, b) => b.bitrate - a.bitrate)[0];
+            }
+            else if (quality === 'low') {
+                download = download.sort((a, b) => a.bitrate - b.bitrate)[0];
+            }
+            else if (quality === 'medium') {
+                download = download.sort((a, b) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1];
+            }
+            else {
+                download = download.sort((a, b) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1];
+            }
+            if (!download)
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
+            try {
+                download.url = (0, decodeCipher_1.decode)(download);
+            }
+            catch (e) {
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, { error: e }));
+            }
+            download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);
+            resolve(new models_1.Download(download));
+        });
+    }));
 }
 exports.download = download;
 function getPlayer(videoId, body = {}) {

@@ -114,7 +114,7 @@ function Ula(a:any) {
             e.splice(0, 1, e.splice(d, 1, e[0])[0]))
     }
         , 1441350318, b, -909882769, 1228583632, 26631421, -1527802730, "Zh7Jf8G", -733341124, function() {
-            for (var d = 64, e = []; ++d - e.length - 32; )
+            for (var d = 64, e:any = []; ++d - e.length - 32; )
                 switch (d) {
                     case 46:
                         d = 95;
@@ -155,7 +155,7 @@ function Ula(a:any) {
                 d.push(d.splice(--e, 1)[0])
         }
         , "\"(([{'/", 909946119, -784352155, ",51];c[49]=c;", -1350260030, -2123584021, -1283334508, -899109078, function() {
-            for (var d = 64, e = []; ++d - e.length - 32; ) {
+            for (var d = 64, e:any = []; ++d - e.length - 32; ) {
                 switch (d) {
                     case 58:
                         d -= 14;
@@ -194,7 +194,7 @@ function Ula(a:any) {
             return e(f, h, l, m, n, p)
         }
         , 68146032, function() {
-            for (var d = 64, e = []; ++d - e.length - 32; ) {
+            for (var d = 64, e:any = []; ++d - e.length - 32; ) {
                 switch (d) {
                     case 91:
                         d = 44;

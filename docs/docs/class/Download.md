@@ -15,37 +15,37 @@
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## audioRate:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## averageBitrate:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## bitrate:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## contentLength:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## dB:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## DurationMs:
 
 
 **Returns:**
-<span class="flex_return">number</span>
+<span class="flex_return">[number![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## expireDate:
 
 
@@ -55,14 +55,14 @@
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## type:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## url:
 
 
 **Returns:**
-<span class="flex_return">string</span>
+<span class="flex_return">[string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>

@@ -11,7 +11,8 @@
  # Functions
 
 
-## Function download():
+## Function download(): 
+This function is used to get the download link of a music
 
 **Builder**:
 ````javascript
@@ -21,14 +22,19 @@ downloadManager.download(id, type, quality)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| id | string |  | 𐄂 |
-| type | [DownloadType_param](/docs/param/DownloadType_param) |  | ✓ |
-| quality | [DownloadQuality_param](/docs/param/DownloadQuality_param) |  | ✓ |
+| id | [string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | The id of the music | 𐄂 |
+| type | [DownloadType_param](/docs/param/DownloadType_param) | The type of the music (available: DownloadType_param) | ✓ |
+| quality | [DownloadQuality_param](/docs/param/DownloadQuality_param) | The quality of the music (available: DownloadQuality_param) | ✓ |
 
 
-**Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
-## Function getMp3():
+<span class="flex_return">**Returns:**&nbsp;
+[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Download](/docs/class/Download)&gt;</span>
+## Function getMp3(): <Badge type="warning" text="Deprecated"/>
+:::warning Deprecated
+This function has been replaced by `download(ID, 'mp3')`
+:::
+
+
 
 **Builder**:
 ````javascript
@@ -38,12 +44,17 @@ downloadManager.getMp3(id)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| id | string |  | 𐄂 |
+| id | [string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | The id of the music | 𐄂 |
 
 
-**Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
-## Function getWebm():
+<span class="flex_return">**Returns:**&nbsp;
+[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
+## Function getWebm(): <Badge type="warning" text="Deprecated"/>
+:::warning Deprecated
+This function is deprecated, use download() instead
+:::
+
+This function is used to get the download link of a music in Webm format
 
 **Builder**:
 ````javascript
@@ -53,8 +64,8 @@ downloadManager.getWebm(id)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| id | string |  | 𐄂 |
+| id | [string![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | The id of the music | 𐄂 |
 
 
-**Returns:**
-<span class="flex_return">[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
+<span class="flex_return">**Returns:**&nbsp;
+[promise![Link](../assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>

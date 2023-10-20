@@ -4,7 +4,9 @@ import * as fs from "fs";
 
 export function extract_dataFromGetData(data:any):Music_model {
     fs.writeFileSync('test.json', JSON.stringify(data, null, 2))
-    let artists:any = [], album:any, date:number
+    let artists:any = []
+    let album:any = []
+    let date:number = 0
     for (let item of data?.longBylineText?.runs || []) {
         // Get Author(s)
         if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')){
@@ -47,7 +49,7 @@ export function extract_dataFromGetData(data:any):Music_model {
 }
 
 export function extract_dataFromListItemRenderer(data:any):Music_model {
-    let artists:any = [], album:any, date:number, title:string, id:string, type:string
+    let artists:any = [], album:any=[], date:number=0, title:string='', id:string, type:string=''
     for (let item of data?.flexColumns || []) {
         if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId){
             title = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text

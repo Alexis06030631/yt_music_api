@@ -4,6 +4,8 @@ const fs = require("fs");
 const { copySync} = require("fs-extra");
 const {join} = require("path");
 const {writeFileSync} = require("fs");
+const { parse } = require('comment-parser')
+
 
 const MozillaType = {
 	'boolean': 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean',
@@ -99,9 +101,13 @@ function createFile(member){
 	if(subMembersContent.functions.length){
 		fileContent += `\n\n\n # Functions\n\n`
 		subMembersContent.functions.forEach(func => {
-			const {title, docParams} = extractDataFormDocComment(func.docComment)
-			fileContent += `\n## Function ${func.name}():\n`+
-				`${title || ''}\n`+
+			const Tdocs = extractDataFormDocComment(func)
+			fileContent += `\n## Function ${func.name}(): ${Tdocs.tags.find(e=>e.tag === 'deprecated')? '<Badge type="warning" text="Deprecated"/>':''}\n`
+			if(Tdocs.tags.find(e=>e.tag === 'deprecated')){
+				fileContent += `:::warning Deprecated\n${Tdocs.tags.find(e=>e.tag === 'deprecated').description}\n:::\n\n`
+			}
+
+			fileContent += `${Tdocs?.description || ''}\n\n`+
 				`**Builder**:\n`+
 				`\`\`\`\`javascript\n`+
 				`${name}.${func.name}(${func.parameters.map(e=>e.parameterName).join(', ')})\n`+
@@ -110,16 +116,16 @@ function createFile(member){
 				fileContent += `### Parameters\n`+
 					`${createTab(['Parameter', 'Type', 'Description', 'Optional'],func.parameters.map(e=>{
 						return {
-							parameter: e.parameterName,
-							type: typeUrlGenerator(func.excerptTokens[e.parameterTypeTokenRange.endIndex-1] || {text:'any'}),
-							description: docParams.find(p=>p.param === e.parameterName)?.doc || '',
-							optional: e.isOptional? '✓':'𐄂'
+							parameter: Tdocs.params[e.parameterName]?.name,
+							type: Tdocs.params[e.parameterName]?.type,
+							description: Tdocs.params[e.parameterName]?.description,
+							optional: Tdocs.params[e.parameterName]?.optional? '✓':'𐄂'
 						}
 					}), [0,1,2,3])}`
 			}
-			fileContent += `\n\n**Returns:**\n`+
-				`<span class="flex_return">${func.excerptTokens.slice(func.returnTypeTokenRange.startIndex, func.returnTypeTokenRange.endIndex).map(e=>{
-					return typeUrlGenerator(e, func.returnTypeTokenRange.endIndex - func.returnTypeTokenRange.startIndex === 1)
+			fileContent += `\n\n<span class="flex_return">**Returns:**&nbsp;\n`+
+				`${func.excerptTokens.slice(func.returnTypeTokenRange.startIndex, func.returnTypeTokenRange.endIndex).map(e=>{
+					return typeUrlGenerator(e)
 				}).join('').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`
 
 		})
@@ -132,7 +138,7 @@ function createFile(member){
 
 			fileContent += `\n\n**Returns:**\n`+
 				`<span class="flex_return">${prop.excerptTokens.slice(prop.propertyTypeTokenRange.startIndex, prop.propertyTypeTokenRange.endIndex).map(e=>{
-					return typeUrlGenerator(e, prop.propertyTypeTokenRange.endIndex - prop.propertyTypeTokenRange.startIndex === 1)
+					return typeUrlGenerator(e)
 				}).join('').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`
 		})
 	}
@@ -208,22 +214,38 @@ function attributeType(method, v2=false){
 	}
 }
 
-function extractDataFormDocComment(docComment){
-	const title = docComment.match(/^(?:\W+)?\*(?:\s+)?(\w.+?)\n/gm)?.map(e=>e.replace(/^(?:\W+)?\*(?:\s+)?/gm, ''))
-	const docParams = [...docComment.matchAll(/^(?:\W+)?\*(?:\s+)?@param[s]?\s(?<param>\w+)\s-\s(?<doc>.+)\n/gm)].map(e=>e.groups)
-	return {title, docParams}
+function extractDataFormDocComment(doc){
+	const parsed = parse(doc.docComment)[0] || {name: doc.name, description: doc.docComment, tags: []}
+	parsed.params = {}
+	const tmp =[...doc.parameters, ...parsed.tags.filter((e)=>e.tag === 'param')].reduce((a, item)=>{
+		const b = a.findIndex(e=>(e.name||e.parameterName) === (item.name||item.parameterName))
+		if(b === -1) a.push(item)
+		else a[b] = {...a[b], ...item}
+		return a
+	}, [])
+	tmp.forEach(e=>{
+		parsed.params[e?.name || e?.parameterName] = {
+			name: e?.name || e?.parameterName,
+			description: e?.description?.replace(/^\W+/g, '') || '',
+			type: typeUrlGenerator(doc.excerptTokens[doc.parameters.find(p=>(p.name||p.parameterName) === (e?.name || e?.parameterName))?.parameterTypeTokenRange.endIndex-1] || {text:'any'}),
+			optional: doc.parameters.find(p=>p.parameterName === (e?.name || e?.parameterName))?.isOptional
+		}
+	})
+	return parsed
 }
 
 function typeUrlGenerator(type, isSingle = false){
-	if(type.kind !== 'Reference') return type.text
 	const TypeLower = type.text.toLowerCase();
 	if(MozillaType[TypeLower]) {
 		return `[${TypeLower}![Link](../assets/img/external_link.svg)](${MozillaType[TypeLower]})`
-	}else {
+	} else if(type.kind !== 'Reference') return type.text
+	else {
 		const dt = ApiDocumenter.members[0].members.find(e=>e.canonicalReference.includes(`~${type.text}:`))
 		if(dt && attributeType(dt, true)){
 			return `[${type.text}](${path.join(types[attributeType(dt, true)].url, type.text)})`
-		}else return `[${type.text}![Link](../assets/img/external_link.svg)](https://www.google.com/search?q=${type.text})`
+		}else {
+			return `[${type.text}![Link](../assets/img/external_link.svg)](https://www.google.com/search?q=${type.text})`
+		}
 	}
 }
 

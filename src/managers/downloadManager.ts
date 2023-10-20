@@ -5,13 +5,16 @@ import { DownloadType_arr, DownloadType_param} from "../types/DownloadType";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {Download} from "../models/";
+import {deprecated} from "../utils/deprecate";
 
-/*
-* This function is used to get the download link of a music in Webm format
-* @deprecated This function is deprecated, use download() instead
+/**
+ * This function is used to get the download link of a music in Webm format
+ * @deprecated This function is deprecated, use download() instead
+ * @param id - The id of the music
  */
 export async function getWebm (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
+        deprecated('getWebm', 'download')
         getPlayer(id).then((res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
@@ -23,8 +26,13 @@ export async function getWebm (id: string): Promise<any> {
     })
 }
 
+/**
+ * @deprecated This function has been replaced by `download(ID, 'mp3')`
+ * @param id - The id of the music
+ */
 export async function getMp3 (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
+        deprecated('getMp3', 'download')
         getPlayer(id).then((res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
@@ -36,7 +44,13 @@ export async function getMp3 (id: string): Promise<any> {
     })
 }
 
-export async function download(id: string, type:DownloadType_param='mp3', quality?:DownloadQuality_param): Promise<any> {
+/**
+ * This function is used to get the download link of a music
+ * @param id - The id of the music
+ * @param type - The type of the music (available: DownloadType_param)
+ * @param quality - The quality of the music (available: DownloadQuality_param)
+ */
+export function download(id: string, type:DownloadType_param='mp3', quality?:DownloadQuality_param): Promise<Download> {
     return new Promise(async (resolve, reject) => {
         if(!DownloadType_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_DOWNLOAD, {typeRequested:type, typesAvailable:DownloadType_arr})
         if(quality && !DownloadQuality_arr.includes(quality)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_QUALITY, {typeRequested:quality, typesAvailable:DownloadQuality_arr})
