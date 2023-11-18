@@ -1,6 +1,6 @@
 import { DownloadQuality_param } from "../types/DownloadQuality";
 import { DownloadType_param } from "../types/DownloadType";
-import { Download } from "../models/";
+import { Download, StreamPlayers } from "../models/";
 /**
  * This function is used to get the download link of a music in Webm format
  * @deprecated This function is deprecated, use download() instead
@@ -19,4 +19,5 @@ export declare function getMp3(id: string): Promise<any>;
  * @param quality - The quality of the music (available: DownloadQuality_param)
  */
 export declare function download(id: string, type?: DownloadType_param, quality?: DownloadQuality_param): Promise<Download>;
+export declare function getStreamPlayers(id: string): Promise<StreamPlayers>;
 //# sourceMappingURL=downloadManager.d.ts.map

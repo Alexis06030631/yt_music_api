@@ -11,5 +11,6 @@ import Playlist from './Playlist';
 import NoLyrics from "./NoLyrics";
 import Search from './Search';
 import Music_model from "./Music_model";
-export { Album, Artist, Artwork, Download, Duration, Home, Lyrics, Music, Music_list, Playlist, NoLyrics, Search, Music_model };
+import StreamPlayers from "./StreamPlayers";
+export { Album, Artist, Artwork, Download, Duration, Home, Lyrics, Music, Music_list, Playlist, NoLyrics, Search, Music_model, StreamPlayers };
 //# sourceMappingURL=index.d.ts.map

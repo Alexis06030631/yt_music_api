@@ -123,7 +123,7 @@ function createFile(member){
 						}
 					}), [0,1,2,3])}`
 			}
-			fileContent += `\n\n<span class="flex_return">**Returns:**&nbsp;\n`+
+			fileContent += `\n\n<span class="flex_return">**Return:**&nbsp;\n`+
 				`${func.excerptTokens.slice(func.returnTypeTokenRange.startIndex, func.returnTypeTokenRange.endIndex).map(e=>{
 					return typeUrlGenerator(e)
 				}).join('').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`
@@ -134,9 +134,15 @@ function createFile(member){
 
 		fileContent += `\n\n\n # Properties\n\n`
 		subMembersContent.properties.forEach(prop => {
+			prop = extractDataFormDocCommentProp(prop)
 			fileContent += `\n## ${prop.name}:\n`
+			fileContent += `${prop?.description || ''}\n\n`+
+				`**Builder**:\n`+
+				`\`\`\`\`javascript\n`+
+				`${name}.${prop.name}\n`+
+				`\`\`\`\`\n\n`
 
-			fileContent += `\n\n**Returns:**\n`+
+			fileContent += `\n\n**Return:**\n`+
 				`<span class="flex_return">${prop.excerptTokens.slice(prop.propertyTypeTokenRange.startIndex, prop.propertyTypeTokenRange.endIndex).map(e=>{
 					return typeUrlGenerator(e)
 				}).join('').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>`
@@ -234,6 +240,11 @@ function extractDataFormDocComment(doc){
 	return parsed
 }
 
+function extractDataFormDocCommentProp(prop) {
+	const parsed = parse(prop.docComment)[0] || {name: prop.name, description: prop.docComment, tags: []}
+	return Object.assign(parsed, prop)
+}
+
 function typeUrlGenerator(type, isSingle = false){
 	const TypeLower = type.text.toLowerCase();
 	if(MozillaType[TypeLower]) {
@@ -267,7 +278,7 @@ function generateSidebar(){
 		'\n- **Interfaces**' +
 		types.Interface.data.map(t => `\n  - [${t.name}](/interface/${t.name}.md)`).join('') +
 		'\n- **Links**\n' +
-		'- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/ytmusic_api/)\n' +
+		'- [![Github](/assets/img/github.svg)Github](https://github.com/Alexis06030631/yt_music_api/)\n' +
 		'- [![NPM](/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)\n' +
 		'- [![Instagram](/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)'
 

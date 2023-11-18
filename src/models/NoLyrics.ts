@@ -1,6 +1,12 @@
 export default class NoLyrics {
-    message: string;
-    status: boolean;
+    /**
+     * The message of the error
+     */
+    public message: string;
+    /**
+     * The status of the error
+     */
+    public status: boolean;
     constructor(message:string) {
         this.message = message
         this.status = false

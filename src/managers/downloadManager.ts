@@ -4,7 +4,7 @@ import { DownloadQuality_arr, DownloadQuality_param} from "../types/DownloadQual
 import { DownloadType_arr, DownloadType_param} from "../types/DownloadType";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
-import {Download} from "../models/";
+import {Download, StreamPlayers} from "../models/";
 import {deprecated} from "../utils/deprecate";
 
 /**
@@ -84,16 +84,50 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
     })
 }
 
+export function getStreamPlayers(id: string): Promise<StreamPlayers> {
+    return new Promise((resolve, reject) => {
+        getPlayer(id).then((res: any) => {
+            let audio = res.streamingData?.adaptiveFormats?.filter((item: any) => item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
+            let video = res.streamingData?.adaptiveFormats?.filter((item: any) => !item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
+            audio.forEach((item: any) => {
+                item.url = decode(item)
+                item.expireDate =  new Date(parseInt(item.url.split('expire=')[1].split('&')[0])*1000)
+            })
+            video.forEach((item: any) => {
+                item.url = decode(item)
+                item.expireDate =  new Date(parseInt(item.url.split('expire=')[1].split('&')[0])*1000)
+            })
+
+            let available = (!!audio || !!video) && res.playabilityStatus.status === 'OK'
+
+            resolve(new StreamPlayers({
+                audios: audio,
+                videos: video,
+                available: available,
+                unplayable_reason: res.playabilityStatus.reason,
+                maxBitrate: Number(res?.playerConfig?.streamSelectionConfig?.maxBitrate)
+            }))
+        })
+    })
+}
+
 
 function getPlayer(videoId:string, body:any={}):any{
     return new Promise((resolve, reject) => {
         let time = (new Date()).getTime().toString()
+        //console.log(time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString())
         requestToYtApi('player?key=', {
             videoId: videoId,
+            "context": {
+                "client": {
+                    "clientName": "WEB_REMIX",
+                    "clientVersion": "1.20231106.01.02"
+                }
+            },
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString() //19641 (13 october 2023 - 15h)
+                    "signatureTimestamp": 19669 ||time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString() //19641 (13 october 2023 - 15h)
                 }
             }
         }).then((res: any) => {

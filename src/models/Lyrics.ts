@@ -1,6 +1,12 @@
 export default class Lyrics {
-    lyrics: string;
-    source: string;
+    /**
+     * The lyrics of the song
+     */
+    public lyrics: string;
+    /**
+     * The source where the lyrics were fetched from
+     */
+    public source: string;
 
     constructor(data: any) {
         this.lyrics = data.lyrics

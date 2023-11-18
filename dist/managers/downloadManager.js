@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.download = exports.getMp3 = exports.getWebm = void 0;
+exports.getStreamPlayers = exports.download = exports.getMp3 = exports.getWebm = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const decodeCipher_1 = require("../utils/decodeCipher");
 const DownloadQuality_1 = require("../types/DownloadQuality");
@@ -106,15 +106,48 @@ function download(id, type = 'mp3', quality) {
     }));
 }
 exports.download = download;
+function getStreamPlayers(id) {
+    return new Promise((resolve, reject) => {
+        getPlayer(id).then((res) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            let audio = ((_c = (_b = (_a = res.streamingData) === null || _a === void 0 ? void 0 : _a.adaptiveFormats) === null || _b === void 0 ? void 0 : _b.filter((item) => item.audioQuality)) === null || _c === void 0 ? void 0 : _c.sort((a, b) => b.bitrate - a.bitrate)) || [];
+            let video = ((_f = (_e = (_d = res.streamingData) === null || _d === void 0 ? void 0 : _d.adaptiveFormats) === null || _e === void 0 ? void 0 : _e.filter((item) => !item.audioQuality)) === null || _f === void 0 ? void 0 : _f.sort((a, b) => b.bitrate - a.bitrate)) || [];
+            audio.forEach((item) => {
+                item.url = (0, decodeCipher_1.decode)(item);
+                item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000);
+            });
+            video.forEach((item) => {
+                item.url = (0, decodeCipher_1.decode)(item);
+                item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000);
+            });
+            let available = (!!audio || !!video) && res.playabilityStatus.status === 'OK';
+            resolve(new models_1.StreamPlayers({
+                audios: audio,
+                videos: video,
+                available: available,
+                unplayable_reason: res.playabilityStatus.reason,
+                maxBitrate: Number((_h = (_g = res === null || res === void 0 ? void 0 : res.playerConfig) === null || _g === void 0 ? void 0 : _g.streamSelectionConfig) === null || _h === void 0 ? void 0 : _h.maxBitrate)
+            }));
+        });
+    });
+}
+exports.getStreamPlayers = getStreamPlayers;
 function getPlayer(videoId, body = {}) {
     return new Promise((resolve, reject) => {
         let time = (new Date()).getTime().toString();
+        //console.log(time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString())
         (0, requestManager_1.requestToYtApi)('player?key=', {
             videoId: videoId,
+            "context": {
+                "client": {
+                    "clientName": "WEB_REMIX",
+                    "clientVersion": "1.20231106.01.02"
+                }
+            },
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": time[0] + time[2] + time[1] + (Number(time[0]) + Number(time[1]) * Number(time[2]) - Number(time[3]) * 2).toString() //19641 (13 october 2023 - 15h)
+                    "signatureTimestamp": 19669 || time[0] + time[2] + time[1] + (Number(time[0]) + Number(time[1]) * Number(time[2]) - Number(time[3]) * 2).toString() //19641 (13 october 2023 - 15h)
                 }
             }
         }).then((res) => {

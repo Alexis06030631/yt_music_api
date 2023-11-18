@@ -1,9 +1,7 @@
 import {Music_model, Artist, Album, Artwork, Duration} from "../models/";
-import * as fs from "fs";
 
 
 export function extract_dataFromGetData(data:any):Music_model {
-    fs.writeFileSync('test.json', JSON.stringify(data, null, 2))
     let artists:any = []
     let album:any = []
     let date:number = 0

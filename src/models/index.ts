@@ -11,6 +11,7 @@ import Playlist from './Playlist';
 import NoLyrics from "./NoLyrics";
 import Search from './Search';
 import Music_model from "./Music_model";
+import StreamPlayers from "./StreamPlayers";
 
 export {
     Album,
@@ -25,5 +26,6 @@ export {
     Playlist,
     NoLyrics,
     Search,
-    Music_model
+    Music_model,
+    StreamPlayers
 }
