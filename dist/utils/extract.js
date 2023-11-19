@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.extract_dataFromListItemRenderer = exports.extract_dataFromGetData = void 0;
 const models_1 = require("../models/");
 function extract_dataFromGetData(data) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
     let artists = [];
     let album = [];
     let date = 0;
@@ -46,7 +46,7 @@ function extract_dataFromGetData(data) {
         duration: new models_1.Duration({
             seconds: timeToSec(((_1 = (_0 = (_z = data.lengthText) === null || _z === void 0 ? void 0 : _z.runs) === null || _0 === void 0 ? void 0 : _0[0]) === null || _1 === void 0 ? void 0 : _1.text) || '0:00'),
             text: (_4 = (_3 = (_2 = data.lengthText) === null || _2 === void 0 ? void 0 : _2.runs) === null || _3 === void 0 ? void 0 : _3[0]) === null || _4 === void 0 ? void 0 : _4.text,
-            label: data.lengthText.accessibility.accessibilityData.label
+            label: (_7 = (_6 = (_5 = data === null || data === void 0 ? void 0 : data.lengthText) === null || _5 === void 0 ? void 0 : _5.accessibility) === null || _6 === void 0 ? void 0 : _6.accessibilityData) === null || _7 === void 0 ? void 0 : _7.label
         })
     });
 }

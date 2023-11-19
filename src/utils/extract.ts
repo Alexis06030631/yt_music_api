@@ -41,7 +41,7 @@ export function extract_dataFromGetData(data:any):Music_model {
         duration: new Duration({
             seconds: timeToSec(data.lengthText?.runs?.[0]?.text || '0:00'),
             text: data.lengthText?.runs?.[0]?.text,
-            label: data.lengthText.accessibility.accessibilityData.label
+            label: data?.lengthText?.accessibility?.accessibilityData?.label
         })
     })
 }
