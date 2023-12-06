@@ -35,3 +35,14 @@ jobs:
           FOLDER: docs/dist # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
+
+
+      - name: Push to website
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: docs # The branch name where you want to push the assets
+          folder: docs/dist # The directory where your assets are generated
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          commit-message: "Build: ({sha}) {msg}" # The commit message
+          clean-exclude: decode.js
+            
