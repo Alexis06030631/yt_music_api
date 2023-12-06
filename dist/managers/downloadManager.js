@@ -30,13 +30,14 @@ function getWebm(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             (0, deprecate_1.deprecated)('getWebm', 'download');
-            getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
+            const decode = yield (0, getDecode_1.getDecodeScript)();
+            getPlayer(id).then((res) => {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
                 let webm = res.streamingData.adaptiveFormats.filter((item) => item.mimeType.includes('audio/webm')).sort((a, b) => b.bitrate - a.bitrate)[0];
-                webm.url = (yield (0, getDecode_1.getDecodeScript)()).decode(webm);
+                webm.url = decode(webm);
                 resolve(webm);
-            }));
+            });
         }));
     });
 }
@@ -49,11 +50,12 @@ function getMp3(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             (0, deprecate_1.deprecated)('getMp3', 'download');
+            const decode = yield (0, getDecode_1.getDecodeScript)();
             getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
                 let mp3 = res.streamingData.adaptiveFormats.filter((item) => item.mimeType.includes('audio/mp4')).sort((a, b) => b.bitrate - a.bitrate)[0];
-                mp3.url = (yield (0, getDecode_1.getDecodeScript)()).decode(mp3);
+                mp3.url = decode(mp3);
                 resolve(mp3);
             }));
         }));
@@ -74,6 +76,7 @@ function download(id, type = 'mp3', quality) {
             throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, { typeRequested: quality, typesAvailable: DownloadQuality_1.DownloadQuality_arr });
         type = type.replace('mp3', 'mp4');
         getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
+            const decode = yield (0, getDecode_1.getDecodeScript)();
             if (!res.streamingData)
                 return reject(res.playabilityStatus);
             let download = res.streamingData.adaptiveFormats.filter((item) => {
@@ -95,7 +98,7 @@ function download(id, type = 'mp3', quality) {
             if (!download)
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
             try {
-                download.url = (yield (0, getDecode_1.getDecodeScript)()).decode(download);
+                download.url = decode(download);
             }
             catch (e) {
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, { error: e }));

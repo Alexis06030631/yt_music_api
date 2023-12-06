@@ -16,11 +16,12 @@ import {getDecodeScript, getSignatureTimestamp} from "../utils/getDecode";
 export async function getWebm (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getWebm', 'download')
-        getPlayer(id).then(async(res: any) => {
+        const decode = await getDecodeScript()
+        getPlayer(id).then((res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
             let webm = res.streamingData.adaptiveFormats.filter((item: any) => item.mimeType.includes('audio/webm')).sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
-            webm.url = (await getDecodeScript()).decode(webm)
+            webm.url = decode(webm)
 
             resolve(webm)
         })
@@ -34,11 +35,12 @@ export async function getWebm (id: string): Promise<any> {
 export async function getMp3 (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getMp3', 'download')
+        const decode = await getDecodeScript()
         getPlayer(id).then(async (res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
             let mp3 = res.streamingData.adaptiveFormats.filter((item: any) => item.mimeType.includes('audio/mp4')).sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
-            mp3.url = (await getDecodeScript()).decode(mp3)
+            mp3.url = decode(mp3)
 
             resolve(mp3)
         })
@@ -58,6 +60,7 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
         type = type.replace('mp3', 'mp4')
 
         getPlayer(id).then(async (res: any) => {
+            const decode = await getDecodeScript()
             if (!res.streamingData) return reject(res.playabilityStatus)
             let download = res.streamingData.adaptiveFormats.filter((item: any) => {
                 if((type === 'mp4' || type === 'webm') && !!item.audioQuality) return item.mimeType.includes(type)
@@ -74,7 +77,7 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
 
             if(!download) return reject(new YTjsErrorError(ErrorCode.DOWNLOAD_LINK_NOT_FOUND, {typeRequested:type, qualityRequested:quality||'default'}))
             try{
-                download.url = (await getDecodeScript()).decode(download)
+                download.url = decode(download)
             }catch (e) {
                 return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, {error:e}))
             }
