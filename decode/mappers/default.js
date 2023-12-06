@@ -76,7 +76,7 @@ function decode(format){
 	url.B = urlSplit[0]
 	Object.assign(url.j, separate_data_url(urlSplit[1], '&'))
 
-	//url.j.n = Ula(url.j.n)
+	url.j.n = fastDownload(url.j.n)
 	return buildUrl(url.B, url.j)
 }
 
