@@ -34,5 +34,5 @@ jobs:
           folder: docs/dist # The directory where your assets are generated
           token: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           commit-message: "Build: ({sha}) {msg}" # The commit message
-          clean-exclude: docs/*
+          clean: false
             
