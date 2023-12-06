@@ -8,3 +8,5 @@ docs/.vitepress/cache/
 docs/docs/
 docs/.vitepress/dist/
 dist/
+/decode/mappers/temp_*
+/decode/base.js

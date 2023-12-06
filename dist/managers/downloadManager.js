@@ -141,13 +141,13 @@ function getPlayer(videoId, body = {}) {
             "context": {
                 "client": {
                     "clientName": "WEB_REMIX",
-                    "clientVersion": "1.20231106.01.02"
+                    "clientVersion": "1.20231130.05.00"
                 }
             },
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": 19669 || time[0] + time[2] + time[1] + (Number(time[0]) + Number(time[1]) * Number(time[2]) - Number(time[3]) * 2).toString() //19641 (13 october 2023 - 15h)
+                    "signatureTimestamp": 19695 || time[0] + time[2] + time[1] + (Number(time[0]) + Number(time[1]) * Number(time[2]) - Number(time[3]) * 2).toString() //19641 (13 october 2023 - 15h)
                 }
             }
         }).then((res) => {

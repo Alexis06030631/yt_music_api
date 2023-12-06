@@ -1,0 +1,15 @@
+{
+  "name": "decode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "puppeteer": "^21.5.2"
+  }
+}

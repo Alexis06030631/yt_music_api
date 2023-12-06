@@ -13,3 +13,4 @@ api-extractor.json
 tsdoc.json
 .github/
 test.json
+/decode
