@@ -25,10 +25,12 @@ jobs:
         run: npm run build
 
       - name: Push to website
-        uses: s0/git-publish-subdir-action@develop
+        uses: JamesIves/github-pages-deploy-action@v4
         env:
           REPO: self
           BRANCH: docs # The branch name where you want to push the assets
           FOLDER: decode/build # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
+          clean-exclude: |
+            *
