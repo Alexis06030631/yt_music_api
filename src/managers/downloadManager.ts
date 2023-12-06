@@ -89,7 +89,6 @@ export function getStreamPlayers(id: string): Promise<StreamPlayers> {
     return new Promise((resolve, reject) => {
         getPlayer(id).then(async(res: any) => {
             const decode = await getDecodeScript()
-            console.log(decode)
             let audio = res.streamingData?.adaptiveFormats?.filter((item: any) => item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             let video = res.streamingData?.adaptiveFormats?.filter((item: any) => !item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             audio.forEach((item: any) => {

@@ -111,7 +111,6 @@ function getStreamPlayers(id) {
         getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const decode = yield (0, getDecode_1.getDecodeScript)();
-            console.log(decode);
             let audio = ((_c = (_b = (_a = res.streamingData) === null || _a === void 0 ? void 0 : _a.adaptiveFormats) === null || _b === void 0 ? void 0 : _b.filter((item) => item.audioQuality)) === null || _c === void 0 ? void 0 : _c.sort((a, b) => b.bitrate - a.bitrate)) || [];
             let video = ((_f = (_e = (_d = res.streamingData) === null || _d === void 0 ? void 0 : _d.adaptiveFormats) === null || _e === void 0 ? void 0 : _e.filter((item) => !item.audioQuality)) === null || _f === void 0 ? void 0 : _f.sort((a, b) => b.bitrate - a.bitrate)) || [];
             audio.forEach((item) => {
