@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
   - cron: '24 13 * * *'
+  push:
+    branches:
+      - main
 
 jobs:
   publish:
@@ -25,10 +28,11 @@ jobs:
         run: npm run build
 
       - name: Push to website
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: docs # The branch name where you want to push the assets
-          FOLDER: decode/build # The directory where your assets are generated
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-          MESSAGE: "Build: ({sha}) {msg}" # The commit message
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: docs # The branch name where you want to push the assets
+          folder: decode/build # The directory where your assets are generated
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          commit-message: "Build: ({sha}) {msg}" # The commit message
+          clean: false
+  
