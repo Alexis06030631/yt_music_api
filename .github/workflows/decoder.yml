@@ -1,0 +1,29 @@
+name: Build decoder youtubeMusic Signature
+
+on:
+  schedule:
+  - cron: '24 13 * * *'
+
+jobs:
+  publish:
+    name: Build decrypt Script
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build files
+        working-directory: ./decode
+        run: npm build
+
+      - name: Push to website
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: docs # The branch name where you want to push the assets
+          FOLDER: decode/build # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message
