@@ -18,7 +18,7 @@ jobs:
 
       - name: Build files
         working-directory: ./decode
-        run: npm build
+        run: npm run build
 
       - name: Push to website
         uses: s0/git-publish-subdir-action@develop
