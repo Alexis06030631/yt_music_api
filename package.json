@@ -4,7 +4,7 @@
 	"description": "A simple API to get music from YouTube Music",
 	"scripts": {
 		"test": "nodemon test.js",
-		"publish": "npm run build && npm publish --access public",
+		"publish_npm": "npm run build && npm publish --access public",
 		"build": "tsc",
 		"build_auto": "nodemon --watch src --exec \"npm run build\"",
 		"docs:dev": "node docs/generateMd.js && vitepress dev docs",
