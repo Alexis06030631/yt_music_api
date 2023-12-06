@@ -1,6 +1,7 @@
 name: Build decoder youtubeMusic Signature
 
 on:
+  workflow_dispatch:
   schedule:
   - cron: '24 13 * * *'
 
@@ -14,10 +15,14 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+      
+      - name: download deps
+        working-directory: ./decode
+        run: npm ci
 
       - name: Build files
         working-directory: ./decode
-        run: npm build
+        run: npm run build
 
       - name: Push to website
         uses: s0/git-publish-subdir-action@develop
