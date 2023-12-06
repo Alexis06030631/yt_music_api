@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStreamPlayers = exports.download = exports.getMp3 = exports.getWebm = void 0;
 const requestManager_1 = require("../utils/requestManager");
-const decodeCipher_1 = require("../utils/decodeCipher");
 const DownloadQuality_1 = require("../types/DownloadQuality");
 const DownloadType_1 = require("../types/DownloadType");
 const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const models_1 = require("../models/");
 const deprecate_1 = require("../utils/deprecate");
+const getDecode_1 = require("../utils/getDecode");
 /**
  * This function is used to get the download link of a music in Webm format
  * @deprecated This function is deprecated, use download() instead
@@ -30,13 +30,13 @@ function getWebm(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             (0, deprecate_1.deprecated)('getWebm', 'download');
-            getPlayer(id).then((res) => {
+            getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
                 let webm = res.streamingData.adaptiveFormats.filter((item) => item.mimeType.includes('audio/webm')).sort((a, b) => b.bitrate - a.bitrate)[0];
-                webm.url = (0, decodeCipher_1.decode)(webm);
+                webm.url = (yield (0, getDecode_1.getDecodeScript)()).decode(webm);
                 resolve(webm);
-            });
+            }));
         }));
     });
 }
@@ -49,13 +49,13 @@ function getMp3(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             (0, deprecate_1.deprecated)('getMp3', 'download');
-            getPlayer(id).then((res) => {
+            getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
                 if (!res.streamingData)
                     return reject(res.playabilityStatus);
                 let mp3 = res.streamingData.adaptiveFormats.filter((item) => item.mimeType.includes('audio/mp4')).sort((a, b) => b.bitrate - a.bitrate)[0];
-                mp3.url = (0, decodeCipher_1.decode)(mp3);
+                mp3.url = (yield (0, getDecode_1.getDecodeScript)()).decode(mp3);
                 resolve(mp3);
-            });
+            }));
         }));
     });
 }
@@ -73,7 +73,7 @@ function download(id, type = 'mp3', quality) {
         if (quality && !DownloadQuality_1.DownloadQuality_arr.includes(quality))
             throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, { typeRequested: quality, typesAvailable: DownloadQuality_1.DownloadQuality_arr });
         type = type.replace('mp3', 'mp4');
-        getPlayer(id).then((res) => {
+        getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
             if (!res.streamingData)
                 return reject(res.playabilityStatus);
             let download = res.streamingData.adaptiveFormats.filter((item) => {
@@ -95,29 +95,31 @@ function download(id, type = 'mp3', quality) {
             if (!download)
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
             try {
-                download.url = (0, decodeCipher_1.decode)(download);
+                download.url = (yield (0, getDecode_1.getDecodeScript)()).decode(download);
             }
             catch (e) {
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, { error: e }));
             }
             download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);
             resolve(new models_1.Download(download));
-        });
+        }));
     }));
 }
 exports.download = download;
 function getStreamPlayers(id) {
     return new Promise((resolve, reject) => {
-        getPlayer(id).then((res) => {
+        getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
+            const decode = yield (0, getDecode_1.getDecodeScript)();
+            console.log(decode);
             let audio = ((_c = (_b = (_a = res.streamingData) === null || _a === void 0 ? void 0 : _a.adaptiveFormats) === null || _b === void 0 ? void 0 : _b.filter((item) => item.audioQuality)) === null || _c === void 0 ? void 0 : _c.sort((a, b) => b.bitrate - a.bitrate)) || [];
             let video = ((_f = (_e = (_d = res.streamingData) === null || _d === void 0 ? void 0 : _d.adaptiveFormats) === null || _e === void 0 ? void 0 : _e.filter((item) => !item.audioQuality)) === null || _f === void 0 ? void 0 : _f.sort((a, b) => b.bitrate - a.bitrate)) || [];
             audio.forEach((item) => {
-                item.url = (0, decodeCipher_1.decode)(item);
+                item.url = decode(item);
                 item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000);
             });
             video.forEach((item) => {
-                item.url = (0, decodeCipher_1.decode)(item);
+                item.url = decode(item);
                 item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000);
             });
             let available = (!!audio || !!video) && res.playabilityStatus.status === 'OK';
@@ -128,14 +130,13 @@ function getStreamPlayers(id) {
                 unplayable_reason: res.playabilityStatus.reason,
                 maxBitrate: Number((_h = (_g = res === null || res === void 0 ? void 0 : res.playerConfig) === null || _g === void 0 ? void 0 : _g.streamSelectionConfig) === null || _h === void 0 ? void 0 : _h.maxBitrate)
             }));
-        });
+        }));
     });
 }
 exports.getStreamPlayers = getStreamPlayers;
 function getPlayer(videoId, body = {}) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
         let time = (new Date()).getTime().toString();
-        //console.log(time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString())
         (0, requestManager_1.requestToYtApi)('player?key=', {
             videoId: videoId,
             "context": {
@@ -147,12 +148,12 @@ function getPlayer(videoId, body = {}) {
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": 19695 || time[0] + time[2] + time[1] + (Number(time[0]) + Number(time[1]) * Number(time[2]) - Number(time[3]) * 2).toString() //19641 (13 october 2023 - 15h)
+                    "signatureTimestamp": yield (0, getDecode_1.getSignatureTimestamp)(),
                 }
             }
         }).then((res) => {
             resolve(res.data);
         }).catch(reject);
-    });
+    }));
 }
 //# sourceMappingURL=downloadManager.js.map

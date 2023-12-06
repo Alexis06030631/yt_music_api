@@ -6,6 +6,7 @@ import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {Download, StreamPlayers} from "../models/";
 import {deprecated} from "../utils/deprecate";
+import {getDecodeScript, getSignatureTimestamp} from "../utils/getDecode";
 
 /**
  * This function is used to get the download link of a music in Webm format
@@ -15,11 +16,11 @@ import {deprecated} from "../utils/deprecate";
 export async function getWebm (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getWebm', 'download')
-        getPlayer(id).then((res: any) => {
+        getPlayer(id).then(async(res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
             let webm = res.streamingData.adaptiveFormats.filter((item: any) => item.mimeType.includes('audio/webm')).sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
-            webm.url = decode(webm)
+            webm.url = (await getDecodeScript()).decode(webm)
 
             resolve(webm)
         })
@@ -33,11 +34,11 @@ export async function getWebm (id: string): Promise<any> {
 export async function getMp3 (id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getMp3', 'download')
-        getPlayer(id).then((res: any) => {
+        getPlayer(id).then(async (res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
 
             let mp3 = res.streamingData.adaptiveFormats.filter((item: any) => item.mimeType.includes('audio/mp4')).sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
-            mp3.url = decode(mp3)
+            mp3.url = (await getDecodeScript()).decode(mp3)
 
             resolve(mp3)
         })
@@ -56,7 +57,7 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
         if(quality && !DownloadQuality_arr.includes(quality)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_QUALITY, {typeRequested:quality, typesAvailable:DownloadQuality_arr})
         type = type.replace('mp3', 'mp4')
 
-        getPlayer(id).then((res: any) => {
+        getPlayer(id).then(async (res: any) => {
             if (!res.streamingData) return reject(res.playabilityStatus)
             let download = res.streamingData.adaptiveFormats.filter((item: any) => {
                 if((type === 'mp4' || type === 'webm') && !!item.audioQuality) return item.mimeType.includes(type)
@@ -73,7 +74,7 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
 
             if(!download) return reject(new YTjsErrorError(ErrorCode.DOWNLOAD_LINK_NOT_FOUND, {typeRequested:type, qualityRequested:quality||'default'}))
             try{
-                download.url = decode(download)
+                download.url = (await getDecodeScript()).decode(download)
             }catch (e) {
                 return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, {error:e}))
             }
@@ -86,7 +87,9 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
 
 export function getStreamPlayers(id: string): Promise<StreamPlayers> {
     return new Promise((resolve, reject) => {
-        getPlayer(id).then((res: any) => {
+        getPlayer(id).then(async(res: any) => {
+            const decode = await getDecodeScript()
+            console.log(decode)
             let audio = res.streamingData?.adaptiveFormats?.filter((item: any) => item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             let video = res.streamingData?.adaptiveFormats?.filter((item: any) => !item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             audio.forEach((item: any) => {
@@ -113,9 +116,8 @@ export function getStreamPlayers(id: string): Promise<StreamPlayers> {
 
 
 function getPlayer(videoId:string, body:any={}):any{
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         let time = (new Date()).getTime().toString()
-        //console.log(time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString())
         requestToYtApi('player?key=', {
             videoId: videoId,
             "context": {
@@ -127,7 +129,7 @@ function getPlayer(videoId:string, body:any={}):any{
             "playbackContext": {
                 "contentPlaybackContext": {
                     "referer": `https://music.youtube.com/watch?v=${videoId}`,
-                    "signatureTimestamp": 19695 ||time[0]+time[2]+time[1]+(Number(time[0])+Number(time[1])*Number(time[2])-Number(time[3])*2).toString() //19641 (13 october 2023 - 15h)
+                    "signatureTimestamp": await getSignatureTimestamp(),
                 }
             }
         }).then((res: any) => {
