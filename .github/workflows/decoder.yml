@@ -4,9 +4,6 @@ on:
   workflow_dispatch:
   schedule:
   - cron: '24 13 * * *'
-  push:
-    branches:
-      - main
 
 jobs:
   publish:
@@ -26,6 +23,10 @@ jobs:
       - name: Build files
         working-directory: ./decode
         run: npm run build
+
+      - name: Test Decoder
+        working-directory: ./decode
+        run: npm run test
 
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
