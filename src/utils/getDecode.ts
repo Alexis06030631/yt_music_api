@@ -21,7 +21,7 @@ function fetchScript(): Promise<any> {
             process.emitWarning('You are using a production build, the decoder will be downloaded from the internet. If you want to use a local decoder, please use a development build.')
             return resolve(require(path.join(__dirname, '../../decode/build/decoder.js')))
         }
-        return fetch('https://alexis06030631.github.io/yt_music_api/decoder.js').then(res => {
+        return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
             return res.text()
         }).then(res => {
             return resolve(eval(res))
