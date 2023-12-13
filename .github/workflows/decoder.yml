@@ -22,11 +22,15 @@ jobs:
 
       - name: Build files
         working-directory: ./decode
-        run: cd ./decode/ && npm run test
+        run: npm run build
 
+      - name: download deps for test
+        working-directory: ./
+        run: npm ci
+        
       - name: Test Decoder
         working-directory: ./decode
-        run: npm run test
+        run: cd ./decode/ && npm run test
 
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
