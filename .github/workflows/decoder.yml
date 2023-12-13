@@ -22,7 +22,7 @@ jobs:
 
       - name: Build files
         working-directory: ./decode
-        run: npm run build
+        run: cd ./decode/ && npm run test
 
       - name: Test Decoder
         working-directory: ./decode
