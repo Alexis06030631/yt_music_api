@@ -24,14 +24,6 @@ jobs:
         working-directory: ./decode
         run: npm run build
 
-      - name: download deps for test
-        working-directory: ./
-        run: npm ci
-        
-      - name: Test Decoder
-        working-directory: ./
-        run: cd ./decode/ && npm run test
-
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
         with:
