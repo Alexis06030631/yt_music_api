@@ -43,7 +43,7 @@ function buildFunc_keyDecrypt(data=searchInFunction('b=void 0===b\\?"":b;c=void 
 }
 buildFunc_fastDownload()
 function buildFunc_fastDownload(){
-	let data = jsbase.match(/(var b=a\.split\(""\),c=(.|\n)*?};)/m)
+	let data = jsbase.match(/(var b=a\.split\(""\),c=(.|\n)*?};$)/m)
 	data = `function fastDownload(a){`+data[0]
 	fs.writeFileSync(path.join(__dirname, './mappers/temp_fastDownload.js'), data)
 }
