@@ -1,13 +1,14 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music, Playlist ,Home} from "../models/";
+import {Music, Playlist ,Home, Album} from "../models/";
 import {searchManager} from "../index";
-import {extract_dataFromGetData, extract_dataFromListItemRenderer} from "../utils/extract";
+import {extract_dataFromGetData, extract_dataFromListItemRenderer, extract_dataFromPlaylist} from "../utils/extract";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
-import {TypeSearch, TypeSearch_arr, TypeSearch_param} from '../types/TypeSearch';
+import {TypeSearchData, TypeSearch, TypeSearch_param, getTypeSearchParam} from '../types/TypeSearch';
 import * as fs from "fs";
 import {getAllObjects, normalizeObjectUnits} from "../utils/typeBuilder";
 import {TypeunitOfTime} from "../types/TypePage";
+
 
 
 /**
@@ -15,31 +16,28 @@ import {TypeunitOfTime} from "../types/TypePage";
  * @param query - Query to search
  * @param type - Type of search
  */
-export async function search (query: string, type: TypeSearch_param = TypeSearch.MUSIC): Promise<Array<Music>> {
+export async function search (query: string, type:string| TypeSearch_param = TypeSearch[0]): Promise<Array<(Music|Album)>> {
     // Check If type is valid with TypeSearch
-    if(!TypeSearch_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch_arr})
+    type = type.toUpperCase()
+    if(!TypeSearch.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch})
     if(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
         return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))]
     }else {
-        let data:any
+        let data:any = []
         const resp_data: Array<Music> = []
-        if(type === TypeSearch.MUSIC || type === TypeSearch.VIDEO) {
-            if(type === TypeSearch.MUSIC) {
-                const music_data:any = await requestToYtApi('search', {
-                    "query": query,
-                    "params": MUSIC_param,
-                })
-                data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
-            }else if(type === TypeSearch.VIDEO) {
-                const music_data:any = await requestToYtApi('search', {
-                    "query": query,
-                    "params": VIDEO_param,
-                })
-                data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Videos')[0].musicShelfRenderer.contents
-            }
-            for (const item of data) {
-                resp_data.push(new Music(extract_dataFromGetData(await GetData(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
-            }
+        const typeSearch:any = getTypeSearchParam(type)
+        if(typeSearch?.param){
+            const music_data:any = await requestToYtApi('search', {
+                "query": query,
+                "params": typeSearch.param,
+            })
+            data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === typeSearch.ytID)[0]
+            data = data[Object.keys(data)[0]]?.contents || []
+        }
+        for (const item of data) {
+            if(type === 'ALBUM') {
+                resp_data.push(new Album(extract_dataFromPlaylist(item.musicResponsiveListItemRenderer)))
+            }else resp_data.push(new Music(extract_dataFromGetData(await GetData(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
         }
         return resp_data
     }
@@ -132,13 +130,13 @@ export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
  * Get the relative musics of a music
  * @param ID - The id of the music
  */
-export async function relative (ID: string): Promise<Array<Music>> {
+export async function relative(ID: string): Promise<Array<Music>> {
     return new Promise(async (resolve) => {
         requestToYtApi('next', {
             "videoId": ID,
         }).then(async (res: any) => {
             const autoMix = res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[1].automixPreviewVideoRenderer.content.automixPlaylistVideoRenderer.navigationEndpoint.watchPlaylistEndpoint
-            requestToYtApi('https://music.youtube.com/youtubei/v1/next?key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30&prettyPrint=false', {
+            requestToYtApi('https://music.youtube.com/youtubei/v1/next?prettyPrint=false', {
                 "params": autoMix.params,
                 "isAudioOnly": true,
                 "playlistId": autoMix.playlistId,
@@ -158,7 +156,7 @@ export async function relative (ID: string): Promise<Array<Music>> {
  * Get the music by id
  * @param id - The id of the music
  */
-export async function get (id: string): Promise<Music> {
+export async function get(id: string): Promise<Music> {
     return new Promise(async (resolve, reject) => {
         GetData(id).then((e:any) => {
             return resolve(new Music(extract_dataFromGetData(e)))

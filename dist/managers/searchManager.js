@@ -26,36 +26,34 @@ const typeBuilder_1 = require("../utils/typeBuilder");
  * @param query - Query to search
  * @param type - Type of search
  */
-function search(query, type = TypeSearch_1.TypeSearch.MUSIC) {
-    var _a, _b, _c, _d, _e;
+function search(query, type = TypeSearch_1.TypeSearch[0]) {
+    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function* () {
         // Check If type is valid with TypeSearch
-        if (!TypeSearch_1.TypeSearch_arr.includes(type))
-            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch_arr });
+        type = type.toUpperCase();
+        if (!TypeSearch_1.TypeSearch.includes(type))
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch });
         if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
             return [new models_1.Music(yield GetData(((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || ''))];
         }
         else {
-            let data;
+            let data = [];
             const resp_data = [];
-            if (type === TypeSearch_1.TypeSearch.MUSIC || type === TypeSearch_1.TypeSearch.VIDEO) {
-                if (type === TypeSearch_1.TypeSearch.MUSIC) {
-                    const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
-                        "query": query,
-                        "params": MUSIC_param,
-                    });
-                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Songs'; })[0].musicShelfRenderer.contents;
+            const typeSearch = (0, TypeSearch_1.getTypeSearchParam)(type);
+            if (typeSearch === null || typeSearch === void 0 ? void 0 : typeSearch.param) {
+                const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
+                    "query": query,
+                    "params": typeSearch.param,
+                });
+                data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === typeSearch.ytID; })[0];
+                data = ((_c = data[Object.keys(data)[0]]) === null || _c === void 0 ? void 0 : _c.contents) || [];
+            }
+            for (const item of data) {
+                if (type === 'ALBUM') {
+                    resp_data.push(new models_1.Album((0, extract_1.extract_dataFromPlaylist)(item.musicResponsiveListItemRenderer)));
                 }
-                else if (type === TypeSearch_1.TypeSearch.VIDEO) {
-                    const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
-                        "query": query,
-                        "params": VIDEO_param,
-                    });
-                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Videos'; })[0].musicShelfRenderer.contents;
-                }
-                for (const item of data) {
-                    resp_data.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_d = (_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId) || ((_e = item.musicResponsiveListItemRenderer) === null || _e === void 0 ? void 0 : _e.onTap.watchEndpoint.videoId)))));
-                }
+                else
+                    resp_data.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_e = (_d = item.musicResponsiveListItemRenderer) === null || _d === void 0 ? void 0 : _d.playlistItemData) === null || _e === void 0 ? void 0 : _e.videoId) || ((_f = item.musicResponsiveListItemRenderer) === null || _f === void 0 ? void 0 : _f.onTap.watchEndpoint.videoId)))));
             }
             return resp_data;
         }
@@ -159,7 +157,7 @@ function relative(ID) {
                 "videoId": ID,
             }).then((res) => __awaiter(this, void 0, void 0, function* () {
                 const autoMix = res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[1].automixPreviewVideoRenderer.content.automixPlaylistVideoRenderer.navigationEndpoint.watchPlaylistEndpoint;
-                (0, requestManager_1.requestToYtApi)('https://music.youtube.com/youtubei/v1/next?key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30&prettyPrint=false', {
+                (0, requestManager_1.requestToYtApi)('https://music.youtube.com/youtubei/v1/next?prettyPrint=false', {
                     "params": autoMix.params,
                     "isAudioOnly": true,
                     "playlistId": autoMix.playlistId,

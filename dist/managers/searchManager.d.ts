@@ -1,4 +1,4 @@
-import { Music, Playlist, Home } from "../models/";
+import { Music, Playlist, Home, Album } from "../models/";
 import { TypeSearch_param } from '../types/TypeSearch';
 import { TypeunitOfTime } from "../types/TypePage";
 /**
@@ -6,7 +6,7 @@ import { TypeunitOfTime } from "../types/TypePage";
  * @param query - Query to search
  * @param type - Type of search
  */
-export declare function search(query: string, type?: TypeSearch_param): Promise<Array<Music>>;
+export declare function search(query: string, type?: string | TypeSearch_param): Promise<Array<(Music | Album)>>;
 /**
  * Get the home page (NOT WORKING)
  * @param type - Type of page to get

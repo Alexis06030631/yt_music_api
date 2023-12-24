@@ -75,6 +75,34 @@ export function extract_dataFromListItemRenderer(data:any):Music_model {
 }
 
 
+export function extract_dataFromPlaylist(data:any):any {
+    let artists:any = [], date:number=0, name:string='', id:string
+    for (let item of data?.flexColumns || []) {
+        if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.length > 1){
+            for (let itemtext of item.musicResponsiveListItemFlexColumnRenderer.text.runs) {
+                if(itemtext.navigationEndpoint?.browseEndpoint?.browseId) {
+                    artists.push(new Artist({
+                        name: itemtext.text,
+                        id: itemtext.navigationEndpoint?.browseEndpoint?.browseId
+                    }))
+                }else if(itemtext.text.match(/([0-9]{4})/g)) {
+                    date = parseInt(itemtext.text)
+                }
+            }
+        }else if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.text){
+            name = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
+        }
+    }
+    id = data?.navigationEndpoint?.browseEndpoint?.browseId
+    return {
+        artworks: data.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
+        name,
+        id,
+        artists: artists,
+        date: date
+    }
+}
+
 
 function timeToSec(time: string) {
     const time_split = time.split(':')

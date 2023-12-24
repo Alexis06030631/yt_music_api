@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extract_dataFromListItemRenderer = exports.extract_dataFromGetData = void 0;
+exports.extract_dataFromPlaylist = exports.extract_dataFromListItemRenderer = exports.extract_dataFromGetData = void 0;
 const models_1 = require("../models/");
 function extract_dataFromGetData(data) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
@@ -80,6 +80,37 @@ function extract_dataFromListItemRenderer(data) {
     });
 }
 exports.extract_dataFromListItemRenderer = extract_dataFromListItemRenderer;
+function extract_dataFromPlaylist(data) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+    let artists = [], date = 0, name = '', id;
+    for (let item of (data === null || data === void 0 ? void 0 : data.flexColumns) || []) {
+        if (((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemFlexColumnRenderer) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.runs) === null || _c === void 0 ? void 0 : _c.length) > 1) {
+            for (let itemtext of item.musicResponsiveListItemFlexColumnRenderer.text.runs) {
+                if ((_e = (_d = itemtext.navigationEndpoint) === null || _d === void 0 ? void 0 : _d.browseEndpoint) === null || _e === void 0 ? void 0 : _e.browseId) {
+                    artists.push(new models_1.Artist({
+                        name: itemtext.text,
+                        id: (_g = (_f = itemtext.navigationEndpoint) === null || _f === void 0 ? void 0 : _f.browseEndpoint) === null || _g === void 0 ? void 0 : _g.browseId
+                    }));
+                }
+                else if (itemtext.text.match(/([0-9]{4})/g)) {
+                    date = parseInt(itemtext.text);
+                }
+            }
+        }
+        else if ((_l = (_k = (_j = (_h = item === null || item === void 0 ? void 0 : item.musicResponsiveListItemFlexColumnRenderer) === null || _h === void 0 ? void 0 : _h.text) === null || _j === void 0 ? void 0 : _j.runs) === null || _k === void 0 ? void 0 : _k[0]) === null || _l === void 0 ? void 0 : _l.text) {
+            name = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+        }
+    }
+    id = (_o = (_m = data === null || data === void 0 ? void 0 : data.navigationEndpoint) === null || _m === void 0 ? void 0 : _m.browseEndpoint) === null || _o === void 0 ? void 0 : _o.browseId;
+    return {
+        artworks: data.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails.map((e) => new models_1.Artwork(e)),
+        name,
+        id,
+        artists: artists,
+        date: date
+    };
+}
+exports.extract_dataFromPlaylist = extract_dataFromPlaylist;
 function timeToSec(time) {
     const time_split = time.split(':');
     let time_sec = 0;
