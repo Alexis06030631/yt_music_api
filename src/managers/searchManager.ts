@@ -24,7 +24,7 @@ export async function search (query: string, type:string| TypeSearch_param = Typ
         return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))]
     }else {
         let data:any = []
-        const resp_data: Array<Music> = []
+        const resp_data: any = []
         const typeSearch:any = getTypeSearchParam(type)
         if(typeSearch?.param){
             const music_data:any = await requestToYtApi('search', {
