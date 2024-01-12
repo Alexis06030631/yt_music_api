@@ -110,7 +110,9 @@ ULa.bn(a,64);
 return a.join("")
 }
 
-var uLa={Jfb:0,Hfb:1,Gfb:2,Ifb:3};
+var ULa={xP:function(a,b){a.splice(0,b)},
+Yn:function(a){a.reverse()},
+bn:function(a,b){var c=a[0];a[0]=a[b%a.length];a[b%a.length]=c}};
 
 function fastDownload(a){var b=a.split(""),c=[null,-1185985974,-322929366,8219557,function(d,e,f,h,l,m){return e(h,l,m)},
 -470463305,39813769,-970015448,-99456862,-1620179882,-575124026,353763061,b,/(,{(;)[)])];/,939408680,-523705008,2038862224,function(d,e,f){var h=d.length;f.forEach(function(l,m,n){this.push(n[m]=d[(d.indexOf(l)-d.indexOf(this[m])+m+h--)%d.length])},e.split(""))},
