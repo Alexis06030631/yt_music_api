@@ -69,6 +69,7 @@ function orgaCompose(a, b, c) {
 }
 
 function decode(format){
+	if(format.url) return format.url
 	const m = mapDecompose(format)
 	const url = orgaCompose(//REPLACE_vals)
 	// extract every params of url and add params to object
