@@ -110,7 +110,6 @@ function download(id, type = 'mp3', quality) {
                 download.url = decode(download);
             }
             catch (e) {
-                console.log(e);
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, e));
             }
             download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);

@@ -21,7 +21,7 @@ const cache = new NodeCache({stdTTL: 3600})
 
 function fetchScript(): Promise<any> {
     return new Promise((resolve, reject) => {
-        if (true || process.env.buildProd) {
+        if (process.env.buildProd) {
             process.emitWarning('You are using a production build, the decoder will be downloaded from the internet. If you want to use a local decoder, please use a development build.')
             return resolve(require(path.join(__dirname, '../../decode/build/decoder.js')))
         }
@@ -30,7 +30,6 @@ function fetchScript(): Promise<any> {
             return res.text()
         }).then(res => {
             cache.set('decoder', res)
-            console.log(res)
             return resolve(eval(res))
         })
     })

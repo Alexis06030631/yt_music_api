@@ -87,7 +87,6 @@ export function download(id: string, type: DownloadType_param = 'mp3', quality?:
             try {
                 download.url = decode(download)
             } catch (e) {
-                console.log(e)
                 return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, e))
             }
             download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000)
