@@ -71,9 +71,15 @@ exports.getMp3 = getMp3;
 function download(id, type = 'mp3', quality) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
         if (!DownloadType_1.DownloadType_arr.includes(type))
-            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_DOWNLOAD, { typeRequested: type, typesAvailable: DownloadType_1.DownloadType_arr });
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_DOWNLOAD, {
+                typeRequested: type,
+                typesAvailable: DownloadType_1.DownloadType_arr
+            });
         if (quality && !DownloadQuality_1.DownloadQuality_arr.includes(quality))
-            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, { typeRequested: quality, typesAvailable: DownloadQuality_1.DownloadQuality_arr });
+            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_QUALITY, {
+                typeRequested: quality,
+                typesAvailable: DownloadQuality_1.DownloadQuality_arr
+            });
         type = type.replace('mp3', 'mp4');
         getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
             const decode = yield (0, getDecode_1.getDecodeScript)();
@@ -96,12 +102,15 @@ function download(id, type = 'mp3', quality) {
                 download = download.sort((a, b) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1];
             }
             if (!download)
-                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, { typeRequested: type, qualityRequested: quality || 'default' }));
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DOWNLOAD_LINK_NOT_FOUND, {
+                    typeRequested: type,
+                    qualityRequested: quality || 'default'
+                }));
             try {
                 download.url = decode(download);
             }
             catch (e) {
-                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, { error: e }));
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.DECHIPHER_ERROR, e));
             }
             download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000);
             resolve(new models_1.Download(download));
@@ -138,7 +147,6 @@ function getStreamPlayers(id) {
 exports.getStreamPlayers = getStreamPlayers;
 function getPlayer(videoId, body = {}) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        let time = (new Date()).getTime().toString();
         (0, requestManager_1.requestToYtApi)('player?key=', {
             videoId: videoId,
             "context": {

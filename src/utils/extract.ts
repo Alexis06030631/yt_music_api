@@ -1,30 +1,30 @@
-import {Music_model, Artist, Album, Artwork, Duration} from "../models/";
+import {Album, Artist, Artwork, Duration, Music_model} from "../models/";
 
 
-export function extract_dataFromGetData(data:any):Music_model {
-    let artists:any = []
-    let album:any = []
-    let date:number = 0
+export function extract_dataFromGetData(data: any): Music_model {
+    let artists: any = []
+    let album: any = []
+    let date: number = 0
     for (let item of data?.longBylineText?.runs || []) {
         // Get Author(s)
-        if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')){
+        if (item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')) {
             artists.push(new Artist({
                 name: item.text,
                 id: item.navigationEndpoint?.browseEndpoint?.browseId
             }))
             // Get Album if exists
-        }else if(item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType.includes('ALBUM')){
+        } else if (item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType.includes('ALBUM')) {
             album = new Album({
                 name: item.text,
                 id: item.navigationEndpoint?.browseEndpoint?.browseId
             })
             // Get Date if exists
-        }else {
-            if(item.text.match(/([0-9]{4})/g)) date = parseInt(item.text)
+        } else {
+            if (item.text.match(/([0-9]{4})/g)) date = parseInt(item.text)
         }
     }
 
-    if(artists.length === 0) artists.push(new Artist({
+    if (artists.length === 0) artists.push(new Artist({
         name: data?.shortBylineText?.runs?.[0]?.text,
         id: null
     }))
@@ -37,7 +37,7 @@ export function extract_dataFromGetData(data:any):Music_model {
         artists: artists,
         album: album,
         date: date,
-        explicit: data?.badges?.find((e)=>e.musicInlineBadgeRenderer?.icon?.iconType === 'MUSIC_EXPLICIT_BADGE').musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE',
+        explicit: data?.badges?.find((e) => e.musicInlineBadgeRenderer?.icon?.iconType === 'MUSIC_EXPLICIT_BADGE').musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE',
         duration: new Duration({
             seconds: timeToSec(data.lengthText?.runs?.[0]?.text || '0:00'),
             text: data.lengthText?.runs?.[0]?.text,
@@ -46,14 +46,14 @@ export function extract_dataFromGetData(data:any):Music_model {
     })
 }
 
-export function extract_dataFromListItemRenderer(data:any):Music_model {
-    let artists:any = [], album:any=[], date:number=0, title:string='', id:string, type:string=''
+export function extract_dataFromListItemRenderer(data: any): Music_model {
+    let artists: any = [], album: any = [], date: number = 0, title: string = '', id: string, type: string = ''
     for (let item of data?.flexColumns || []) {
-        if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId){
+        if (item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId) {
             title = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
             id = item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint.watchEndpoint?.videoId
             type = item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType
-        }else if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.browseEndpoint?.browseId){
+        } else if (item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.browseEndpoint?.browseId) {
             artists.push(new Artist({
                 name: item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text,
                 id: item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.browseEndpoint?.browseId
@@ -75,29 +75,27 @@ export function extract_dataFromListItemRenderer(data:any):Music_model {
 }
 
 
-export function extract_dataFromPlaylist(data:any):any {
-    let artists:any = [], date:number=0, name:string='', id:string
-    for (let item of data?.flexColumns || []) {
-        if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.length > 1){
-            for (let itemtext of item.musicResponsiveListItemFlexColumnRenderer.text.runs) {
-                if(itemtext.navigationEndpoint?.browseEndpoint?.browseId) {
-                    artists.push(new Artist({
-                        name: itemtext.text,
-                        id: itemtext.navigationEndpoint?.browseEndpoint?.browseId
-                    }))
-                }else if(itemtext.text.match(/([0-9]{4})/g)) {
-                    date = parseInt(itemtext.text)
-                }
-            }
-        }else if(item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.text){
-            name = item.musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
+export function extract_dataFromPlaylist(data: any): any {
+    let artists: any = [], date: number = 0, name: string = '', id: string
+
+    for (let item of data.header.musicDetailHeaderRenderer?.subtitle?.runs || []) {
+        // Check if the item is an artist
+        if (item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')) {
+            artists.push(new Artist({
+                name: item.text,
+                id: item.navigationEndpoint?.browseEndpoint?.browseId
+            }))
+            // Check if the item is a date
+        } else {
+            if (item.text.match(/([0-9]{4})/g)) date = parseInt(item.text)
         }
     }
-    id = data?.navigationEndpoint?.browseEndpoint?.browseId
+
     return {
-        artworks: data.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
-        name,
-        id,
+        artworks: data.header.musicDetailHeaderRenderer.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
+        name: data.header.musicDetailHeaderRenderer.title.runs[0].text,
+        description: data.header.musicDetailHeaderRenderer?.description?.runs?.[0]?.text,
+        id: data.responseContext?.serviceTrackingParams?.find((e: any) => e.service === 'GFEEDBACK').params.find((e: any) => e.key === 'browse_id').value.split('/').pop(),
         artists: artists,
         date: date
     }

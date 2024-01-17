@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTypeSearchParam = exports.TypeSearch = exports.TypeSearchData = void 0;
 class TypeSearchData {
 }
+exports.TypeSearchData = TypeSearchData;
 TypeSearchData.MUSIC = {
     param: 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
     ytID: 'Songs'
@@ -15,8 +16,11 @@ TypeSearchData.ALBUM = {
     param: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D',
     ytID: 'Albums'
 };
-exports.TypeSearchData = TypeSearchData;
-exports.TypeSearch = ['MUSIC', 'VIDEO', 'ALBUM'];
+TypeSearchData.ALL = {
+    param: '',
+    ytID: ''
+};
+exports.TypeSearch = ['MUSIC', 'VIDEO', 'ALBUM', 'ALL'];
 function getTypeSearchParam(search) {
     if (exports.TypeSearch.includes(search)) {
         return TypeSearchData[search];

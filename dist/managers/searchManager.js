@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetData = exports.getPlaylist = exports.get = exports.relative = exports.getPage = exports.search = void 0;
+exports.GetDataPl = exports.GetDataVid = exports.getPlaylist = exports.get = exports.relative = exports.getPage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const models_1 = require("../models/");
 const index_1 = require("../index");
@@ -21,42 +21,83 @@ const errors_1 = require("../errors");
 const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
 const typeBuilder_1 = require("../utils/typeBuilder");
+const Search_1 = __importDefault(require("../models/Search"));
 /**
  * Search music, video or other with query
  * @param query - Query to search
  * @param type - Type of search
  */
 function search(query, type = TypeSearch_1.TypeSearch[0]) {
-    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function* () {
-        // Check If type is valid with TypeSearch
-        type = type.toUpperCase();
-        if (!TypeSearch_1.TypeSearch.includes(type))
-            throw new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, { typeRequested: type, typesAvailable: TypeSearch_1.TypeSearch });
-        if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
-            return [new models_1.Music(yield GetData(((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || ''))];
-        }
-        else {
-            let data = [];
-            const resp_data = [];
-            const typeSearch = (0, TypeSearch_1.getTypeSearchParam)(type);
-            if (typeSearch === null || typeSearch === void 0 ? void 0 : typeSearch.param) {
-                const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
-                    "query": query,
-                    "params": typeSearch.param,
-                });
-                data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === typeSearch.ytID; })[0];
-                data = ((_c = data[Object.keys(data)[0]]) === null || _c === void 0 ? void 0 : _c.contents) || [];
-            }
-            for (const item of data) {
-                if (type === 'ALBUM') {
-                    resp_data.push(new models_1.Album((0, extract_1.extract_dataFromPlaylist)(item.musicResponsiveListItemRenderer)));
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            type = type.toUpperCase();
+            if (!TypeSearch_1.TypeSearch.includes(type))
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, {
+                    typeRequested: type,
+                    typesAvailable: TypeSearch_1.TypeSearch
+                }));
+            let searchs = [];
+            let typeSearch = (0, TypeSearch_1.getTypeSearchParam)(type);
+            if (query.match(/^(?:https?:\/\/)?(?:www\.|music\.)?(?:youtube\.com|youtu\.?be)\/.+$/)) {
+                const url = new URL(query);
+                if (!url.hostname.includes('youtube'))
+                    return reject(new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_URL, url.hostname));
+                if (url.searchParams.get('list')) {
+                    try {
+                        return resolve([new models_1.Album(yield GetDataPl(url.searchParams.get('list') || ''))]);
+                    }
+                    catch (e) {
+                        return reject(e);
+                    }
                 }
+                else if (url.searchParams.get('v')) {
+                    try {
+                        return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid(url.searchParams.get('v') || '')))]);
+                    }
+                    catch (e) {
+                        return reject(e);
+                    }
+                }
+                else if (url.pathname.includes('channel'))
+                    return reject(new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED));
                 else
-                    resp_data.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetData(((_e = (_d = item.musicResponsiveListItemRenderer) === null || _d === void 0 ? void 0 : _d.playlistItemData) === null || _e === void 0 ? void 0 : _e.videoId) || ((_f = item.musicResponsiveListItemRenderer) === null || _f === void 0 ? void 0 : _f.onTap.watchEndpoint.videoId)))));
+                    return reject(new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_URL, url.hostname));
             }
-            return resp_data;
-        }
+            else if ((_a = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _a === void 0 ? void 0 : _a[1]) {
+                return resolve([new models_1.Music(yield GetDataVid(((_b = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || ''))]);
+            }
+            const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
+                "query": query,
+                "params": typeSearch.param,
+            });
+            if (!typeSearch.param) {
+                for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text.includes(typeSearch.ytID); })) {
+                    if ((_d = (_c = item.musicShelfRenderer) === null || _c === void 0 ? void 0 : _c.contents) === null || _d === void 0 ? void 0 : _d.length) {
+                        for (const music of item.musicShelfRenderer.contents) {
+                            // Get type of music
+                            if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && ((_f = (_e = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _e === void 0 ? void 0 : _e.watchEndpoint) === null || _f === void 0 ? void 0 : _f.videoId)) {
+                                try {
+                                    searchs.push((yield this.search(`https://music.youtube.com/watch?v=${(_h = (_g = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpoint) === null || _h === void 0 ? void 0 : _h.videoId}`, 'MUSIC'))[0]);
+                                }
+                                catch (e) {
+                                    reject(e);
+                                }
+                            }
+                            else if (item.musicShelfRenderer.title.runs[0].text === 'Albums') {
+                                searchs.push((yield this.search(`https://music.youtube.com/playlist?list=${music.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId}`, 'ALBUM'))[0]);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!searchs.length)
+                return reject(new errors_1.YTjsErrorError(errorCodes_1.default.NOT_FOUND, query));
+            else if (!typeSearch.param)
+                return resolve(new Search_1.default(query, searchs));
+            else
+                resolve(searchs);
+        }));
     });
 }
 exports.search = search;
@@ -121,7 +162,7 @@ function getPage(type) {
                                                 if (!resp_data.music_list.find((e: any) => e.title === title_music_list))
                                                     resp_data.music_list.push({title: title_music_list, musics: []})
                                                 resp_data.music_list.find((e: any) => e.title === title_music_list).musics.push(
-                                                    extract_dataFromGetData(await searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId))
+                                                    extract_dataFromGetData(await searchManager.GetDataVid(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId))
                                                 )
                                             }
                                         }
@@ -181,7 +222,7 @@ exports.relative = relative;
 function get(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            GetData(id).then((e) => {
+            GetDataVid(id).then((e) => {
                 return resolve(new models_1.Music((0, extract_1.extract_dataFromGetData)(e)));
             }).catch((e) => __awaiter(this, void 0, void 0, function* () {
                 reject(e);
@@ -204,7 +245,7 @@ function getPlaylist(id) {
                 yield new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                     const music_list = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer.contents;
                     for (let i = 0; music_list.length > i; i++) {
-                        //musics.push(extract_dataFromGetData(await GetData(music_list[i].musicResponsiveListItemRenderer.playlistItemData.videoId)))
+                        //musics.push(extract_dataFromGetData(await GetDataVid(music_list[i].musicResponsiveListItemRenderer.playlistItemData.videoId)))
                         if (music_list.length === i + 1)
                             resolve(null);
                     }
@@ -229,7 +270,7 @@ function recursiveGetRelative(data, i = 0) {
         console.log(i);
         if (i < 0)
             return resolve(data);
-        const data2 = yield index_1.searchManager.GetData(data.musicCarouselShelfRenderer.contents[i].musicResponsiveListItemRenderer.playlistItemData.videoId);
+        const data2 = yield index_1.searchManager.GetDataVid(data.musicCarouselShelfRenderer.contents[i].musicResponsiveListItemRenderer.playlistItemData.videoId);
         if (data2.videoId) {
             data.musicCarouselShelfRenderer.contents[i] = data2;
             return resolve(yield recursiveGetRelative(data, i - 1));
@@ -238,7 +279,7 @@ function recursiveGetRelative(data, i = 0) {
             return resolve(data);
     }));
 }
-function GetData(id) {
+function GetDataVid(id) {
     return new Promise((resolve, reject) => {
         (0, requestManager_1.requestToYtApi)('next', {
             "videoId": id
@@ -251,6 +292,15 @@ function GetData(id) {
         }).catch(reject);
     });
 }
-exports.GetData = GetData;
-const MUSIC_param = 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D', VIDEO_param = 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D';
+exports.GetDataVid = GetDataVid;
+function GetDataPl(id) {
+    return new Promise((resolve, reject) => {
+        (0, requestManager_1.requestToYtApi)('browse', {
+            "browseId": id
+        }).then((res) => {
+            resolve((0, extract_1.extract_dataFromPlaylist)(res.data));
+        }).catch(reject);
+    });
+}
+exports.GetDataPl = GetDataPl;
 //# sourceMappingURL=searchManager.js.map

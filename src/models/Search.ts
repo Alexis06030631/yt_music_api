@@ -1,54 +1,28 @@
-import {promises} from "dns";
-import {requestToYtApi} from "../utils/requestManager";
-import {Artwork, Artist} from "./";
+import Music from "./Music";
+import Album from "./Album";
 
-export default class Music {
+export default class Search {
     /**
-     * An array of Artwork objects
+     * The query of the search
      */
-    public artworks: Array<Artwork>;
+    public query: string;
     /**
-     * The YTmusic id of the music
+     * An array of musics
      */
-    public id: string;
+    public musics: Array<Music>;
     /**
-     * The title of the music
+     * An array of musics videos
      */
-    public name: string;
+    public videos: Array<Music>;
     /**
-     * The artist of the music
+     * An array of albums
      */
-    public artist: Artist;
-    /**
-     * The type of the video (audio or video)
-     */
-    public typeVideo: string
-    private artist_data: object;
+    public albums: Array<Album>;
 
-    constructor(search_result: any) {
-        this.artworks = search_result.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails
-        this.id = search_result.playlistItemData.videoId
-
-        this.name = search_result.flexColumns.find((item: any) => item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId === this.id).musicResponsiveListItemFlexColumnRenderer.text.runs[0].text
-        this.artist = new Artist({
-            name: this.extractArtistData(search_result)?.text,
-            id: this.extractArtistData(search_result)?.navigationEndpoint?.browseEndpoint?.browseId
-        })
-        this.typeVideo = search_result?.flexColumns?.find((item: any) => item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.videoId === this.id)?.musicResponsiveListItemFlexColumnRenderer?.text?.runs?.[0]?.navigationEndpoint?.watchEndpoint?.watchEndpointMusicSupportedConfigs?.watchEndpointMusicConfig?.musicVideoType
-    }
-
-    extractArtistData(search_result: any):any {
-        let artist_dt = {}
-        search_result.flexColumns.find((item: any) => {
-            artist_dt = item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs.find((item2: any) => item2?.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST' || item2?.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_USER_CHANNEL')
-            return item?.musicResponsiveListItemFlexColumnRenderer?.text?.runs.find((item2: any) => {
-                return item2?.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST' || item2?.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_USER_CHANNEL'
-            })?.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType === 'MUSIC_PAGE_TYPE_ARTIST'
-        })
-        return artist_dt
-    }
-
-    getLink(): string {
-        return `https://music.youtube.com/watch?v=${this.id}`
+    constructor(query: string, search_result: any) {
+        this.query = query
+        this.musics = search_result.filter((item: any) => Music.prototype.isPrototypeOf(item) && item.isAudioOnly)
+        this.videos = search_result.filter((item: any) => Music.prototype.isPrototypeOf(item) && !item.isAudioOnly)
+        this.albums = search_result.filter((item: any) => Album.prototype.isPrototypeOf(item))
     }
 }

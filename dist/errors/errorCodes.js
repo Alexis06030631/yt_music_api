@@ -14,6 +14,10 @@ const ErrorCode = {
     DECHIPHER_ERROR: 'DECHIPHER_ERROR',
     INVALID_TYPE_BUILDER: 'INVALID_TYPE_BUILDER',
     INVALID_TYPE_PAGE: 'INVALID_TYPE_PAGE',
+    INVALID_URL: 'INVALID_URL',
+    NOT_FOUND: 'NOT_FOUND',
+    /* Axios Errors */
+    ENOTFOUND: 'ENOTFOUND'
 };
 exports.default = ErrorCode;
 //# sourceMappingURL=errorCodes.js.map

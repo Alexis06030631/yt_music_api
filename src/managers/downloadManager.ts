@@ -1,7 +1,6 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {decode} from "../utils/decodeCipher";
-import { DownloadQuality_arr, DownloadQuality_param} from "../types/DownloadQuality";
-import { DownloadType_arr, DownloadType_param} from "../types/DownloadType";
+import {DownloadQuality_arr, DownloadQuality_param} from "../types/DownloadQuality";
+import {DownloadType_arr, DownloadType_param} from "../types/DownloadType";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
 import {Download, StreamPlayers} from "../models/";
@@ -13,7 +12,7 @@ import {getDecodeScript, getSignatureTimestamp} from "../utils/getDecode";
  * @deprecated This function is deprecated, use download() instead
  * @param id - The id of the music
  */
-export async function getWebm (id: string): Promise<any> {
+export async function getWebm(id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getWebm', 'download')
         const decode = await getDecodeScript()
@@ -32,7 +31,7 @@ export async function getWebm (id: string): Promise<any> {
  * @deprecated This function has been replaced by `download(ID, 'mp3')`
  * @param id - The id of the music
  */
-export async function getMp3 (id: string): Promise<any> {
+export async function getMp3(id: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
         deprecated('getMp3', 'download')
         const decode = await getDecodeScript()
@@ -53,35 +52,44 @@ export async function getMp3 (id: string): Promise<any> {
  * @param type - The type of the music (available: DownloadType_param)
  * @param quality - The quality of the music (available: DownloadQuality_param)
  */
-export function download(id: string, type:DownloadType_param='mp3', quality?:DownloadQuality_param): Promise<Download> {
+export function download(id: string, type: DownloadType_param = 'mp3', quality?: DownloadQuality_param): Promise<Download> {
     return new Promise(async (resolve, reject) => {
-        if(!DownloadType_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_DOWNLOAD, {typeRequested:type, typesAvailable:DownloadType_arr})
-        if(quality && !DownloadQuality_arr.includes(quality)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_QUALITY, {typeRequested:quality, typesAvailable:DownloadQuality_arr})
+        if (!DownloadType_arr.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_DOWNLOAD, {
+            typeRequested: type,
+            typesAvailable: DownloadType_arr
+        })
+        if (quality && !DownloadQuality_arr.includes(quality)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_QUALITY, {
+            typeRequested: quality,
+            typesAvailable: DownloadQuality_arr
+        })
         type = type.replace('mp3', 'mp4')
 
         getPlayer(id).then(async (res: any) => {
             const decode = await getDecodeScript()
             if (!res.streamingData) return reject(res.playabilityStatus)
             let download = res.streamingData.adaptiveFormats.filter((item: any) => {
-                if((type === 'mp4' || type === 'webm') && !!item.audioQuality) return item.mimeType.includes(type)
+                if ((type === 'mp4' || type === 'webm') && !!item.audioQuality) return item.mimeType.includes(type)
             })
-            if(quality === 'high'){
+            if (quality === 'high') {
                 download = download.sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
-            }else if(quality === 'low') {
+            } else if (quality === 'low') {
                 download = download.sort((a: any, b: any) => a.bitrate - b.bitrate)[0]
-            }else if(quality === 'medium') {
-                download = download.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(download.length / 2)-1]
-            }else {
-                download = download.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(download.length / 2)-1]
+            } else if (quality === 'medium') {
+                download = download.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1]
+            } else {
+                download = download.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(download.length / 2) - 1]
             }
 
-            if(!download) return reject(new YTjsErrorError(ErrorCode.DOWNLOAD_LINK_NOT_FOUND, {typeRequested:type, qualityRequested:quality||'default'}))
-            try{
+            if (!download) return reject(new YTjsErrorError(ErrorCode.DOWNLOAD_LINK_NOT_FOUND, {
+                typeRequested: type,
+                qualityRequested: quality || 'default'
+            }))
+            try {
                 download.url = decode(download)
-            }catch (e) {
-                return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, {error:e}))
+            } catch (e) {
+                return reject(new YTjsErrorError(ErrorCode.DECHIPHER_ERROR, e))
             }
-            download.expireDate =  new Date(parseInt(download.url.split('expire=')[1].split('&')[0])*1000)
+            download.expireDate = new Date(parseInt(download.url.split('expire=')[1].split('&')[0]) * 1000)
 
             resolve(new Download(download))
         })
@@ -90,17 +98,17 @@ export function download(id: string, type:DownloadType_param='mp3', quality?:Dow
 
 export function getStreamPlayers(id: string): Promise<StreamPlayers> {
     return new Promise((resolve, reject) => {
-        getPlayer(id).then(async(res: any) => {
+        getPlayer(id).then(async (res: any) => {
             const decode = await getDecodeScript()
             let audio = res.streamingData?.adaptiveFormats?.filter((item: any) => item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             let video = res.streamingData?.adaptiveFormats?.filter((item: any) => !item.audioQuality)?.sort((a: any, b: any) => b.bitrate - a.bitrate) || []
             audio.forEach((item: any) => {
                 item.url = decode(item)
-                item.expireDate =  new Date(parseInt(item.url.split('expire=')[1].split('&')[0])*1000)
+                item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000)
             })
             video.forEach((item: any) => {
                 item.url = decode(item)
-                item.expireDate =  new Date(parseInt(item.url.split('expire=')[1].split('&')[0])*1000)
+                item.expireDate = new Date(parseInt(item.url.split('expire=')[1].split('&')[0]) * 1000)
             })
 
             let available = (!!audio || !!video) && res.playabilityStatus.status === 'OK'
@@ -117,9 +125,8 @@ export function getStreamPlayers(id: string): Promise<StreamPlayers> {
 }
 
 
-function getPlayer(videoId:string, body:any={}):any{
+function getPlayer(videoId: string, body: any = {}): any {
     return new Promise(async (resolve, reject) => {
-        let time = (new Date()).getTime().toString()
         requestToYtApi('player?key=', {
             videoId: videoId,
             "context": {

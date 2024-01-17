@@ -3,17 +3,16 @@ import ErrorCodes, {ErrorCodeType} from "./errorCodes";
 import errorCode from "./errorCodes";
 
 export function makeAxiosError (message: any, error:any, ...args: any[]): Error {
-    const msg = (message in ErrorCodes)? Messages[message]: null
+    const msg = (error.code in ErrorCodes)? Messages[error.code]: null
 
-    if (typeof msg === 'function') return new Error(msg(...(args as [string])));
+    if (typeof msg === 'function') return new Error(msg(message));
     if (!args?.length) {
         new Error(`An unknown error has occurred: ${message}`);
         delete error.headers
         // @ts-ignore
         return new Error(error)
     }
-    args.unshift(msg);
-    return new Error(String(...args));
+    return new Error(message);
 }
 
 
@@ -30,7 +29,7 @@ function makeYTjsErrorError(Base:ErrorConstructor): any {
         constructor(code:ErrorCodeType, ...args:any[]) {
             super(message(code, args));
             this.code = code;
-            Error.captureStackTrace?.(this, YTjsError);
+            Error.captureStackTrace(this, YTjsError);
         }
 
         get name() {

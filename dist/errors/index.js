@@ -8,17 +8,16 @@ const Messages_1 = __importDefault(require("./Messages"));
 const errorCodes_1 = __importDefault(require("./errorCodes"));
 const errorCodes_2 = __importDefault(require("./errorCodes"));
 function makeAxiosError(message, error, ...args) {
-    const msg = (message in errorCodes_1.default) ? Messages_1.default[message] : null;
+    const msg = (error.code in errorCodes_1.default) ? Messages_1.default[error.code] : null;
     if (typeof msg === 'function')
-        return new Error(msg(...args));
+        return new Error(msg(message));
     if (!(args === null || args === void 0 ? void 0 : args.length)) {
         new Error(`An unknown error has occurred: ${message}`);
         delete error.headers;
         // @ts-ignore
         return new Error(error);
     }
-    args.unshift(msg);
-    return new Error(String(...args));
+    return new Error(message);
 }
 exports.makeAxiosError = makeAxiosError;
 /**
@@ -30,10 +29,9 @@ exports.makeAxiosError = makeAxiosError;
 function makeYTjsErrorError(Base) {
     return class YTjsError extends Base {
         constructor(code, ...args) {
-            var _a;
             super(message(code, args));
             this.code = code;
-            (_a = Error.captureStackTrace) === null || _a === void 0 ? void 0 : _a.call(Error, this, YTjsError);
+            Error.captureStackTrace(this, YTjsError);
         }
         get name() {
             return `${super.name} [${this.code}]`;

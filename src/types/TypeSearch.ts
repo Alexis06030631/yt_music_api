@@ -11,10 +11,14 @@ export class TypeSearchData {
         param: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D',
         ytID: 'Albums'
     }
+    static ALL: any = {
+        param: '',
+        ytID: ''
+    }
 }
 
-export const TypeSearch = ['MUSIC', 'VIDEO', 'ALBUM']
-export type TypeSearch_param = 'MUSIC' | 'VIDEO' | 'ALBUM'
+export const TypeSearch = ['MUSIC', 'VIDEO', 'ALBUM', 'ALL']
+export type TypeSearch_param = 'MUSIC' | 'VIDEO' | 'ALBUM' | 'ALL'
 
 export function getTypeSearchParam(search: string): TypeSearchData {
     if(TypeSearch.includes(search)) {

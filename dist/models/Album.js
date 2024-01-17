@@ -16,6 +16,7 @@ const searchManager_1 = require("../managers/searchManager");
 class Album {
     constructor(album) {
         this.name = album.name;
+        this.description = album === null || album === void 0 ? void 0 : album.description;
         this.id = album.id;
         this.artworks = (album === null || album === void 0 ? void 0 : album.artworks) || [];
         this.date = album === null || album === void 0 ? void 0 : album.date;
@@ -34,7 +35,7 @@ class Album {
                     var _a, _b, _c;
                     const resp_data = [];
                     for (const item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].musicShelfRenderer.contents) {
-                        resp_data.push(new index_1.Music((0, extract_1.extract_dataFromGetData)(yield (0, searchManager_1.GetData)(((_b = (_a = item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId) || ((_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.onTap.watchEndpoint.videoId)))));
+                        resp_data.push(new index_1.Music((0, extract_1.extract_dataFromGetData)(yield (0, searchManager_1.GetDataVid)(((_b = (_a = item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId) || ((_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.onTap.watchEndpoint.videoId)))));
                     }
                     resolve(resp_data);
                 }));

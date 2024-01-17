@@ -4,7 +4,7 @@ exports.DownloadType = exports.DownloadType_arr = void 0;
 exports.DownloadType_arr = ['mp3', 'webm'];
 class DownloadType {
 }
+exports.DownloadType = DownloadType;
 DownloadType.mp3 = '.mp3';
 DownloadType.webm = '.webm';
-exports.DownloadType = DownloadType;
 //# sourceMappingURL=DownloadType.js.map

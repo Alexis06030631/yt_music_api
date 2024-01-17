@@ -18,6 +18,10 @@ const Messages = {
     [errorCodes_1.default.CURRENTLY_NOT_SUPPORTED]: () => `This feature is currently not supported. This feature will be available in the next version of the library. Please contact the developer of the library (https://instagram.com/leko_system).`,
     [errorCodes_1.default.INVALID_TYPE_BUILDER]: (type) => `The type of builder ${type} was invalid. Please contact the developer of the library (https://instagram.com/leko_system).`,
     [errorCodes_1.default.INVALID_TYPE_PAGE]: (types) => `The type of page was invalid. Type Available: ${types}`,
+    [errorCodes_1.default.INVALID_URL]: (url) => `The url ${url} is invalid. Please use a valid youtube url.`,
+    [errorCodes_1.default.NOT_FOUND]: (error) => `The requested resource was not found. Message: ${error.message}`,
+    /* Axios errors */
+    [errorCodes_1.default.ENOTFOUND]: (error) => `The remote server was not found. Please check your internet connection. Message: ${error.message}`
 };
 exports.default = Messages;
 //# sourceMappingURL=Messages.js.map

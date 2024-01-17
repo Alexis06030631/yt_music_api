@@ -15,6 +15,13 @@ const ErrorCode:any= {
 
     INVALID_TYPE_BUILDER: 'INVALID_TYPE_BUILDER',
     INVALID_TYPE_PAGE: 'INVALID_TYPE_PAGE',
+    INVALID_URL: 'INVALID_URL',
+
+    NOT_FOUND: 'NOT_FOUND',
+
+
+    /* Axios Errors */
+    ENOTFOUND: 'ENOTFOUND'
 }
 
 export default ErrorCode;

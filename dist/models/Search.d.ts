@@ -1,28 +1,22 @@
-import { Artwork, Artist } from "./";
-export default class Music {
+import Music from "./Music";
+import Album from "./Album";
+export default class Search {
     /**
-     * An array of Artwork objects
+     * The query of the search
      */
-    artworks: Array<Artwork>;
+    query: string;
     /**
-     * The YTmusic id of the music
+     * An array of musics
      */
-    id: string;
+    musics: Array<Music>;
     /**
-     * The title of the music
+     * An array of musics videos
      */
-    name: string;
+    videos: Array<Music>;
     /**
-     * The artist of the music
+     * An array of albums
      */
-    artist: Artist;
-    /**
-     * The type of the video (audio or video)
-     */
-    typeVideo: string;
-    private artist_data;
-    constructor(search_result: any);
-    extractArtistData(search_result: any): any;
-    getLink(): string;
+    albums: Array<Album>;
+    constructor(query: string, search_result: any);
 }
 //# sourceMappingURL=Search.d.ts.map

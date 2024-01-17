@@ -5,6 +5,10 @@ export default class Album {
      */
     name: string;
     /**
+     * The description of the album
+     */
+    description?: string;
+    /**
      * The YT id of the album
      */
     id: string;

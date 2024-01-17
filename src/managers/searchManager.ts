@@ -1,14 +1,13 @@
 import {requestToYtApi} from '../utils/requestManager';
-import {Music, Playlist ,Home, Album} from "../models/";
+import {Album, Home, Music, Playlist} from "../models/";
 import {searchManager} from "../index";
-import {extract_dataFromGetData, extract_dataFromListItemRenderer, extract_dataFromPlaylist} from "../utils/extract";
+import {extract_dataFromGetData, extract_dataFromPlaylist} from "../utils/extract";
 import {YTjsErrorError} from "../errors";
 import ErrorCode from "../errors/errorCodes";
-import {TypeSearchData, TypeSearch, TypeSearch_param, getTypeSearchParam} from '../types/TypeSearch';
-import * as fs from "fs";
+import {getTypeSearchParam, TypeSearch, TypeSearch_param} from '../types/TypeSearch';
 import {getAllObjects, normalizeObjectUnits} from "../utils/typeBuilder";
 import {TypeunitOfTime} from "../types/TypePage";
-
+import Search from "../models/Search";
 
 
 /**
@@ -16,31 +15,70 @@ import {TypeunitOfTime} from "../types/TypePage";
  * @param query - Query to search
  * @param type - Type of search
  */
-export async function search (query: string, type:string| TypeSearch_param = TypeSearch[0]): Promise<Array<(Music|Album)>> {
-    // Check If type is valid with TypeSearch
-    type = type.toUpperCase()
-    if(!TypeSearch.includes(type)) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {typeRequested:type, typesAvailable:TypeSearch})
-    if(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
-        return [new Music(await GetData(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))]
-    }else {
-        let data:any = []
-        const resp_data: any = []
-        const typeSearch:any = getTypeSearchParam(type)
-        if(typeSearch?.param){
-            const music_data:any = await requestToYtApi('search', {
-                "query": query,
-                "params": typeSearch.param,
-            })
-            data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === typeSearch.ytID)[0]
-            data = data[Object.keys(data)[0]]?.contents || []
+export async function search(query: string, type: string | TypeSearch_param = TypeSearch[0]): Promise<(Search | Array<Music | Album>)> {
+
+    return new Promise(async (resolve, reject) => {
+        type = type.toUpperCase()
+        if (!TypeSearch.includes(type)) return reject(new YTjsErrorError(ErrorCode.INVALID_TYPE_SEARCH, {
+            typeRequested: type,
+            typesAvailable: TypeSearch
+        }))
+
+        let searchs: Array<any> = []
+        let typeSearch: any = getTypeSearchParam(type)
+
+        if (query.match(/^(?:https?:\/\/)?(?:www\.|music\.)?(?:youtube\.com|youtu\.?be)\/.+$/)) {
+            const url = new URL(query)
+            if (!url.hostname.includes('youtube')) return reject(new YTjsErrorError(ErrorCode.INVALID_URL, url.hostname))
+
+            if (url.searchParams.get('list')) {
+                try {
+                    return resolve([new Album(await GetDataPl(url.searchParams.get('list') || ''))])
+                } catch (e) {
+                    return reject(e)
+                }
+            } else if (url.searchParams.get('v')) {
+                try {
+                    return resolve([new Music(extract_dataFromGetData(await GetDataVid(url.searchParams.get('v') || '')))])
+                } catch (e) {
+                    return reject(e)
+                }
+            } else if (url.pathname.includes('channel')) return reject(new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED))
+            else return reject(new YTjsErrorError(ErrorCode.INVALID_URL, url.hostname))
+
+        } else if (query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
+            return resolve([new Music(await GetDataVid(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))])
         }
-        for (const item of data) {
-            if(type === 'ALBUM') {
-                resp_data.push(new Album(extract_dataFromPlaylist(item.musicResponsiveListItemRenderer)))
-            }else resp_data.push(new Music(extract_dataFromGetData(await GetData(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
+
+
+        const music_data: any = await requestToYtApi('search', {
+            "query": query,
+            "params": typeSearch.param,
+        })
+
+        if (!typeSearch.param) {
+            for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text.includes(typeSearch.ytID))) {
+                if (item.musicShelfRenderer?.contents?.length) {
+                    for (const music of item.musicShelfRenderer.contents) {
+                        // Get type of music
+                        if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint?.watchEndpoint?.videoId) {
+                            try {
+                                searchs.push((await this.search(`https://music.youtube.com/watch?v=${music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint?.watchEndpoint?.videoId}`, 'MUSIC'))[0])
+                            } catch (e) {
+                                reject(e)
+                            }
+                        } else if (item.musicShelfRenderer.title.runs[0].text === 'Albums') {
+                            searchs.push((await this.search(`https://music.youtube.com/playlist?list=${music.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId}`, 'ALBUM'))[0])
+                        }
+                    }
+                }
+            }
         }
-        return resp_data
-    }
+
+        if (!searchs.length) return reject(new YTjsErrorError(ErrorCode.NOT_FOUND, query))
+        else if (!typeSearch.param) return resolve(new Search(query, searchs))
+        else resolve(searchs)
+    })
 }
 
 /**
@@ -48,11 +86,11 @@ export async function search (query: string, type:string| TypeSearch_param = Typ
  * @param type - Type of page to get
  * @beta
  */
-export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
+export async function getPage(type: TypeunitOfTime): Promise<Home | any> {
     throw new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED)
     return new Promise(async (resolve) => {
         const idsearch = normalizeObjectUnits('typePage', type)
-        if(!idsearch) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_PAGE, getAllObjects('typePage'))
+        if (!idsearch) throw new YTjsErrorError(ErrorCode.INVALID_TYPE_PAGE, getAllObjects('typePage'))
         requestToYtApi('browse', {
             "browseId": idsearch
         }).then(async (res: any) => {
@@ -61,12 +99,12 @@ export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
             const title = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.title
             console.log(title)
             const resp_data: any = {
-                music_list:[],
-                playlist:[]
+                music_list: [],
+                playlist: []
             }
             new Promise(async (resolve2) => {
-                for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents){
-                    if(item.musicCarouselShelfRenderer?.contents?.length){
+                for (let item of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
+                    if (item.musicCarouselShelfRenderer?.contents?.length) {
                         const pl_title = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.title.runs[0].text
                         const pl_subtitle = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.strapline?.runs?.[0]?.text || false
                         const id = item.musicCarouselShelfRenderer.header.musicCarouselShelfBasicHeaderRenderer.moreContentButton?.buttonRenderer?.navigationEndpoint.watchPlaylistEndpoint.playlistId
@@ -102,7 +140,7 @@ export async function getPage(type:TypeunitOfTime): Promise<Home|any> {
                                             if (!resp_data.music_list.find((e: any) => e.title === title_music_list))
                                                 resp_data.music_list.push({title: title_music_list, musics: []})
                                             resp_data.music_list.find((e: any) => e.title === title_music_list).musics.push(
-                                                extract_dataFromGetData(await searchManager.GetData(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId))
+                                                extract_dataFromGetData(await searchManager.GetDataVid(musicdt.musicResponsiveListItemRenderer.playlistItemData.videoId))
                                             )
                                         }
                                     }
@@ -141,9 +179,9 @@ export async function relative(ID: string): Promise<Array<Music>> {
                 "isAudioOnly": true,
                 "playlistId": autoMix.playlistId,
                 "enablePersistentPlaylistPanel": true,
-            }).then((e:any) => {
+            }).then((e: any) => {
                 const resp_data: Array<Music> = []
-                for (const item of e.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.map((e:any) => e.playlistPanelVideoRenderer)) {
+                for (const item of e.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.map((e: any) => e.playlistPanelVideoRenderer)) {
                     resp_data.push(new Music(extract_dataFromGetData(item), true))
                 }
                 return resolve(resp_data)
@@ -158,7 +196,7 @@ export async function relative(ID: string): Promise<Array<Music>> {
  */
 export async function get(id: string): Promise<Music> {
     return new Promise(async (resolve, reject) => {
-        GetData(id).then((e:any) => {
+        GetDataVid(id).then((e: any) => {
             return resolve(new Music(extract_dataFromGetData(e)))
         }).catch(async (e) => {
             reject(e)
@@ -175,12 +213,12 @@ export async function getPlaylist(id: string): Promise<Playlist> {
         requestToYtApi('browse', {
             "browseId": id
         }).then(async (res: any) => {
-            let musics:any = []
+            let musics: any = []
             await new Promise(async (resolve) => {
                 const music_list: any = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].musicPlaylistShelfRenderer.contents
                 for (let i = 0; music_list.length > i; i++) {
-                    //musics.push(extract_dataFromGetData(await GetData(music_list[i].musicResponsiveListItemRenderer.playlistItemData.videoId)))
-                    if(music_list.length === i+1) resolve(null)
+                    //musics.push(extract_dataFromGetData(await GetDataVid(music_list[i].musicResponsiveListItemRenderer.playlistItemData.videoId)))
+                    if (music_list.length === i + 1) resolve(null)
                 }
             })
             return resolve(new Playlist({
@@ -194,33 +232,40 @@ export async function getPlaylist(id: string): Promise<Playlist> {
     })
 }
 
-function recursiveGetRelative(data: any, i:number=0): any {
+function recursiveGetRelative(data: any, i: number = 0): any {
     return new Promise(async (resolve) => {
-        if(!data.musicCarouselShelfRenderer.contents[i]?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) return resolve(await recursiveGetRelative(data, i-1))
+        if (!data.musicCarouselShelfRenderer.contents[i]?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) return resolve(await recursiveGetRelative(data, i - 1))
         console.log(i)
-        if(i < 0) return resolve(data)
-        const data2 = await searchManager.GetData(data.musicCarouselShelfRenderer.contents[i].musicResponsiveListItemRenderer.playlistItemData.videoId)
-        if(data2.videoId) {
+        if (i < 0) return resolve(data)
+        const data2 = await searchManager.GetDataVid(data.musicCarouselShelfRenderer.contents[i].musicResponsiveListItemRenderer.playlistItemData.videoId)
+        if (data2.videoId) {
             data.musicCarouselShelfRenderer.contents[i] = data2
-            return resolve(await recursiveGetRelative(data, i-1))
-        }else return resolve(data)
+            return resolve(await recursiveGetRelative(data, i - 1))
+        } else return resolve(data)
     })
 }
 
-export function GetData(id: string): Promise<any> {
+export function GetDataVid(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
         requestToYtApi('next', {
-            "videoId":  id
+            "videoId": id
         }).then((res: any) => {
-            if(res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint) {
+            if (res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint) {
                 resolve({
                     browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId,
                     ...res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
                 })
-            }else reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, id))
+            } else reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, id))
         }).catch(reject)
     })
 }
 
-const MUSIC_param= 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
-    VIDEO_param= 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D'
+export function GetDataPl(id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        requestToYtApi('browse', {
+            "browseId": id
+        }).then((res: any) => {
+            resolve(extract_dataFromPlaylist(res.data))
+        }).catch(reject)
+    })
+}
