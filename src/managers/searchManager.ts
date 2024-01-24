@@ -56,7 +56,16 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
             "params": typeSearch.param,
         })
 
-        if (!typeSearch.param) {
+        if (typeSearch.param) {
+            let data: any = []
+            if (typeSearch.ytID === 'Songs') data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Songs')[0].musicShelfRenderer.contents
+            else if (typeSearch.ytID === 'Videos') data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text === 'Videos')[0].musicShelfRenderer.contents
+
+            let item: any
+            for (item of data) {
+                searchs.push(new Music(extract_dataFromGetData(await GetDataVid(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
+            }
+        } else {
             for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text.includes(typeSearch.ytID))) {
                 if (item.musicShelfRenderer?.contents?.length) {
                     for (const music of item.musicShelfRenderer.contents) {

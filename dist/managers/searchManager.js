@@ -30,7 +30,7 @@ const Search_1 = __importDefault(require("../models/Search"));
 function search(query, type = TypeSearch_1.TypeSearch[0]) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
             type = type.toUpperCase();
             if (!TypeSearch_1.TypeSearch.includes(type))
                 return reject(new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_TYPE_SEARCH, {
@@ -71,14 +71,25 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
                 "query": query,
                 "params": typeSearch.param,
             });
-            if (!typeSearch.param) {
+            if (typeSearch.param) {
+                let data = [];
+                if (typeSearch.ytID === 'Songs')
+                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Songs'; })[0].musicShelfRenderer.contents;
+                else if (typeSearch.ytID === 'Videos')
+                    data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Videos'; })[0].musicShelfRenderer.contents;
+                let item;
+                for (item of data) {
+                    searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid(((_d = (_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.playlistItemData) === null || _d === void 0 ? void 0 : _d.videoId) || ((_e = item.musicResponsiveListItemRenderer) === null || _e === void 0 ? void 0 : _e.onTap.watchEndpoint.videoId)))));
+                }
+            }
+            else {
                 for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text.includes(typeSearch.ytID); })) {
-                    if ((_d = (_c = item.musicShelfRenderer) === null || _c === void 0 ? void 0 : _c.contents) === null || _d === void 0 ? void 0 : _d.length) {
+                    if ((_g = (_f = item.musicShelfRenderer) === null || _f === void 0 ? void 0 : _f.contents) === null || _g === void 0 ? void 0 : _g.length) {
                         for (const music of item.musicShelfRenderer.contents) {
                             // Get type of music
-                            if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && ((_f = (_e = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _e === void 0 ? void 0 : _e.watchEndpoint) === null || _f === void 0 ? void 0 : _f.videoId)) {
+                            if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && ((_j = (_h = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _h === void 0 ? void 0 : _h.watchEndpoint) === null || _j === void 0 ? void 0 : _j.videoId)) {
                                 try {
-                                    searchs.push((yield this.search(`https://music.youtube.com/watch?v=${(_h = (_g = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpoint) === null || _h === void 0 ? void 0 : _h.videoId}`, 'MUSIC'))[0]);
+                                    searchs.push((yield this.search(`https://music.youtube.com/watch?v=${(_l = (_k = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _k === void 0 ? void 0 : _k.watchEndpoint) === null || _l === void 0 ? void 0 : _l.videoId}`, 'MUSIC'))[0]);
                                 }
                                 catch (e) {
                                     reject(e);
