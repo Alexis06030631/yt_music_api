@@ -1,10 +1,14 @@
 import {requestToYtApi} from "../utils/requestManager";
-import {Download, Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model} from "./";
+import {Album, Artist, Artwork, Download, Duration, Lyrics, Music_model, NoLyrics} from "./";
 import * as downloadManager from "../managers/downloadManager";
 import {DownloadType_param} from "../types/DownloadType";
 import {DownloadQuality_param} from "../types/DownloadQuality";
 
 export default class Music {
+    /**
+     * Show if is the best result of the search
+     */
+    public bestResult: boolean;
     /**
      * An array of Artwork objects
      */
@@ -55,12 +59,13 @@ export default class Music {
     public isExplicit: boolean
 
     constructor(data: Music_model, autoMix?: boolean) {
+        if (data.bestResult) this.bestResult = data.bestResult
         this.artworks = data.artworks
         this.id = data.id
         this.title = data.title
         this.artists = data.artists
         this.artists.toString = () => {
-            const artists: Array<Artist> = data.artists = [ ...data.artists]
+            const artists: Array<Artist> = data.artists = [...data.artists]
             // Return the artists in string format with a comma between each artist and if it's the last artist add '&'
             return artists.map((artist, index) => `${artist.name}${index === artists.length - 1 ? '' : index === artists.length - 2 ? ' &' : ','} `).join('')
         }
@@ -71,10 +76,10 @@ export default class Music {
         this.isAudioOnly = data.type.includes('ATV')
         this.date = data.date
         this.isExplicit = data.explicit
-        if(autoMix) this.autoMix = autoMix
+        if (autoMix) this.autoMix = autoMix
     }
 
-    getLyrics(): Promise<Lyrics|NoLyrics> {
+    getLyrics(): Promise<Lyrics | NoLyrics> {
         return new Promise((resolve, reject) => {
             requestToYtApi('browse', {
                 browseId: this.browseId,
@@ -92,7 +97,7 @@ export default class Music {
         })
     }
 
-    download(type:DownloadType_param, quality?:DownloadQuality_param): Promise<Download> {
+    download(type: DownloadType_param, quality?: DownloadQuality_param): Promise<Download> {
         return new Promise((resolve, reject) => {
             downloadManager.download(this.id, type, quality).then(resolve).catch(reject)
         })

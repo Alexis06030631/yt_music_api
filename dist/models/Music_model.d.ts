@@ -1,4 +1,4 @@
-import { Artist, Artwork, Duration, Album } from "./";
+import { Album, Artist, Artwork, Duration } from "./";
 export default class Music_model {
     id: string;
     browseId: string;
@@ -10,6 +10,7 @@ export default class Music_model {
     duration: Duration;
     album: Album;
     explicit: boolean;
+    bestResult: boolean;
     constructor(music: any);
 }
 //# sourceMappingURL=Music_model.d.ts.map

@@ -28,6 +28,8 @@ const _1 = require("./");
 const downloadManager = __importStar(require("../managers/downloadManager"));
 class Music {
     constructor(data, autoMix) {
+        if (data.bestResult)
+            this.bestResult = data.bestResult;
         this.artworks = data.artworks;
         this.id = data.id;
         this.title = data.title;

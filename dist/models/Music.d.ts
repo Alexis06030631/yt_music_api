@@ -1,7 +1,11 @@
-import { Download, Album, Artwork, Artist, Duration, Lyrics, NoLyrics, Music_model } from "./";
+import { Album, Artist, Artwork, Download, Duration, Lyrics, Music_model, NoLyrics } from "./";
 import { DownloadType_param } from "../types/DownloadType";
 import { DownloadQuality_param } from "../types/DownloadQuality";
 export default class Music {
+    /**
+     * Show if is the best result of the search
+     */
+    bestResult: boolean;
     /**
      * An array of Artwork objects
      */

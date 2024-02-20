@@ -8,6 +8,9 @@ const Album_1 = __importDefault(require("./Album"));
 class Search {
     constructor(query, search_result) {
         this.query = query;
+        if (search_result.filter((item) => Music_1.default.prototype.isPrototypeOf(item) && item.bestResult).length > 0) {
+            this.bestResult = search_result.filter((item) => Music_1.default.prototype.isPrototypeOf(item) && item.bestResult)[0];
+        }
         this.musics = search_result.filter((item) => Music_1.default.prototype.isPrototypeOf(item) && item.isAudioOnly);
         this.videos = search_result.filter((item) => Music_1.default.prototype.isPrototypeOf(item) && !item.isAudioOnly);
         this.albums = search_result.filter((item) => Album_1.default.prototype.isPrototypeOf(item));

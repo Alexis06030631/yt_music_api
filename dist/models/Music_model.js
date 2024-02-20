@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Music_model {
     constructor(music) {
+        this.bestResult = music.bestResult || false;
         this.id = music.id || null;
         this.browseId = music.browseId || null;
         this.title = music.title || null;

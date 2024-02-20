@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extract_dataFromPlaylist = exports.extract_dataFromListItemRenderer = exports.extract_dataFromGetData = void 0;
 const models_1 = require("../models/");
-function extract_dataFromGetData(data) {
+function extract_dataFromGetData(data, bestResult = false) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
     let artists = [];
     let album = [];
@@ -34,6 +34,7 @@ function extract_dataFromGetData(data) {
             id: null
         }));
     return new models_1.Music_model({
+        bestResult: bestResult,
         artworks: data.thumbnail.thumbnails.map((e) => new models_1.Artwork(e)),
         title: data.title.runs[0].text,
         browseId: data.browseId,

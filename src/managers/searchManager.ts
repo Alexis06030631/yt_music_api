@@ -46,8 +46,9 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
             } else if (url.pathname.includes('channel')) return reject(new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED))
             else return reject(new YTjsErrorError(ErrorCode.INVALID_URL, url.hostname))
 
-        } else if (query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1]) {
-            return resolve([new Music(await GetDataVid(query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$/)?.[1] || ''))])
+        } else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
+            let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/)
+            return resolve([new Music(await GetDataVid(id?.[1] || id?.[0] || ''))])
         }
 
 
@@ -66,6 +67,18 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
                 searchs.push(new Music(extract_dataFromGetData(await GetDataVid(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
             }
         } else {
+            let i = 0
+            for (const bestItems of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer?.contents || []) {
+                if (bestItems.musicResponsiveListItemRenderer.playlistItemData?.videoId) searchs.push(new Music(extract_dataFromGetData(await GetDataVid(bestItems.musicResponsiveListItemRenderer.playlistItemData?.videoId), i === 0)))
+                else if (bestItems.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId) searchs.push(new Album(extract_dataFromPlaylist(await GetDataPl(bestItems.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId))))
+                i++
+            }
+            //console.log(music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer)
+            if (music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]) {
+                // TODO: Add top result
+            }
+
+            //for (const item of music_data.data)
             for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text.includes(typeSearch.ytID))) {
                 if (item.musicShelfRenderer?.contents?.length) {
                     for (const music of item.musicShelfRenderer.contents) {

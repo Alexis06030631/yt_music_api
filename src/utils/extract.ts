@@ -1,7 +1,7 @@
 import {Album, Artist, Artwork, Duration, Music_model} from "../models/";
 
 
-export function extract_dataFromGetData(data: any): Music_model {
+export function extract_dataFromGetData(data: any, bestResult = false): Music_model {
     let artists: any = []
     let album: any = []
     let date: number = 0
@@ -29,6 +29,7 @@ export function extract_dataFromGetData(data: any): Music_model {
         id: null
     }))
     return new Music_model({
+        bestResult: bestResult,
         artworks: data.thumbnail.thumbnails.map((e: any) => new Artwork(e)),
         title: data.title.runs[0].text,
         browseId: data.browseId,

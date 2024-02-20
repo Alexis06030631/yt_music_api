@@ -1,4 +1,4 @@
-import {Artist, Artwork, Duration, Album} from "./";
+import {Album, Artist, Artwork, Duration} from "./";
 
 export default class Music_model {
     public id: string;
@@ -11,8 +11,10 @@ export default class Music_model {
     public duration: Duration
     public album: Album
     public explicit: boolean
+    public bestResult: boolean;
 
     constructor(music: any) {
+        this.bestResult = music.bestResult || false
         this.id = music.id || null
         this.browseId = music.browseId || null
         this.title = music.title || null

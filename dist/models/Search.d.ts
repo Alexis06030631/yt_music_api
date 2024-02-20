@@ -6,6 +6,10 @@ export default class Search {
      */
     query: string;
     /**
+     * The best result of the search
+     */
+    bestResult: Music | Album;
+    /**
      * An array of musics
      */
     musics: Array<Music>;
