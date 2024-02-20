@@ -66,7 +66,7 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
             }
             else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
                 let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/);
-                return resolve([new models_1.Music(yield GetDataVid((id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || ''))]);
+                return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid((id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '')))]);
             }
             const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
                 "query": query,

@@ -48,7 +48,7 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
 
         } else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
             let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/)
-            return resolve([new Music(await GetDataVid(id?.[1] || id?.[0] || ''))])
+            return resolve([new Music(extract_dataFromGetData(await GetDataVid(id?.[1] || id?.[0] || '')))])
         }
 
 
