@@ -1,6 +1,6 @@
 {
 	"name": "ytmusic_api_unofficial",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "A simple API to get music from YouTube Music",
 	"scripts": {
 		"test": "nodemon test.js",
