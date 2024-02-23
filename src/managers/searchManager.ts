@@ -73,7 +73,7 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
                 else if (bestItems?.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId) searchs.push(new Album(extract_dataFromPlaylist(await GetDataPl(bestItems.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId))))
                 i++
             }
-            if (music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint.videoId) {
+            if (music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint?.videoId) {
                 searchs.push(new Music(extract_dataFromGetData(await GetDataVid(music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint.videoId), true)))
             }
 
