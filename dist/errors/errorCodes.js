@@ -17,7 +17,10 @@ const ErrorCode = {
     INVALID_URL: 'INVALID_URL',
     NOT_FOUND: 'NOT_FOUND',
     /* Axios Errors */
-    ENOTFOUND: 'ENOTFOUND'
+    ENOTFOUND: 'ENOTFOUND',
+    /* Path errors */
+    PATH_NOT_FOUND: 'PATH_NOT_FOUND',
+    NOT_REACHABLE_PATH: 'NOT_REACHABLE_PATH',
 };
 exports.default = ErrorCode;
 //# sourceMappingURL=errorCodes.js.map

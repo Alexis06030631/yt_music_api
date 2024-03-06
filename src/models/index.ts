@@ -2,6 +2,7 @@ import Album from './Album';
 import Artist from './Artist';
 import Artwork from './Artwork';
 import Download from './Download';
+import DownloadFile from './DownloadFile';
 import Duration from './Duration';
 import Home from './Home';
 import Lyrics from "./Lyrics";
@@ -18,6 +19,7 @@ export {
     Artist,
     Artwork,
     Download,
+    DownloadFile,
     Duration,
     Home,
     Lyrics,

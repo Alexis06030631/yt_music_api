@@ -1,4 +1,4 @@
-const ErrorCode:any= {
+const ErrorCode: any = {
     UnrecognizedError: 'UnrecognizedError',
     BadRequest: 'BadRequest',
     FAILED_PRECONDITION: 'FAILED_PRECONDITION',
@@ -21,7 +21,11 @@ const ErrorCode:any= {
 
 
     /* Axios Errors */
-    ENOTFOUND: 'ENOTFOUND'
+    ENOTFOUND: 'ENOTFOUND',
+
+    /* Path errors */
+    PATH_NOT_FOUND: 'PATH_NOT_FOUND',
+    NOT_REACHABLE_PATH: 'NOT_REACHABLE_PATH',
 }
 
 export default ErrorCode;

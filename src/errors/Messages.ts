@@ -22,7 +22,11 @@ const Messages = {
     [ErrorCodes.NOT_FOUND]: (error: any) => `The requested resource was not found. Message: ${error.message}`,
 
     /* Axios errors */
-    [ErrorCodes.ENOTFOUND]: (error: any) => `The remote server was not found. Please check your internet connection. Message: ${error.message}`
+    [ErrorCodes.ENOTFOUND]: (error: any) => `The remote server was not found. Please check your internet connection. Message: ${error.message}`,
+
+    /* Path errors */
+    [ErrorCodes.PATH_NOT_FOUND]: (error: any) => `The path you requested was not found. Path: ${error.path || 'None'}`,
+    [ErrorCodes.NOT_REACHABLE_PATH]: (error: any) => `The path you requested was not reachable. Path: ${error.path || 'None'}`,
 };
 
 export default Messages;

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamPlayers = exports.Music_model = exports.Search = exports.NoLyrics = exports.Playlist = exports.Music_list = exports.Music = exports.Lyrics = exports.Home = exports.Duration = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
+exports.StreamPlayers = exports.Music_model = exports.Search = exports.NoLyrics = exports.Playlist = exports.Music_list = exports.Music = exports.Lyrics = exports.Home = exports.Duration = exports.DownloadFile = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
 const Album_1 = __importDefault(require("./Album"));
 exports.Album = Album_1.default;
 const Artist_1 = __importDefault(require("./Artist"));
@@ -12,6 +12,8 @@ const Artwork_1 = __importDefault(require("./Artwork"));
 exports.Artwork = Artwork_1.default;
 const Download_1 = __importDefault(require("./Download"));
 exports.Download = Download_1.default;
+const DownloadFile_1 = __importDefault(require("./DownloadFile"));
+exports.DownloadFile = DownloadFile_1.default;
 const Duration_1 = __importDefault(require("./Duration"));
 exports.Duration = Duration_1.default;
 const Home_1 = __importDefault(require("./Home"));

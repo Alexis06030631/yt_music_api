@@ -21,7 +21,10 @@ const Messages = {
     [errorCodes_1.default.INVALID_URL]: (url) => `The url ${url} is invalid. Please use a valid youtube url.`,
     [errorCodes_1.default.NOT_FOUND]: (error) => `The requested resource was not found. Message: ${error.message}`,
     /* Axios errors */
-    [errorCodes_1.default.ENOTFOUND]: (error) => `The remote server was not found. Please check your internet connection. Message: ${error.message}`
+    [errorCodes_1.default.ENOTFOUND]: (error) => `The remote server was not found. Please check your internet connection. Message: ${error.message}`,
+    /* Path errors */
+    [errorCodes_1.default.PATH_NOT_FOUND]: (error) => `The path you requested was not found. Path: ${error.path || 'None'}`,
+    [errorCodes_1.default.NOT_REACHABLE_PATH]: (error) => `The path you requested was not reachable. Path: ${error.path || 'None'}`,
 };
 exports.default = Messages;
 //# sourceMappingURL=Messages.js.map

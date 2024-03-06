@@ -6,6 +6,10 @@ import ErrorCode from "../errors/errorCodes";
 import {Download, StreamPlayers} from "../models/";
 import {deprecated} from "../utils/deprecate";
 import {getDecodeScript, getSignatureTimestamp} from "../utils/getDecode";
+import {DownloadFile} from "../models";
+import axios from "axios";
+import * as fsPath from "path";
+import * as fs from "fs";
 
 /**
  * This function is used to get the download link of a music in Webm format
@@ -96,6 +100,10 @@ export function download(id: string, type: DownloadType_param = 'mp3', quality?:
     })
 }
 
+/**
+ * This function is used to get the stream players of a music (audio and video streams)
+ * @param id - The id of the music
+ */
 export function getStreamPlayers(id: string): Promise<StreamPlayers> {
     return new Promise((resolve, reject) => {
         getPlayer(id).then(async (res: any) => {
@@ -121,6 +129,52 @@ export function getStreamPlayers(id: string): Promise<StreamPlayers> {
                 maxBitrate: Number(res?.playerConfig?.streamSelectionConfig?.maxBitrate)
             }))
         })
+    })
+}
+
+/**
+ * This function is used to download a music and save it as a file
+ * @param id - The id of the music
+ * @param path - The path where the music will be downloaded
+ * @param type - The type of the music (available: DownloadType_param)
+ * @param quality - The quality of the music (available: DownloadQuality_param)
+ */
+export function downloadAsFile(id: string, path: string, type: DownloadType_param = 'mp3', quality?: DownloadQuality_param): Promise<DownloadFile> {
+    return new Promise(async (resolve, reject) => {
+        let relativePath = fsPath.relative('/', fsPath.join(path))
+        if (!relativePath.startsWith('/')) relativePath = `/${relativePath}`
+        const split = relativePath.split('/')
+        if (split[split.length - 1].split('.').length === 1) split[split.length - 1] = `${split[split.length - 1]}/download.${type}`
+        split[split.length - 1] = `${split[split.length - 1].split('.').map((item, index) => index === split[split.length - 1].split('.').length - 1 ? type : item).join('.')}`
+        relativePath = split.join('/')
+        if (!relativePath) return reject(new YTjsErrorError(ErrorCode.PATH_NOT_FOUND, {path: relativePath}))
+        if (!fs.existsSync(relativePath.replace(`${relativePath.split('/')[relativePath.split('/').length - 1]}`, ''))) fs.mkdirSync(relativePath.replace(`${relativePath.split('/')[relativePath.split('/').length - 1]}`, ''), {recursive: true})
+        download(id, type, quality).then((res: Download) => {
+            axios.get(res.url, {
+                responseType: 'stream',
+                headers: {
+                    accept: '*/*',
+                    dnt: 1,
+                    "accept-encoding": "gzip, deflate, br",
+                    "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+                    "cache-control": "no-cache",
+                    "pragma": "no-cache",
+                    "range": "bytes=0-",
+                    "sec-ch-ua": '"Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"',
+                    "sec-ch-ua-mobile": '?0',
+                    "sec-ch-ua-platform": '"macOS"',
+                    "sec-fetch-dest": "video",
+                },
+            }).then((response: any) => {
+                response.data.pipe(fs.createWriteStream(relativePath))
+                response.data.on('end', () => {
+                    resolve(new DownloadFile({
+                        path: relativePath,
+                        size: Math.round(fs.statSync(relativePath).size / 1024 / 1024 * 100) / 100,
+                    }))
+                })
+            }).catch(reject)
+        }).catch(reject)
     })
 }
 

@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStreamPlayers = exports.download = exports.getMp3 = exports.getWebm = void 0;
+exports.downloadAsFile = exports.getStreamPlayers = exports.download = exports.getMp3 = exports.getWebm = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const DownloadQuality_1 = require("../types/DownloadQuality");
 const DownloadType_1 = require("../types/DownloadType");
@@ -21,6 +44,10 @@ const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const models_1 = require("../models/");
 const deprecate_1 = require("../utils/deprecate");
 const getDecode_1 = require("../utils/getDecode");
+const models_2 = require("../models");
+const axios_1 = __importDefault(require("axios"));
+const fsPath = __importStar(require("path"));
+const fs = __importStar(require("fs"));
 /**
  * This function is used to get the download link of a music in Webm format
  * @deprecated This function is deprecated, use download() instead
@@ -118,6 +145,10 @@ function download(id, type = 'mp3', quality) {
     }));
 }
 exports.download = download;
+/**
+ * This function is used to get the stream players of a music (audio and video streams)
+ * @param id - The id of the music
+ */
 function getStreamPlayers(id) {
     return new Promise((resolve, reject) => {
         getPlayer(id).then((res) => __awaiter(this, void 0, void 0, function* () {
@@ -145,6 +176,56 @@ function getStreamPlayers(id) {
     });
 }
 exports.getStreamPlayers = getStreamPlayers;
+/**
+ * This function is used to download a music and save it as a file
+ * @param id - The id of the music
+ * @param path - The path where the music will be downloaded
+ * @param type - The type of the music (available: DownloadType_param)
+ * @param quality - The quality of the music (available: DownloadQuality_param)
+ */
+function downloadAsFile(id, path, type = 'mp3', quality) {
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        let relativePath = fsPath.relative('/', fsPath.join(path));
+        if (!relativePath.startsWith('/'))
+            relativePath = `/${relativePath}`;
+        const split = relativePath.split('/');
+        if (split[split.length - 1].split('.').length === 1)
+            split[split.length - 1] = `${split[split.length - 1]}/download.${type}`;
+        split[split.length - 1] = `${split[split.length - 1].split('.').map((item, index) => index === split[split.length - 1].split('.').length - 1 ? type : item).join('.')}`;
+        relativePath = split.join('/');
+        if (!relativePath)
+            return reject(new errors_1.YTjsErrorError(errorCodes_1.default.PATH_NOT_FOUND, { path: relativePath }));
+        if (!fs.existsSync(relativePath.replace(`${relativePath.split('/')[relativePath.split('/').length - 1]}`, '')))
+            fs.mkdirSync(relativePath.replace(`${relativePath.split('/')[relativePath.split('/').length - 1]}`, ''), { recursive: true });
+        download(id, type, quality).then((res) => {
+            axios_1.default.get(res.url, {
+                responseType: 'stream',
+                headers: {
+                    accept: '*/*',
+                    dnt: 1,
+                    "accept-encoding": "gzip, deflate, br",
+                    "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+                    "cache-control": "no-cache",
+                    "pragma": "no-cache",
+                    "range": "bytes=0-",
+                    "sec-ch-ua": '"Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"',
+                    "sec-ch-ua-mobile": '?0',
+                    "sec-ch-ua-platform": '"macOS"',
+                    "sec-fetch-dest": "video",
+                },
+            }).then((response) => {
+                response.data.pipe(fs.createWriteStream(relativePath));
+                response.data.on('end', () => {
+                    resolve(new models_2.DownloadFile({
+                        path: relativePath,
+                        size: Math.round(fs.statSync(relativePath).size / 1024 / 1024 * 100) / 100,
+                    }));
+                });
+            }).catch(reject);
+        }).catch(reject);
+    }));
+}
+exports.downloadAsFile = downloadAsFile;
 function getPlayer(videoId, body = {}) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
         (0, requestManager_1.requestToYtApi)('player?key=', {
