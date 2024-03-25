@@ -18,19 +18,20 @@ let Defaultbody = {
     }
 }
 let YTmusic_API_URL = 'https://music.youtube.com/youtubei/v1/'
-    
-async function requestToYtApi(url: string, body:object, header?: object): Promise<AxiosResponse|AxiosError> {
+
+async function requestToYtApi(url: string, body: object, header?: object): Promise<AxiosResponse | AxiosError> {
     return new Promise((resolve, reject) => {
         axios.post(makeUrl(url), makeBody(body), {headers: makeHeaders(header)})
             .then((res: AxiosResponse) => {
                 resolve(res);
             })
             .catch((err: any) => {
-                if(err.response?.data?.error?.status) {
-                    if(ErrorCode[err.response?.data?.error?.status]){
+                if (err.response?.data?.error?.status) {
+                    if (ErrorCode[err.response?.data?.error?.status]) {
                         return reject(new YTjsErrorError(err.response?.data?.error?.status, err.response?.data?.error?.errors?.[0]?.message))
                     }
-                }reject(makeAxiosError(err.response?.data?.error?.status || err.message, err, err.response?.data?.error));
+                }
+                reject(makeAxiosError(err.response?.data?.error?.status || err.message, err, err.response?.data?.error));
             })
     })
 }
@@ -38,14 +39,14 @@ async function requestToYtApi(url: string, body:object, header?: object): Promis
 function makeUrl(url: string): string {
     if (url.startsWith('http')) {
         return encodeURI(url);
-    }else return encodeURI(YTmusic_API_URL + url);
+    } else return encodeURI(YTmusic_API_URL + url + '?prettyPrint=false');
 }
 
 function makeHeaders(headers: any): AxiosRequestConfig['headers'] {
     return {...Defaultheaders, ...headers};
 }
 
-function makeBody(params:object): AxiosRequestConfig['params'] {
+function makeBody(params: object): AxiosRequestConfig['params'] {
     return {...Defaultbody, ...params};
 }
 

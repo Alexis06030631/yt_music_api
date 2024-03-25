@@ -8,14 +8,16 @@ import {getTypeSearchParam, TypeSearch, TypeSearch_param} from '../types/TypeSea
 import {getAllObjects, normalizeObjectUnits} from "../utils/typeBuilder";
 import {TypeunitOfTime} from "../types/TypePage";
 import Search from "../models/Search";
+import Trending from "../models/Trending";
 
 
 /**
  * Search music, video or other with query
  * @param query - Query to search
  * @param type - Type of search
+ * @param onlyBest - Is a boolean parameter that could be used to limit the search results to only the best matches
  */
-export async function search(query: string, type: string | TypeSearch_param = TypeSearch[0]): Promise<(Search | Array<Music | Album>)> {
+export async function search(query: string, type: string | TypeSearch_param = TypeSearch[0], onlyBest = false): Promise<(Search | Array<Music | Album>)> {
 
     return new Promise(async (resolve, reject) => {
         type = type.toUpperCase()
@@ -39,7 +41,10 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
                 }
             } else if (url.searchParams.get('v')) {
                 try {
-                    return resolve([new Music(extract_dataFromGetData(await GetDataVid(url.searchParams.get('v') || '')))])
+                    const datavid = await GetDataVid(url.searchParams.get('v') || '').catch((e) => {
+                        reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id: url.searchParams.get('v')}))
+                    })
+                    return resolve([new Music(extract_dataFromGetData(datavid))])
                 } catch (e) {
                     return reject(e)
                 }
@@ -48,7 +53,10 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
 
         } else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
             let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/)
-            return resolve([new Music(extract_dataFromGetData(await GetDataVid(id?.[1] || id?.[0] || '')))])
+            const datavid = await GetDataVid(id?.[1] || id?.[0] || '').catch((e) => {
+                reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id: id?.[1] || id?.[0] || ''}))
+            })
+            return resolve([new Music(extract_dataFromGetData(datavid))])
         }
 
 
@@ -64,20 +72,24 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
 
             let item: any
             for (item of data) {
-                searchs.push(new Music(extract_dataFromGetData(await GetDataVid(item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId))))
+                let id = item.musicResponsiveListItemRenderer?.playlistItemData?.videoId || item.musicResponsiveListItemRenderer?.onTap.watchEndpoint.videoId
+                if (!id) continue
+                const datavid = await GetDataVid(id).catch((e) => {
+                    reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id}))
+                })
+                searchs.push(new Music(extract_dataFromGetData(datavid)))
             }
         } else {
             let i = 0
-            for (const bestItems of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer?.contents || []) {
-                if (bestItems?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) searchs.push(new Music(extract_dataFromGetData(await GetDataVid(bestItems.musicResponsiveListItemRenderer.playlistItemData?.videoId), i === 0)))
-                else if (bestItems?.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId) searchs.push(new Album(extract_dataFromPlaylist(await GetDataPl(bestItems.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId))))
-                i++
-            }
             if (music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint?.videoId) {
-                searchs.push(new Music(extract_dataFromGetData(await GetDataVid(music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint.videoId), true)))
+                let id = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer.title.runs[0]?.navigationEndpoint?.watchEndpoint.videoId
+                const datavid = await GetDataVid(id).catch((e) => {
+                    reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id}))
+                })
+                searchs.push(new Music(extract_dataFromGetData(datavid, true)))
+                if (onlyBest) return resolve(new Search(query, searchs))
             }
 
-            //for (const item of music_data.data)
             for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicShelfRenderer?.title?.runs[0]?.text.includes(typeSearch.ytID))) {
                 if (item.musicShelfRenderer?.contents?.length) {
                     for (const music of item.musicShelfRenderer.contents) {
@@ -93,6 +105,17 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
                         }
                     }
                 }
+            }
+
+            for (const bestItems of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item: any) => item?.musicCardShelfRenderer?.header.musicCardShelfHeaderBasicRenderer?.title.runs[0]?.text === 'Top result')?.[0]?.musicCardShelfRenderer?.contents || []) {
+                if (bestItems?.musicResponsiveListItemRenderer?.playlistItemData?.videoId) {
+                    const id = bestItems.musicResponsiveListItemRenderer.playlistItemData?.videoId
+                    const datavid = await GetDataVid(id).catch((e) => {
+                        reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id}))
+                    })
+                    searchs.push(new Music(extract_dataFromGetData(datavid, i === 0)))
+                } else if (bestItems?.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId) searchs.push(new Album(extract_dataFromPlaylist(await GetDataPl(bestItems.musicTwoRowItemRenderer?.navigationEndpoint?.browseEndpoint?.browseId))))
+                i++
             }
         }
 
@@ -276,7 +299,7 @@ export function GetDataVid(id: string): Promise<any> {
                     browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId,
                     ...res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
                 })
-            } else reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, id))
+            } else reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id}))
         }).catch(reject)
     })
 }
@@ -287,6 +310,41 @@ export function GetDataPl(id: string): Promise<any> {
             "browseId": id
         }).then((res: any) => {
             resolve(extract_dataFromPlaylist(res.data))
+        }).catch(reject)
+    })
+}
+
+
+/**
+ * @beta
+ * @param query
+ */
+export function getSuggestSearch(query: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        return reject(new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED))
+        requestToYtApi('music/get_search_suggestions', {
+            "input": query
+        }).then((res: any) => {
+            console.log(res.data.contents[0].searchSuggestionsSectionRenderer.contents)
+        }).catch(reject)
+    })
+}
+
+export function getTrending(country: string = "ZZ"): Promise<any> {
+    return new Promise((resolve, reject) => {
+        return reject(new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED))
+        country = country.toUpperCase()
+        requestToYtApi('browse', {
+            browseId: "FEmusic_charts",
+            formData: {
+                selectedValues: [country]
+            }
+        }).then(async (res: any) => {
+            res.data.songs = []
+            for (let song of res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents?.[1].musicCarouselShelfRenderer.contents) {
+                res.data.songs.push((await searchManager.get(song.musicTwoRowItemRenderer.navigationEndpoint.watchEndpoint.videoId)))
+            }
+            resolve(new Trending(res.data))
         }).catch(reject)
     })
 }

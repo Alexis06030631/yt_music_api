@@ -56,7 +56,7 @@ function makeUrl(url) {
         return encodeURI(url);
     }
     else
-        return encodeURI(YTmusic_API_URL + url);
+        return encodeURI(YTmusic_API_URL + url + '?prettyPrint=false');
 }
 function makeHeaders(headers) {
     return Object.assign(Object.assign({}, Defaultheaders), headers);

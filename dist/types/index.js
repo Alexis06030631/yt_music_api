@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TypePage = exports.TypeSearch = exports.DownloadQuality = exports.DownloadType = void 0;
+exports.AvailableCountry = exports.TypePage = exports.TypeSearch = exports.DownloadQuality = exports.DownloadType = void 0;
 const DownloadType = __importStar(require("./DownloadType"));
 exports.DownloadType = DownloadType;
 const DownloadQuality = __importStar(require("./DownloadQuality"));
@@ -32,4 +32,6 @@ const TypeSearch = __importStar(require("./TypeSearch"));
 exports.TypeSearch = TypeSearch;
 const TypePage = __importStar(require("./TypePage"));
 exports.TypePage = TypePage;
+const AvailableCountry = __importStar(require("./AvailableCountry"));
+exports.AvailableCountry = AvailableCountry;
 //# sourceMappingURL=index.js.map

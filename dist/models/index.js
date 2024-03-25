@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamPlayers = exports.Music_model = exports.Search = exports.NoLyrics = exports.Playlist = exports.Music_list = exports.Music = exports.Lyrics = exports.Home = exports.Duration = exports.DownloadFile = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
+exports.StreamPlayers = exports.Trending = exports.Music_model = exports.Search = exports.NoLyrics = exports.Playlist = exports.Music_list = exports.Music = exports.Lyrics = exports.Home = exports.Duration = exports.DownloadFile = exports.Download = exports.Artwork = exports.Artist = exports.Album = void 0;
 const Album_1 = __importDefault(require("./Album"));
 exports.Album = Album_1.default;
 const Artist_1 = __importDefault(require("./Artist"));
@@ -34,4 +34,6 @@ const Music_model_1 = __importDefault(require("./Music_model"));
 exports.Music_model = Music_model_1.default;
 const StreamPlayers_1 = __importDefault(require("./StreamPlayers"));
 exports.StreamPlayers = StreamPlayers_1.default;
+const Trending_1 = __importDefault(require("./Trending"));
+exports.Trending = Trending_1.default;
 //# sourceMappingURL=index.js.map

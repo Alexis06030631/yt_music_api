@@ -6,8 +6,9 @@ import Search from "../models/Search";
  * Search music, video or other with query
  * @param query - Query to search
  * @param type - Type of search
+ * @param onlyBest - Is a boolean parameter that could be used to limit the search results to only the best matches
  */
-export declare function search(query: string, type?: string | TypeSearch_param): Promise<(Search | Array<Music | Album>)>;
+export declare function search(query: string, type?: string | TypeSearch_param, onlyBest?: boolean): Promise<(Search | Array<Music | Album>)>;
 /**
  * Get the home page (NOT WORKING)
  * @param type - Type of page to get
@@ -31,4 +32,10 @@ export declare function get(id: string): Promise<Music>;
 export declare function getPlaylist(id: string): Promise<Playlist>;
 export declare function GetDataVid(id: string): Promise<any>;
 export declare function GetDataPl(id: string): Promise<any>;
+/**
+ * @beta
+ * @param query
+ */
+export declare function getSuggestSearch(query: string): Promise<any>;
+export declare function getTrending(country?: string): Promise<any>;
 //# sourceMappingURL=searchManager.d.ts.map

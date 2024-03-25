@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetDataPl = exports.GetDataVid = exports.getPlaylist = exports.get = exports.relative = exports.getPage = exports.search = void 0;
+exports.getTrending = exports.getSuggestSearch = exports.GetDataPl = exports.GetDataVid = exports.getPlaylist = exports.get = exports.relative = exports.getPage = exports.search = void 0;
 const requestManager_1 = require("../utils/requestManager");
 const models_1 = require("../models/");
 const index_1 = require("../index");
@@ -22,12 +22,14 @@ const errorCodes_1 = __importDefault(require("../errors/errorCodes"));
 const TypeSearch_1 = require("../types/TypeSearch");
 const typeBuilder_1 = require("../utils/typeBuilder");
 const Search_1 = __importDefault(require("../models/Search"));
+const Trending_1 = __importDefault(require("../models/Trending"));
 /**
  * Search music, video or other with query
  * @param query - Query to search
  * @param type - Type of search
+ * @param onlyBest - Is a boolean parameter that could be used to limit the search results to only the best matches
  */
-function search(query, type = TypeSearch_1.TypeSearch[0]) {
+function search(query, type = TypeSearch_1.TypeSearch[0], onlyBest = false) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
@@ -53,7 +55,10 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
                 }
                 else if (url.searchParams.get('v')) {
                     try {
-                        return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid(url.searchParams.get('v') || '')))]);
+                        const datavid = yield GetDataVid(url.searchParams.get('v') || '').catch((e) => {
+                            reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id: url.searchParams.get('v') }));
+                        });
+                        return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(datavid))]);
                     }
                     catch (e) {
                         return reject(e);
@@ -66,7 +71,10 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
             }
             else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
                 let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/);
-                return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid((id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '')))]);
+                const datavid = yield GetDataVid((id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '').catch((e) => {
+                    reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id: (id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '' }));
+                });
+                return resolve([new models_1.Music((0, extract_1.extract_dataFromGetData)(datavid))]);
             }
             const music_data = yield (0, requestManager_1.requestToYtApi)('search', {
                 "query": query,
@@ -80,29 +88,33 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
                     data = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Videos'; })[0].musicShelfRenderer.contents;
                 let item;
                 for (item of data) {
-                    searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid(((_b = (_a = item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId) || ((_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.onTap.watchEndpoint.videoId)))));
+                    let id = ((_b = (_a = item.musicResponsiveListItemRenderer) === null || _a === void 0 ? void 0 : _a.playlistItemData) === null || _b === void 0 ? void 0 : _b.videoId) || ((_c = item.musicResponsiveListItemRenderer) === null || _c === void 0 ? void 0 : _c.onTap.watchEndpoint.videoId);
+                    if (!id)
+                        continue;
+                    const datavid = yield GetDataVid(id).catch((e) => {
+                        reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id }));
+                    });
+                    searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(datavid)));
                 }
             }
             else {
                 let i = 0;
-                for (const bestItems of ((_f = (_e = (_d = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.musicCardShelfRenderer) === null || _f === void 0 ? void 0 : _f.contents) || []) {
-                    if ((_h = (_g = bestItems === null || bestItems === void 0 ? void 0 : bestItems.musicResponsiveListItemRenderer) === null || _g === void 0 ? void 0 : _g.playlistItemData) === null || _h === void 0 ? void 0 : _h.videoId)
-                        searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid((_j = bestItems.musicResponsiveListItemRenderer.playlistItemData) === null || _j === void 0 ? void 0 : _j.videoId), i === 0)));
-                    else if ((_m = (_l = (_k = bestItems === null || bestItems === void 0 ? void 0 : bestItems.musicTwoRowItemRenderer) === null || _k === void 0 ? void 0 : _k.navigationEndpoint) === null || _l === void 0 ? void 0 : _l.browseEndpoint) === null || _m === void 0 ? void 0 : _m.browseId)
-                        searchs.push(new models_1.Album((0, extract_1.extract_dataFromPlaylist)(yield GetDataPl((_q = (_p = (_o = bestItems.musicTwoRowItemRenderer) === null || _o === void 0 ? void 0 : _o.navigationEndpoint) === null || _p === void 0 ? void 0 : _p.browseEndpoint) === null || _q === void 0 ? void 0 : _q.browseId))));
-                    i++;
+                if ((_h = (_g = (_f = (_e = (_d = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.musicCardShelfRenderer.title.runs[0]) === null || _f === void 0 ? void 0 : _f.navigationEndpoint) === null || _g === void 0 ? void 0 : _g.watchEndpoint) === null || _h === void 0 ? void 0 : _h.videoId) {
+                    let id = (_m = (_l = (_k = (_j = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _j === void 0 ? void 0 : _j[0]) === null || _k === void 0 ? void 0 : _k.musicCardShelfRenderer.title.runs[0]) === null || _l === void 0 ? void 0 : _l.navigationEndpoint) === null || _m === void 0 ? void 0 : _m.watchEndpoint.videoId;
+                    const datavid = yield GetDataVid(id).catch((e) => {
+                        reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id }));
+                    });
+                    searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(datavid, true)));
+                    if (onlyBest)
+                        return resolve(new Search_1.default(query, searchs));
                 }
-                if ((_v = (_u = (_t = (_s = (_r = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _r === void 0 ? void 0 : _r[0]) === null || _s === void 0 ? void 0 : _s.musicCardShelfRenderer.title.runs[0]) === null || _t === void 0 ? void 0 : _t.navigationEndpoint) === null || _u === void 0 ? void 0 : _u.watchEndpoint) === null || _v === void 0 ? void 0 : _v.videoId) {
-                    searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(yield GetDataVid((_z = (_y = (_x = (_w = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _w === void 0 ? void 0 : _w[0]) === null || _x === void 0 ? void 0 : _x.musicCardShelfRenderer.title.runs[0]) === null || _y === void 0 ? void 0 : _y.navigationEndpoint) === null || _z === void 0 ? void 0 : _z.watchEndpoint.videoId), true)));
-                }
-                //for (const item of music_data.data)
                 for (const item of music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return (_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicShelfRenderer) === null || _a === void 0 ? void 0 : _a.title) === null || _b === void 0 ? void 0 : _b.runs[0]) === null || _c === void 0 ? void 0 : _c.text.includes(typeSearch.ytID); })) {
-                    if ((_1 = (_0 = item.musicShelfRenderer) === null || _0 === void 0 ? void 0 : _0.contents) === null || _1 === void 0 ? void 0 : _1.length) {
+                    if ((_p = (_o = item.musicShelfRenderer) === null || _o === void 0 ? void 0 : _o.contents) === null || _p === void 0 ? void 0 : _p.length) {
                         for (const music of item.musicShelfRenderer.contents) {
                             // Get type of music
-                            if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && ((_3 = (_2 = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _2 === void 0 ? void 0 : _2.watchEndpoint) === null || _3 === void 0 ? void 0 : _3.videoId)) {
+                            if ((item.musicShelfRenderer.title.runs[0].text === 'Songs' || item.musicShelfRenderer.title.runs[0].text === 'Videos') && ((_r = (_q = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _q === void 0 ? void 0 : _q.watchEndpoint) === null || _r === void 0 ? void 0 : _r.videoId)) {
                                 try {
-                                    searchs.push((yield this.search(`https://music.youtube.com/watch?v=${(_5 = (_4 = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _4 === void 0 ? void 0 : _4.watchEndpoint) === null || _5 === void 0 ? void 0 : _5.videoId}`, 'MUSIC'))[0]);
+                                    searchs.push((yield this.search(`https://music.youtube.com/watch?v=${(_t = (_s = music.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].navigationEndpoint) === null || _s === void 0 ? void 0 : _s.watchEndpoint) === null || _t === void 0 ? void 0 : _t.videoId}`, 'MUSIC'))[0]);
                                 }
                                 catch (e) {
                                     reject(e);
@@ -113,6 +125,18 @@ function search(query, type = TypeSearch_1.TypeSearch[0]) {
                             }
                         }
                     }
+                }
+                for (const bestItems of ((_w = (_v = (_u = music_data.data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents.filter((item) => { var _a, _b, _c; return ((_c = (_b = (_a = item === null || item === void 0 ? void 0 : item.musicCardShelfRenderer) === null || _a === void 0 ? void 0 : _a.header.musicCardShelfHeaderBasicRenderer) === null || _b === void 0 ? void 0 : _b.title.runs[0]) === null || _c === void 0 ? void 0 : _c.text) === 'Top result'; })) === null || _u === void 0 ? void 0 : _u[0]) === null || _v === void 0 ? void 0 : _v.musicCardShelfRenderer) === null || _w === void 0 ? void 0 : _w.contents) || []) {
+                    if ((_y = (_x = bestItems === null || bestItems === void 0 ? void 0 : bestItems.musicResponsiveListItemRenderer) === null || _x === void 0 ? void 0 : _x.playlistItemData) === null || _y === void 0 ? void 0 : _y.videoId) {
+                        const id = (_z = bestItems.musicResponsiveListItemRenderer.playlistItemData) === null || _z === void 0 ? void 0 : _z.videoId;
+                        const datavid = yield GetDataVid(id).catch((e) => {
+                            reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id }));
+                        });
+                        searchs.push(new models_1.Music((0, extract_1.extract_dataFromGetData)(datavid, i === 0)));
+                    }
+                    else if ((_2 = (_1 = (_0 = bestItems === null || bestItems === void 0 ? void 0 : bestItems.musicTwoRowItemRenderer) === null || _0 === void 0 ? void 0 : _0.navigationEndpoint) === null || _1 === void 0 ? void 0 : _1.browseEndpoint) === null || _2 === void 0 ? void 0 : _2.browseId)
+                        searchs.push(new models_1.Album((0, extract_1.extract_dataFromPlaylist)(yield GetDataPl((_5 = (_4 = (_3 = bestItems.musicTwoRowItemRenderer) === null || _3 === void 0 ? void 0 : _3.navigationEndpoint) === null || _4 === void 0 ? void 0 : _4.browseEndpoint) === null || _5 === void 0 ? void 0 : _5.browseId))));
+                    i++;
                 }
             }
             if (!searchs.length)
@@ -312,7 +336,7 @@ function GetDataVid(id) {
                 resolve(Object.assign({ browseId: res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[1].tabRenderer.endpoint.browseEndpoint.browseId }, res.data.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer));
             }
             else
-                reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, id));
+                reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id }));
         }).catch(reject);
     });
 }
@@ -327,4 +351,39 @@ function GetDataPl(id) {
     });
 }
 exports.GetDataPl = GetDataPl;
+/**
+ * @beta
+ * @param query
+ */
+function getSuggestSearch(query) {
+    return new Promise((resolve, reject) => {
+        return reject(new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED));
+        (0, requestManager_1.requestToYtApi)('music/get_search_suggestions', {
+            "input": query
+        }).then((res) => {
+            console.log(res.data.contents[0].searchSuggestionsSectionRenderer.contents);
+        }).catch(reject);
+    });
+}
+exports.getSuggestSearch = getSuggestSearch;
+function getTrending(country = "ZZ") {
+    return new Promise((resolve, reject) => {
+        return reject(new errors_1.YTjsErrorError(errorCodes_1.default.CURRENTLY_NOT_SUPPORTED));
+        country = country.toUpperCase();
+        (0, requestManager_1.requestToYtApi)('browse', {
+            browseId: "FEmusic_charts",
+            formData: {
+                selectedValues: [country]
+            }
+        }).then((res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            res.data.songs = [];
+            for (let song of (_a = res.data.contents.singleColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) === null || _a === void 0 ? void 0 : _a[1].musicCarouselShelfRenderer.contents) {
+                res.data.songs.push((yield index_1.searchManager.get(song.musicTwoRowItemRenderer.navigationEndpoint.watchEndpoint.videoId)));
+            }
+            resolve(new Trending_1.default(res.data));
+        })).catch(reject);
+    });
+}
+exports.getTrending = getTrending;
 //# sourceMappingURL=searchManager.js.map

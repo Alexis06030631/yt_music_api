@@ -13,6 +13,7 @@ import NoLyrics from "./NoLyrics";
 import Search from './Search';
 import Music_model from "./Music_model";
 import StreamPlayers from "./StreamPlayers";
+import Trending from "./Trending";
 
 export {
     Album,
@@ -29,5 +30,6 @@ export {
     NoLyrics,
     Search,
     Music_model,
+    Trending,
     StreamPlayers
 }

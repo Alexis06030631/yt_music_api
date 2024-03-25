@@ -82,14 +82,21 @@ function extract_dataFromListItemRenderer(data) {
 }
 exports.extract_dataFromListItemRenderer = extract_dataFromListItemRenderer;
 function extract_dataFromPlaylist(data) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
     let artists = [], date = 0, name = '', id;
-    for (let item of ((_b = (_a = data.header.musicDetailHeaderRenderer) === null || _a === void 0 ? void 0 : _a.subtitle) === null || _b === void 0 ? void 0 : _b.runs) || []) {
+    if (!(data === null || data === void 0 ? void 0 : data.header))
+        return {
+            name: null,
+            id: null,
+            artists: [],
+            date: null
+        };
+    for (let item of ((_c = (_b = (_a = data.header) === null || _a === void 0 ? void 0 : _a.musicDetailHeaderRenderer) === null || _b === void 0 ? void 0 : _b.subtitle) === null || _c === void 0 ? void 0 : _c.runs) || []) {
         // Check if the item is an artist
-        if (((_g = (_f = (_e = (_d = (_c = item.navigationEndpoint) === null || _c === void 0 ? void 0 : _c.browseEndpoint) === null || _d === void 0 ? void 0 : _d.browseEndpointContextSupportedConfigs) === null || _e === void 0 ? void 0 : _e.browseEndpointContextMusicConfig) === null || _f === void 0 ? void 0 : _f.pageType) === null || _g === void 0 ? void 0 : _g.includes('ARTIST')) || ((_m = (_l = (_k = (_j = (_h = item.navigationEndpoint) === null || _h === void 0 ? void 0 : _h.browseEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpointContextSupportedConfigs) === null || _k === void 0 ? void 0 : _k.browseEndpointContextMusicConfig) === null || _l === void 0 ? void 0 : _l.pageType) === null || _m === void 0 ? void 0 : _m.includes('USER'))) {
+        if (((_h = (_g = (_f = (_e = (_d = item.navigationEndpoint) === null || _d === void 0 ? void 0 : _d.browseEndpoint) === null || _e === void 0 ? void 0 : _e.browseEndpointContextSupportedConfigs) === null || _f === void 0 ? void 0 : _f.browseEndpointContextMusicConfig) === null || _g === void 0 ? void 0 : _g.pageType) === null || _h === void 0 ? void 0 : _h.includes('ARTIST')) || ((_o = (_m = (_l = (_k = (_j = item.navigationEndpoint) === null || _j === void 0 ? void 0 : _j.browseEndpoint) === null || _k === void 0 ? void 0 : _k.browseEndpointContextSupportedConfigs) === null || _l === void 0 ? void 0 : _l.browseEndpointContextMusicConfig) === null || _m === void 0 ? void 0 : _m.pageType) === null || _o === void 0 ? void 0 : _o.includes('USER'))) {
             artists.push(new models_1.Artist({
                 name: item.text,
-                id: (_p = (_o = item.navigationEndpoint) === null || _o === void 0 ? void 0 : _o.browseEndpoint) === null || _p === void 0 ? void 0 : _p.browseId
+                id: (_q = (_p = item.navigationEndpoint) === null || _p === void 0 ? void 0 : _p.browseEndpoint) === null || _q === void 0 ? void 0 : _q.browseId
             }));
             // Check if the item is a date
         }
@@ -101,8 +108,8 @@ function extract_dataFromPlaylist(data) {
     return {
         artworks: data.header.musicDetailHeaderRenderer.thumbnail.croppedSquareThumbnailRenderer.thumbnail.thumbnails.map((e) => new models_1.Artwork(e)),
         name: data.header.musicDetailHeaderRenderer.title.runs[0].text,
-        description: (_t = (_s = (_r = (_q = data.header.musicDetailHeaderRenderer) === null || _q === void 0 ? void 0 : _q.description) === null || _r === void 0 ? void 0 : _r.runs) === null || _s === void 0 ? void 0 : _s[0]) === null || _t === void 0 ? void 0 : _t.text,
-        id: (_v = (_u = data.responseContext) === null || _u === void 0 ? void 0 : _u.serviceTrackingParams) === null || _v === void 0 ? void 0 : _v.find((e) => e.service === 'GFEEDBACK').params.find((e) => e.key === 'browse_id').value.split('/').pop(),
+        description: (_u = (_t = (_s = (_r = data.header.musicDetailHeaderRenderer) === null || _r === void 0 ? void 0 : _r.description) === null || _s === void 0 ? void 0 : _s.runs) === null || _t === void 0 ? void 0 : _t[0]) === null || _u === void 0 ? void 0 : _u.text,
+        id: (_w = (_v = data.responseContext) === null || _v === void 0 ? void 0 : _v.serviceTrackingParams) === null || _w === void 0 ? void 0 : _w.find((e) => e.service === 'GFEEDBACK').params.find((e) => e.key === 'browse_id').value.split('/').pop(),
         artists: artists,
         date: date
     };

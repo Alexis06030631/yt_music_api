@@ -79,7 +79,14 @@ export function extract_dataFromListItemRenderer(data: any): Music_model {
 export function extract_dataFromPlaylist(data: any): any {
     let artists: any = [], date: number = 0, name: string = '', id: string
 
-    for (let item of data.header.musicDetailHeaderRenderer?.subtitle?.runs || []) {
+    if (!data?.header) return {
+        name: null,
+        id: null,
+        artists: [],
+        date: null
+    }
+
+    for (let item of data.header?.musicDetailHeaderRenderer?.subtitle?.runs || []) {
         // Check if the item is an artist
         if (item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('ARTIST') || item.navigationEndpoint?.browseEndpoint?.browseEndpointContextSupportedConfigs?.browseEndpointContextMusicConfig?.pageType?.includes('USER')) {
             artists.push(new Artist({
