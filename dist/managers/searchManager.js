@@ -69,8 +69,8 @@ function search(query, type = TypeSearch_1.TypeSearch[0], onlyBest = false) {
                 else
                     return reject(new errors_1.YTjsErrorError(errorCodes_1.default.INVALID_URL, url.hostname));
             }
-            else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
-                let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/);
+            else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^\S{11}$)/.test(query)) {
+                let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^\S{11}$)/);
                 const datavid = yield GetDataVid((id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '').catch((e) => {
                     reject(new errors_1.YTjsErrorError(errorCodes_1.default.VIDEO_NOT_FOUND, { id: (id === null || id === void 0 ? void 0 : id[1]) || (id === null || id === void 0 ? void 0 : id[0]) || '' }));
                 });

@@ -51,8 +51,8 @@ export async function search(query: string, type: string | TypeSearch_param = Ty
             } else if (url.pathname.includes('channel')) return reject(new YTjsErrorError(ErrorCode.CURRENTLY_NOT_SUPPORTED))
             else return reject(new YTjsErrorError(ErrorCode.INVALID_URL, url.hostname))
 
-        } else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/.test(query)) {
-            let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^.{11}$)/)
+        } else if (/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^\S{11}$)/.test(query)) {
+            let id = query.match(/^(?:https?:\/\/)?(?:www\.)?.*(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:.+)?$|(^\S{11}$)/)
             const datavid = await GetDataVid(id?.[1] || id?.[0] || '').catch((e) => {
                 reject(new YTjsErrorError(ErrorCode.VIDEO_NOT_FOUND, {id: id?.[1] || id?.[0] || ''}))
             })
