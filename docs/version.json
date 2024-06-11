@@ -1,5 +1,5 @@
 {
-  "latestVersion": "2.0.0-beta.1",
+  "latestVersion": "2.0.0-beta.1.1",
   "versions": [
     {
       "version": "1.3.3",
@@ -10,6 +10,11 @@
       "version": "2.0.0-beta.1",
       "lastUpdated": "2024-06-11T17:24:03.208Z",
       "url": "2_0_0-beta_1"
+    },
+    {
+      "version": "2.0.0-beta.1.1",
+      "lastUpdated": "2024-06-11T17:50:04.784Z",
+      "url": "2_0_0-beta_1_1"
     }
   ]
 }

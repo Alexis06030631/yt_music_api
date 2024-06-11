@@ -7,7 +7,7 @@ export default {
 	"description": "A simple API to get music from YouTube Music",
 	"base": "/yt_music_api",
 	"outDir": './dist',
-	"srcDir": path.join(__dirname, './'),
+	"srcDir": path.join(__dirname, '..', 'build'),
 	"cleanUrls": true,
 	"ignoreDeadLinks": true,
 	"head": [
