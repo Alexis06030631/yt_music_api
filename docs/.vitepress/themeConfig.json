@@ -1,0 +1,68 @@
+{
+  "sidebar": [
+    {
+      "text": "Introduction",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "What is YouTubeMusic?",
+          "link": "/docs/what-is-ytmusic"
+        },
+        {
+          "text": "Getting Started",
+          "link": "/docs/getting-started"
+        }
+      ]
+    },
+    {
+      "text": "Methods",
+      "items": [
+        {
+          "text": "charts",
+          "link": "/2_0_0-beta_1/method/charts"
+        },
+        {
+          "text": "download",
+          "link": "/2_0_0-beta_1/method/download"
+        },
+        {
+          "text": "get",
+          "link": "/2_0_0-beta_1/method/get"
+        },
+        {
+          "text": "search",
+          "link": "/2_0_0-beta_1/method/search"
+        }
+      ]
+    },
+    {
+      "text": "Classes",
+      "items": [
+        {
+          "text": "Album",
+          "link": "/2_0_0-beta_1/class/Album"
+        },
+        {
+          "text": "Artist",
+          "link": "/2_0_0-beta_1/class/Artist"
+        },
+        {
+          "text": "Duration",
+          "link": "/2_0_0-beta_1/class/Duration"
+        },
+        {
+          "text": "Music",
+          "link": "/2_0_0-beta_1/class/Music"
+        },
+        {
+          "text": "Playlist",
+          "link": "/2_0_0-beta_1/class/Playlist"
+        },
+        {
+          "text": "Thumbnail",
+          "link": "/2_0_0-beta_1/class/Thumbnail"
+        }
+      ]
+    }
+  ]
+}

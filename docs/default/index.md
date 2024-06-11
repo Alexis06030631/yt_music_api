@@ -24,7 +24,7 @@ You can soon:
 ## Installation
 
 ```bash
-npm install ytmusic_api_unofficial
+npm install ytmusic_api_unofficial@{VERSION__}
 ```
 
 ## Examples
@@ -46,6 +46,14 @@ searchManager.get('ID').then((result) => {
 downloadManager.download('ID', 'mp3', high).then((result) => {
 	console.log(result);
 });
+```
+
+### Private Constants
+
+You can set the following constants to get the best results in search, home, and trending.
+
+```dotenv
+YT_VISITOR_ID=YOUR_VISITOR_ID
 ```
 
 Make By [Alexis06030631](https://www.instagram.com/leko_system/)

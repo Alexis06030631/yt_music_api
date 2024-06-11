@@ -1,1 +1,0 @@
-{"version":3,"file":"Artwork.d.ts","sourceRoot":"","sources":["../../src/models/Artwork.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,OAAO;IACxB;;OAEG;IACI,GAAG,EAAE,MAAM,CAAC;IACnB;;OAEG;IACI,KAAK,EAAE,MAAM,CAAC;IACrB;;OAEG;IACI,MAAM,EAAE,MAAM,CAAC;gBAEV,OAAO,EAAE,GAAG;CAK3B"}

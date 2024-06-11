@@ -10,10 +10,7 @@
 	"docModel": {
 		"enabled": true,
 		"includeForgottenExports": true,
-		'apiJsonFilePath': "<projectFolder>/temp/<unscopedPackageName>.api.json"
-	},
-	"dtsRollup": {
-		"enabled": false
+		"apiJsonFilePath": "<projectFolder>/docs/temp/<unscopedPackageName>.api.json"
 	},
 	"messages": {
 		"compilerMessageReporting": {
@@ -35,5 +32,12 @@
 				"logLevel": "warning"
 			}
 		}
+	},
+	"tsdocMetadata": {
+		"enabled": false
+	},
+	"dtsRollup": {
+		"enabled": true,
+		"untrimmedFilePath": "./dist/index.d.ts"
 	}
 }

@@ -1,1 +1,0 @@
-{"version":3,"file":"Artist.js","sourceRoot":"","sources":["../../src/models/Artist.ts"],"names":[],"mappings":";;AAAA,MAAqB,MAAM;IAUvB,YAAY,MAAW;QACnB,IAAI,CAAC,IAAI,GAAG,MAAM,CAAC,IAAI,CAAA;QACvB,IAAI,CAAC,EAAE,GAAG,MAAM,CAAC,EAAE,CAAA;IACvB,CAAC;CACJ;AAdD,yBAcC"}

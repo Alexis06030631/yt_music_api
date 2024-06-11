@@ -1,139 +1,74 @@
+const version = require('../version.json')
+const themeConfig = require('./themeConfig.json')
 export default {
-  "title": "YTMusic",
-  "description": "A simple API to get music from YouTube Music",
-  "base": "/yt_music_api",
-  "srcDir": "./",
-  "outDir": "./dist",
-  "cleanUrls": true,
-  "ignoreDeadLinks": true,
-  "markdown": {
-    "attrs": {
-      "disable": true
-    }
-  },
-  "themeConfig": {
-    "editLink": {
-      "pattern": "https://github.com/Alexis06030631/yt_music_api/edit/main/docs/:path",
-      "text": "Edit this page on GitHub"
-    },
-    "footer": {
-      "message": "Made with ❤️ by <a href=\"https://instagram.com/leko_system\">Leko_system</a>"
-    },
-    "sidebar": [
-      {
-        "text": "Methods",
-        "items": [
-          {
-            "text": "downloadManager",
-            "link": "/docs/method/downloadManager"
-          },
-          {
-            "text": "searchManager",
-            "link": "/docs/method/searchManager"
-          }
-        ]
-      },
-      {
-        "text": "Classes",
-        "items": [
-          {
-            "text": "Album",
-            "link": "/docs/class/Album"
-          },
-          {
-            "text": "Artist",
-            "link": "/docs/class/Artist"
-          },
-          {
-            "text": "Artwork",
-            "link": "/docs/class/Artwork"
-          },
-          {
-            "text": "Download",
-            "link": "/docs/class/Download"
-          },
-          {
-            "text": "Duration",
-            "link": "/docs/class/Duration"
-          },
-          {
-            "text": "Home",
-            "link": "/docs/class/Home"
-          },
-          {
-            "text": "Lyrics",
-            "link": "/docs/class/Lyrics"
-          },
-          {
-            "text": "Music_2",
-            "link": "/docs/class/Music_2"
-          },
-          {
-            "text": "Music_list",
-            "link": "/docs/class/Music_list"
-          },
-          {
-            "text": "Music_model",
-            "link": "/docs/class/Music_model"
-          },
-          {
-            "text": "Music",
-            "link": "/docs/class/Music"
-          },
-          {
-            "text": "NoLyrics",
-            "link": "/docs/class/NoLyrics"
-          },
-          {
-            "text": "Playlist",
-            "link": "/docs/class/Playlist"
-          }
-        ]
-      },
-      {
-        "text": "Interfaces",
-        "items": [
-          {
-            "text": "DownloadQuality_2",
-            "link": "/docs/interface/DownloadQuality_2"
-          },
-          {
-            "text": "DownloadType_2",
-            "link": "/docs/interface/DownloadType_2"
-          },
-          {
-            "text": "TypeSearch_2",
-            "link": "/docs/interface/TypeSearch_2"
-          }
-        ]
-      },
-      {
-        "text": "Params",
-        "items": [
-          {
-            "text": "DownloadQuality_param",
-            "link": "/docs/param/DownloadQuality_param"
-          },
-          {
-            "text": "DownloadType_param",
-            "link": "/docs/param/DownloadType_param"
-          },
-          {
-            "text": "TypeSearch_param",
-            "link": "/docs/param/TypeSearch_param"
-          }
-        ]
-      }
-    ],
-    "socialLinks": [
-      {
-        "icon": "github",
-        "link": "https://github.com/Alexis06030631/ytmusic_api/"
-      },
-      {
-        "icon": "instagram",
-        "link": "https://www.instagram.com/leko_system/"
-      }
-    ]
-  }
+	"title": "YTMusic",
+	"description": "A simple API to get music from YouTube Music",
+	"base": "/yt_music_api",
+	"outDir": './dist',
+	"srcDir": "./build",
+	"publicDir": "build/public",
+	"cleanUrls": true,
+	"ignoreDeadLinks": true,
+	"head": [
+		[
+			"link",
+			{
+				"rel": "icon",
+				"href": "/yt_music_api/assets/logo.svg"
+			}
+		],
+		[
+			"link",
+			{
+				"rel": "stylesheet",
+				"href": "/yt_music_api/assets/css/theme_edit.css"
+			}
+		]
+	],
+	"markdown": {
+		"attrs": {
+			"disable": false
+		}
+	},
+	"themeConfig": {
+		"editLink": {
+			"pattern": "https://github.com/Alexis06030631/yt_music_api/edit/main/docs/:path",
+			"text": "Edit this page on GitHub"
+		},
+		"footer": {
+			"message": "Made with ❤️ by <a href=\"https://instagram.com/leko_system\">LKS Music</a>"
+		},
+		"sidebar": themeConfig.sidebar,
+		"nav": [
+			{
+				text: `V${version.latestVersion}`,
+				link: '/',
+				activeMatch: `/${version.latestVersion}`
+			},
+			/*{
+				"text": `Version: ${version.versions[0].version} ${version.latestVersion === version.versions[0].version ? "(latest)" : ""}`,
+				"items": version.versions.sort((a, b) => a.version > b.version ? -1 : 1).map(v => {
+					return {
+						text: v.version + (v.version === version.latestVersion ? " (latest)" : ""),
+						link: `/${v.url}`
+					}
+				})
+			}
+			 */
+		],
+		"socialLinks": [
+			{
+				"icon": "github",
+				"link": "https://github.com/Alexis06030631/yt_music_api/"
+			},
+			{
+				"icon": "npm",
+				"link": "https://www.npmjs.com/package/ytmusic_api_unofficial"
+			},
+			{
+				"icon": "instagram",
+				"link": "https://www.instagram.com/leko_system/"
+			}
+		]
+	}
 }

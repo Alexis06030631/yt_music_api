@@ -1,9 +1,10 @@
 node_modules/
 test.js
+test.ts
 .Ds_Store
 .idea/
 temp
-
+.env
 docs/.vitepress/cache/
 docs/docs/
 docs/.vitepress/dist/
