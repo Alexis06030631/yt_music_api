@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: Download deps from docs
+        run: cd ./docs/ && npm ci
+
       - name: download deps
         run: npm ci
 
