@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <includedPredefinedLibrary name="Node.js Core" />
+    <excludedPredefinedLibrary name="yt_music_api/decode/node_modules" />
+    <excludedPredefinedLibrary name="yt_music_api/docs/node_modules" />
+  </component>
+</project>

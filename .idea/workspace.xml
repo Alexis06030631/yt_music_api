@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9cb55106-44e9-4248-8a9f-e34d1d36c3ca" name="Changes" comment="Update ReadMe" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Alexis06030631/yt_music_api.git&quot;,
+    &quot;accountId&quot;: &quot;8f85ba98-ee05-4977-9f0d-02f412e2c2a7&quot;
+  }
+}</component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="kbq1gwrn" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2Q3ndujdjGOOx8aPKc8NbgP6d3R" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Node.js.build_test.js.executor": "Run",
+    "Node.js.decode_builder.js.executor": "Run",
+    "Node.js.test.js.executor": "Run",
+    "Node.js.versionning.js.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-JavaScript: Code Vision Performance": "JavaScript: code vision performance watcher",
+    "Notification.DoNotAsk-JavaScript: Code Vision Performance": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "docs",
+    "javascript.nodejs.core.library.configured.version": "21.6.0",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "last_opened_file_path": "/Users/user/GitHub/yt_music_api/docs/default",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Run",
+    "npm.dev.executor": "Run",
+    "npm.docs:build.executor": "Run",
+    "npm.docs:dev.executor": "Run",
+    "npm.test.executor": "Run",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "settings.typescriptcompiler",
+    "ts.external.directory.path": "/usr/local/lib/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/default" />
+      <recent name="$PROJECT_DIR$/docs/build" />
+      <recent name="$PROJECT_DIR$/docs/dist" />
+      <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/build/public" />
+      <recent name="$PROJECT_DIR$/docs/build" />
+      <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/docs/build/docs" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.docs:build">
+    <configuration name="decode_builder.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/decode/decode_builder.js" working-dir="$PROJECT_DIR$/decode">
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/docs/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/docs/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="docs:build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="docs:build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="docs:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="docs:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs>
+        <env name="YT_DEBUG_MODE" value="true" />
+      </envs>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.decode_builder.js" />
+      <item itemvalue="npm.docs:build" />
+      <item itemvalue="npm.docs:dev" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.dev" />
+      <item itemvalue="npm.test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.docs:build" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.docs:dev" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9cb55106-44e9-4248-8a9f-e34d1d36c3ca" name="Changes" comment="" />
+      <created>1684591223950</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684591223950</updated>
+      <workItem from="1684591224888" duration="12736000" />
+      <workItem from="1684947692892" duration="966000" />
+      <workItem from="1684958592646" duration="20000" />
+      <workItem from="1685042768052" duration="7262000" />
+      <workItem from="1685128251202" duration="1278000" />
+      <workItem from="1685469026090" duration="25000" />
+      <workItem from="1685728012026" duration="4488000" />
+      <workItem from="1687269062782" duration="47000" />
+      <workItem from="1688597972224" duration="969000" />
+      <workItem from="1688627833360" duration="848000" />
+      <workItem from="1691164821030" duration="2299000" />
+      <workItem from="1691167521112" duration="1389000" />
+      <workItem from="1691169158106" duration="552000" />
+      <workItem from="1693180298969" duration="1431000" />
+      <workItem from="1693381806655" duration="1956000" />
+      <workItem from="1693479988476" duration="1875000" />
+      <workItem from="1693490652470" duration="2001000" />
+      <workItem from="1693503722001" duration="3885000" />
+      <workItem from="1693657123964" duration="531000" />
+      <workItem from="1693761428767" duration="803000" />
+      <workItem from="1694190373093" duration="7189000" />
+      <workItem from="1694248612293" duration="5841000" />
+      <workItem from="1694333857133" duration="189000" />
+      <workItem from="1694334714385" duration="2310000" />
+      <workItem from="1694337130900" duration="11822000" />
+      <workItem from="1694540111073" duration="5000" />
+      <workItem from="1694540147870" duration="147000" />
+      <workItem from="1694540554982" duration="49000" />
+      <workItem from="1694547552675" duration="1266000" />
+      <workItem from="1694712329796" duration="5334000" />
+      <workItem from="1694718443119" duration="1600000" />
+      <workItem from="1694973933477" duration="5126000" />
+      <workItem from="1695064940787" duration="488000" />
+      <workItem from="1695065750998" duration="28000" />
+      <workItem from="1695066578052" duration="1067000" />
+      <workItem from="1695159006069" duration="11369000" />
+      <workItem from="1695230080415" duration="9427000" />
+      <workItem from="1695321179958" duration="1005000" />
+      <workItem from="1695323034648" duration="7904000" />
+      <workItem from="1695383882036" duration="5148000" />
+      <workItem from="1695400031810" duration="27000" />
+      <workItem from="1695403972893" duration="1628000" />
+      <workItem from="1695420634791" duration="232000" />
+      <workItem from="1695421434652" duration="491000" />
+      <workItem from="1695421966959" duration="11847000" />
+      <workItem from="1695492549080" duration="565000" />
+      <workItem from="1695716961565" duration="760000" />
+      <workItem from="1695721595510" duration="1634000" />
+      <workItem from="1695750220772" duration="19242000" />
+      <workItem from="1695876286198" duration="6650000" />
+      <workItem from="1695988948309" duration="658000" />
+      <workItem from="1695989806792" duration="220000" />
+      <workItem from="1695993711686" duration="3066000" />
+      <workItem from="1696003438874" duration="1185000" />
+      <workItem from="1696004673417" duration="25065000" />
+      <workItem from="1696268698439" duration="6405000" />
+      <workItem from="1696320540257" duration="1891000" />
+      <workItem from="1696323104383" duration="3788000" />
+      <workItem from="1696347477608" duration="19000" />
+      <workItem from="1696632696003" duration="2283000" />
+      <workItem from="1696671345815" duration="197000" />
+      <workItem from="1696671847724" duration="67000" />
+      <workItem from="1696672803224" duration="2861000" />
+      <workItem from="1696678898538" duration="49000" />
+      <workItem from="1696952814701" duration="4932000" />
+      <workItem from="1696967277303" duration="2893000" />
+      <workItem from="1697011807816" duration="2137000" />
+      <workItem from="1697145379373" duration="1175000" />
+      <workItem from="1697202071972" duration="1761000" />
+      <workItem from="1697296246599" duration="394000" />
+      <workItem from="1697298990485" duration="161000" />
+      <workItem from="1697530528441" duration="13863000" />
+      <workItem from="1697616568446" duration="3568000" />
+      <workItem from="1697621586286" duration="4519000" />
+      <workItem from="1697632563832" duration="5834000" />
+      <workItem from="1697737113605" duration="1018000" />
+      <workItem from="1697817488259" duration="6472000" />
+      <workItem from="1697968343383" duration="34000" />
+      <workItem from="1698272702262" duration="2745000" />
+      <workItem from="1698311159501" duration="3345000" />
+      <workItem from="1699714859588" duration="4931000" />
+      <workItem from="1700308603657" duration="4529000" />
+      <workItem from="1700314400335" duration="1234000" />
+      <workItem from="1700383760006" duration="510000" />
+      <workItem from="1700832577477" duration="811000" />
+      <workItem from="1701807275594" duration="11645000" />
+      <workItem from="1701871953865" duration="26000" />
+      <workItem from="1701872468117" duration="195000" />
+      <workItem from="1702475979604" duration="2585000" />
+      <workItem from="1702478949803" duration="98000" />
+      <workItem from="1702577268396" duration="2666000" />
+      <workItem from="1702645766926" duration="48000" />
+      <workItem from="1703425430931" duration="10593000" />
+      <workItem from="1705086083495" duration="1471000" />
+      <workItem from="1705186079834" duration="4000" />
+      <workItem from="1705396872171" duration="4126000" />
+      <workItem from="1705443100131" duration="3790000" />
+      <workItem from="1705482354226" duration="198000" />
+      <workItem from="1705483653916" duration="5157000" />
+      <workItem from="1705497137047" duration="995000" />
+      <workItem from="1705498378377" duration="2790000" />
+      <workItem from="1705501709028" duration="14000" />
+      <workItem from="1705502737106" duration="1536000" />
+      <workItem from="1705577260043" duration="546000" />
+      <workItem from="1705577933370" duration="112000" />
+      <workItem from="1705591539666" duration="11000" />
+      <workItem from="1706121957950" duration="1647000" />
+      <workItem from="1708357452260" duration="1978000" />
+      <workItem from="1708464135860" duration="14000" />
+      <workItem from="1708464246718" duration="2366000" />
+      <workItem from="1708470723331" duration="1110000" />
+      <workItem from="1708598850467" duration="68000" />
+      <workItem from="1708598951807" duration="112000" />
+      <workItem from="1708599082216" duration="138000" />
+      <workItem from="1708599240655" duration="597000" />
+      <workItem from="1708712715234" duration="2060000" />
+      <workItem from="1708771568185" duration="599000" />
+      <workItem from="1709716411087" duration="3000" />
+      <workItem from="1709716432819" duration="1034000" />
+      <workItem from="1709717649173" duration="4360000" />
+      <workItem from="1709736818649" duration="628000" />
+      <workItem from="1709836268459" duration="6717000" />
+      <workItem from="1710867031753" duration="895000" />
+      <workItem from="1711393421818" duration="38000" />
+      <workItem from="1711396372226" duration="2383000" />
+      <workItem from="1711540791774" duration="59000" />
+      <workItem from="1712321683296" duration="12328000" />
+      <workItem from="1712400100502" duration="4202000" />
+      <workItem from="1713466917775" duration="64000" />
+      <workItem from="1714564021061" duration="610000" />
+      <workItem from="1716278946834" duration="7735000" />
+      <workItem from="1716362006104" duration="24215000" />
+      <workItem from="1716552146501" duration="65000" />
+      <workItem from="1716552240103" duration="21000" />
+      <workItem from="1716552371213" duration="17465000" />
+      <workItem from="1716830232670" duration="36699000" />
+      <workItem from="1717762026431" duration="131000" />
+      <workItem from="1717762244396" duration="5242000" />
+      <workItem from="1718035225238" duration="10854000" />
+      <workItem from="1718099237883" duration="6813000" />
+    </task>
+    <task id="LOCAL-00001" summary="init module">
+      <created>1684604323984</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684604323984</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Warning message">
+      <created>1684604480299</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1684604480299</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update src errors">
+      <created>1685116785156</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685116785156</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Music model add lyrics">
+      <created>1685116811431</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1685116811431</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Get function">
+      <created>1685116830543</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685116830543</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix warnings">
+      <created>1685116892285</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1685116892285</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Build">
+      <created>1685116928541</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1685116928541</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix missing song">
+      <created>1691167159290</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1691167159290</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix type song not work">
+      <created>1691168978174</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1691168978174</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Fix down links">
+      <option name="closed" value="true" />
+      <created>1698315491900</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1698315491902</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Fix dead links">
+      <option name="closed" value="true" />
+      <created>1698315525906</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1698315525906</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Fix yt Update cipher">
+      <option name="closed" value="true" />
+      <created>1699722556300</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1699722556301</updated>
+    </task>
+    <task id="LOCAL-00072" summary="V1.1.0-beta.2.4.0 - Add downloadManager.getStreamPlayers(id) function">
+      <option name="closed" value="true" />
+      <created>1700313670080</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1700313670082</updated>
+    </task>
+    <task id="LOCAL-00073" summary="V1.1.0-beta.2.4.0 - Add downloadManager.getStreamPlayers(id) function">
+      <option name="closed" value="true" />
+      <created>1700315126937</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1700315126937</updated>
+    </task>
+    <task id="LOCAL-00074" summary="FIX: extract label duration not available">
+      <option name="closed" value="true" />
+      <created>1700384159944</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1700384159945</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Decoder builder">
+      <option name="closed" value="true" />
+      <created>1701860564306</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1701860564308</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Decoder builder">
+      <option name="closed" value="true" />
+      <created>1701860578026</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1701860578026</updated>
+    </task>
+    <task id="LOCAL-00077" summary="remove old file">
+      <option name="closed" value="true" />
+      <created>1701861551446</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1701861551446</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Fix github action missing file">
+      <option name="closed" value="true" />
+      <created>1701861663055</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1701861663056</updated>
+    </task>
+    <task id="LOCAL-00079" summary="(fix URL download) - Fetch decode script from server">
+      <option name="closed" value="true" />
+      <created>1701869440072</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1701869440073</updated>
+    </task>
+    <task id="LOCAL-00080" summary="V1.1.0-beta.2.6.0">
+      <option name="closed" value="true" />
+      <created>1701869584073</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1701869584074</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Fix recursive script call">
+      <option name="closed" value="true" />
+      <created>1701869749189</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1701869749190</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Add decode key to upgrade download speed">
+      <option name="closed" value="true" />
+      <created>1701871256670</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1701871256670</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Remove debug command 👀">
+      <option name="closed" value="true" />
+      <created>1701871428994</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1701871428995</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Fix download direct command">
+      <option name="closed" value="true" />
+      <created>1701872623361</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1701872623362</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Fix build a compromised decoder">
+      <option name="closed" value="true" />
+      <created>1702476967910</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1702476967911</updated>
+    </task>
+    <task id="LOCAL-00086" summary="(regex) Fix n°2 build a compromised decoder">
+      <option name="closed" value="true" />
+      <created>1702477714217</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1702477714218</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Try Fix n°3 build decoder">
+      <option name="closed" value="true" />
+      <created>1702478553497</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1702478553497</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Faster fetch decode script">
+      <option name="closed" value="true" />
+      <created>1702479020713</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1702479020713</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Add Album search and album getMusic">
+      <option name="closed" value="true" />
+      <created>1703432471779</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1703432471780</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Add cache for decrypter">
+      <option name="closed" value="true" />
+      <created>1703436530695</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1703436530697</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Fix regex get in decode builder &amp;&amp; add test before push new decoder">
+      <option name="closed" value="true" />
+      <created>1705097678733</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1705097678736</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Fix already decode url">
+      <option name="closed" value="true" />
+      <created>1705503464119</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1705503464119</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Woups">
+      <option name="closed" value="true" />
+      <created>1705503538229</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1705503538229</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Fix search category Only">
+      <option name="closed" value="true" />
+      <created>1706122894976</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1706122894977</updated>
+    </task>
+    <task id="LOCAL-00095" summary="V1.2.0">
+      <option name="closed" value="true" />
+      <created>1706123245187</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1706123245187</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Fix detect ID on ytURL &amp;&amp; Init Best Result from search">
+      <option name="closed" value="true" />
+      <created>1708465371133</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1708465371133</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Fix stupid error">
+      <option name="closed" value="true" />
+      <created>1708465647432</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1708465647432</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Fix stupid error">
+      <option name="closed" value="true" />
+      <created>1708465652882</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1708465652882</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Fix search for best items bugs">
+      <option name="closed" value="true" />
+      <created>1708723295426</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1708723295426</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Woups">
+      <option name="closed" value="true" />
+      <created>1708725510716</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1708725510716</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Woups">
+      <option name="closed" value="true" />
+      <created>1709722186184</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1709722186185</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Try fix GetDataVid() reject">
+      <option name="closed" value="true" />
+      <created>1711397083955</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1711397083955</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Fix regex...">
+      <option name="closed" value="true" />
+      <created>1711397666229</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1711397666229</updated>
+    </task>
+    <task id="LOCAL-00104" summary="V2.0.0-beta.1, this version may contain errors please let me know as soon as possible">
+      <option name="closed" value="true" />
+      <created>1718123035749</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1718123035749</updated>
+    </task>
+    <task id="LOCAL-00105" summary="fix doc generator">
+      <option name="closed" value="true" />
+      <created>1718126751856</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1718126751857</updated>
+    </task>
+    <task id="LOCAL-00106" summary="Update ReadMe">
+      <option name="closed" value="true" />
+      <created>1718126923846</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1718126923846</updated>
+    </task>
+    <task id="LOCAL-00107" summary="Update ReadMe">
+      <option name="closed" value="true" />
+      <created>1718126944028</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1718126944028</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Update ReadMe">
+      <option name="closed" value="true" />
+      <created>1718126947997</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1718126947997</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/utils/extract.js" />
+        <option value="$PROJECT_DIR$/src/models/Album.js" />
+        <option value="$PROJECT_DIR$/src/models/Music.js" />
+        <option value="$PROJECT_DIR$/src/v2/utils/index.js" />
+        <option value="$PROJECT_DIR$/src/v2/managers/searchManager.js.map" />
+        <option value="$PROJECT_DIR$/src/v2/managers/searchManager.js" />
+        <option value="$PROJECT_DIR$/src/managers/downloadManager.js" />
+        <option value="$PROJECT_DIR$/src/utils/deprecate.js" />
+        <option value="$PROJECT_DIR$/src/types/DownloadQuality.js" />
+        <option value="$PROJECT_DIR$/src/types/DownloadType.js" />
+        <option value="$PROJECT_DIR$/src/errors/errorCodes.js" />
+        <option value="$PROJECT_DIR$/src/types/TypeSearch.js" />
+        <option value="$PROJECT_DIR$/src/types/DownloadType.d.ts" />
+        <option value="$PROJECT_DIR$/src/types/DownloadType.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/types/DownloadType.js.map" />
+        <option value="$PROJECT_DIR$/src/types/DownloadQuality.js.map" />
+        <option value="$PROJECT_DIR$/src/types/DownloadQuality.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/types/DownloadQuality.d.ts" />
+        <option value="$PROJECT_DIR$/src/v2/utils/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/v2/utils/index.js.map" />
+        <option value="$PROJECT_DIR$/src/v2/utils/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/v2/utils/request.js.map" />
+        <option value="$PROJECT_DIR$/src/v2/utils/parser.js" />
+        <option value="$PROJECT_DIR$/src/v2/utils/request.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/models/Search.js" />
+        <option value="$PROJECT_DIR$/src/v2/utils/request.d.ts" />
+        <option value="$PROJECT_DIR$/src/models/Album.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/v2/utils/request.js" />
+        <option value="$PROJECT_DIR$/src/models/Album.d.ts" />
+        <option value="$PROJECT_DIR$/src/models/Album.js.map" />
+        <option value="$PROJECT_DIR$/src/utils/extract.d.ts" />
+        <option value="$PROJECT_DIR$/src/v2/utils/parser.d.ts" />
+        <option value="$PROJECT_DIR$/src/v2/utils/parser.js.map" />
+        <option value="$PROJECT_DIR$/src/managers/searchManager.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/models/Music.js.map" />
+        <option value="$PROJECT_DIR$/src/managers/searchManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/models/Music.d.ts" />
+        <option value="$PROJECT_DIR$/src/managers/searchManager.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Music.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/managers/searchManager.js" />
+        <option value="$PROJECT_DIR$/src/utils/extract.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/utils/extract.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Artist.js" />
+        <option value="$PROJECT_DIR$/src/models/Music_list.js" />
+        <option value="$PROJECT_DIR$/src/utils/getDecode.js" />
+        <option value="$PROJECT_DIR$/src/v2/utils/parser.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/managers/downloadManager.js.map" />
+        <option value="$PROJECT_DIR$/src/managers/downloadManager.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/managers/downloadManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/v2/utils/parserMapper.js" />
+        <option value="$PROJECT_DIR$/src/models/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/models/index.js" />
+        <option value="$PROJECT_DIR$/src/models/index.js.map" />
+        <option value="$PROJECT_DIR$/src/models/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/utils/requestManager.js.map" />
+        <option value="$PROJECT_DIR$/src/utils/requestManager.js" />
+        <option value="$PROJECT_DIR$/src/utils/requestManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/utils/requestManager.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/errors/index.js" />
+        <option value="$PROJECT_DIR$/src/errors/index.d.ts" />
+        <option value="$PROJECT_DIR$/src/errors/index.js.map" />
+        <option value="$PROJECT_DIR$/src/errors/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/utils/typeBuilder.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/utils/typeBuilder.js.map" />
+        <option value="$PROJECT_DIR$/src/utils/typeBuilder.js" />
+        <option value="$PROJECT_DIR$/src/utils/typeBuilder.d.ts" />
+        <option value="$PROJECT_DIR$/src/errors/Messages.d.ts" />
+        <option value="$PROJECT_DIR$/src/errors/Messages.js" />
+        <option value="$PROJECT_DIR$/src/errors/Messages.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/errors/Messages.js.map" />
+        <option value="$PROJECT_DIR$/src/v2/managers/searchManager.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/v2/managers/searchManager.d.ts" />
+        <option value="$PROJECT_DIR$/src/types/TypeSearch.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/types/TypeSearch.d.ts" />
+        <option value="$PROJECT_DIR$/src/types/TypeSearch.js.map" />
+        <option value="$PROJECT_DIR$/src/errors/errorCodes.d.ts" />
+        <option value="$PROJECT_DIR$/src/errors/errorCodes.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/errors/errorCodes.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Music_model.js" />
+        <option value="$PROJECT_DIR$/src/models/Playlist.js" />
+        <option value="$PROJECT_DIR$/src/models/Lyrics.d.ts.map" />
+        <option value="$PROJECT_DIR$/src/models/Lyrics.js.map" />
+        <option value="$PROJECT_DIR$/src/models/Lyrics.d.ts" />
+        <option value="$PROJECT_DIR$/src/models/Lyrics.js" />
+        <option value="$PROJECT_DIR$/temp/backup/models/StreamPlayers.js" />
+        <option value="$PROJECT_DIR$/temp/backup/models/Download.js" />
+        <option value="$PROJECT_DIR$/temp/backup/models/StreamPlayers.d.ts" />
+        <option value="$PROJECT_DIR$/temp/backup/models/StreamPlayers.d.ts.map" />
+        <option value="$PROJECT_DIR$/temp/backup/models/StreamPlayers.js.map" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/getDecode.js.map" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/getDecode.d.ts" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/getDecode.d.ts.map" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/deprecate.d.ts" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/deprecate.d.ts.map" />
+        <option value="$PROJECT_DIR$/temp/backup/utils/deprecate.js.map" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Fix recursive script call" />
+    <MESSAGE value="Add decode key to upgrade download speed" />
+    <MESSAGE value="Remove debug command " />
+    <MESSAGE value="Fix download direct command" />
+    <MESSAGE value="Fix build a compromised decoder" />
+    <MESSAGE value="(regex) Fix n°2 build a compromised decoder" />
+    <MESSAGE value="Try Fix n°3 build decoder" />
+    <MESSAGE value="Faster fetch decode script" />
+    <MESSAGE value="Add Album search and album getMusic" />
+    <MESSAGE value="Add cache for decrypter" />
+    <MESSAGE value="Fix regex get in decode builder &amp;&amp; add test before push new decoder" />
+    <MESSAGE value="Fix already decode url" />
+    <MESSAGE value="Fix search category Only" />
+    <MESSAGE value="V1.2.0" />
+    <MESSAGE value="Fix detect ID on ytURL &amp;&amp; Init Best Result from search" />
+    <MESSAGE value="Fix stupid error" />
+    <MESSAGE value="Fix search for best items bugs" />
+    <MESSAGE value="Woups" />
+    <MESSAGE value="Try fix" />
+    <MESSAGE value="Try fix GetDataVid() reject" />
+    <MESSAGE value="Fix regex" />
+    <MESSAGE value="Fix regex..." />
+    <MESSAGE value="V2.0.0-beta.1, this version may contain errors please let me know as soon as possible" />
+    <MESSAGE value="fix doc generator" />
+    <MESSAGE value="Update ReadMe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update ReadMe" />
+  </component>
+  <component name="VueSettings">
+    <option name="innerServiceType" value="TS_SERVICE" />
+  </component>
+</project>
