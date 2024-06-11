@@ -1,3 +1,5 @@
+import path from "node:path";
+
 const version = require('../version.json')
 const themeConfig = require('./themeConfig.json')
 export default {
@@ -5,8 +7,7 @@ export default {
 	"description": "A simple API to get music from YouTube Music",
 	"base": "/yt_music_api",
 	"outDir": './dist',
-	"srcDir": "./build",
-	"publicDir": "build/public",
+	"srcDir": path.join(__dirname, './'),
 	"cleanUrls": true,
 	"ignoreDeadLinks": true,
 	"head": [

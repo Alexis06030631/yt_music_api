@@ -9,22 +9,22 @@ const {MozillaType, build} = require('./default.json')
 
 const thisVersion = version.versions.find(v => v.version === version.latestVersion)
 
-const pathDocVersion = path.join(__dirname, build, thisVersion.url)
-const defaultDir = "./docs/default";
+const pathDocVersion = path.join(__dirname, build)
+const defaultDir = path.join(__dirname, 'default')
 const themeConfig = path.join(__dirname, ".vitepress/themeConfig.json");
 const types = {
 	Function: {
 		pos: 1,
 		path: `${pathDocVersion}/method/`,
 		data: [],
-		url: `/${thisVersion.url}/method/`,
+		url: `/method/`,
 		name: 'Methods'
 	},
 	Class: {
 		pos: 2,
 		path: `${pathDocVersion}/class/`,
 		data: [],
-		url: `/${thisVersion.url}/class/`,
+		url: `/class/`,
 		name: 'Classes'
 	}
 }
@@ -281,7 +281,7 @@ function generateDetailDisclosure(title, content) {
 	return `<details open><summary>${title}</summary><p>${content}</p></details>`
 }
 
-copySync(defaultDir, pathDocVersion, {overwrite: true});
+copySync(defaultDir, path.join(pathDocVersion), {overwrite: true});
 generateSidebar()
 
 function generateSidebar() {

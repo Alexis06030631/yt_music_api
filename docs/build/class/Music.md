@@ -59,7 +59,7 @@ Music.album
 
 
 **Return:**
-<span class="flex_return">[Album](/2_0_0-beta_1/class/Album)</span>
+<span class="flex_return">[Album](/class/Album)</span>
 ## artists
 An array of Artist objects
 
@@ -71,7 +71,7 @@ Music.artists
 
 
 **Return:**
-<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/2_0_0-beta_1/class/Artist)&gt;</span>
+<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/class/Artist)&gt;</span>
 ## browseID
 The browseId of the music (NOT WORKING)
 
@@ -95,7 +95,7 @@ Music.duration
 
 
 **Return:**
-<span class="flex_return">[Duration](/2_0_0-beta_1/class/Duration)</span>
+<span class="flex_return">[Duration](/class/Duration)</span>
 ## id
 The YTmusic id of the music
 
@@ -155,7 +155,7 @@ Music.thumbnails
 
 
 **Return:**
-<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Thumbnail](/2_0_0-beta_1/class/Thumbnail)&gt;</span>
+<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Thumbnail](/class/Thumbnail)&gt;</span>
 ## title
 The title of the music
 

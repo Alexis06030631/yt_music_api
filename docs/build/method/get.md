@@ -15,4 +15,4 @@ get(query)
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/2_0_0-beta_1/class/Music) | [Artist](/2_0_0-beta_1/class/Artist) | [Playlist](/2_0_0-beta_1/class/Playlist) | null&gt;</span>
+[promise![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/class/Music) | [Artist](/class/Artist) | [Playlist](/class/Playlist) | null&gt;</span>

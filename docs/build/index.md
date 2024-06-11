@@ -1,37 +1,59 @@
 ---
-layout: home
-
-title: Home
-titleTemplate: Ytmusic API
-description: A simple API for YouTube Music
-
-
-hero:
-  name: YT Music
-  text: A simplest YT Music API
-  tagline: Search, Download, and much more with the Ytmusic API.
-  image:
-    src: /assets/logo.svg
-    alt: YtMusic
-  actions:
-    - theme: brand
-      text: Get Started
-      link: /docs/what-is-ytmusic
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/Alexis06030631/yt_music_api
-
-features:
-  - icon: 💡
-    title: Object-Oriented
-    details: The API is designed to be easy to use and understand.
-  - icon: ⚡️
-    title: 2x Faster than Ytdl-core
-    details: The module sends requests to the YouTube Music API, which is much faster than scrapping the website.
-  - icon: 🛠️
-    title: Feature-rich
-    details: The API has many features, such as downloading, searching, and much more.
-  - icon: 🔑
-    title: Fully Typed APIs
-    details: Flexible programmatic APIs with full TypeScript typing.
+title: Get Started
+layout: doc
 ---
+
+# Ytmusic API
+
+## Description
+
+A simple, easy to use API for YouTube Music.
+You can:
+
+- Search for songs, video
+- Download songs and video in the highest quality
+- Fast, easy to use and no ads
+- Get popular songs from trending charts
+
+You can soon:
+
+- Get albums, artists, playlists, and more
+- Get lyrics
+- And more...
+
+## Installation
+
+```bash
+npm install ytmusic_api_unofficial@2.0.0-beta.1
+```
+
+## Examples
+
+```javascript
+const {searchManager, downloadManager} = require('ytmusic_api_unofficial')
+
+// Return a list of songs with the name 'hello'
+searchManager.search('hello', 'MUSIC').then((result) => {
+	console.log(result);
+});
+
+// Return a song by id
+searchManager.get('ID').then((result) => {
+	console.log(result);
+});
+
+// Download a song by id
+downloadManager.download('ID', 'mp3', high).then((result) => {
+	console.log(result);
+});
+```
+
+### Private Constants
+
+You can set the following constants to get the best results in search, home, and trending.
+
+```dotenv
+YT_VISITOR_ID=YOUR_VISITOR_ID
+```
+
+Make By [Alexis06030631](https://www.instagram.com/leko_system/)

@@ -19,19 +19,19 @@
       "items": [
         {
           "text": "charts",
-          "link": "/2_0_0-beta_1/method/charts"
+          "link": "/method/charts"
         },
         {
           "text": "download",
-          "link": "/2_0_0-beta_1/method/download"
+          "link": "/method/download"
         },
         {
           "text": "get",
-          "link": "/2_0_0-beta_1/method/get"
+          "link": "/method/get"
         },
         {
           "text": "search",
-          "link": "/2_0_0-beta_1/method/search"
+          "link": "/method/search"
         }
       ]
     },
@@ -40,27 +40,27 @@
       "items": [
         {
           "text": "Album",
-          "link": "/2_0_0-beta_1/class/Album"
+          "link": "/class/Album"
         },
         {
           "text": "Artist",
-          "link": "/2_0_0-beta_1/class/Artist"
+          "link": "/class/Artist"
         },
         {
           "text": "Duration",
-          "link": "/2_0_0-beta_1/class/Duration"
+          "link": "/class/Duration"
         },
         {
           "text": "Music",
-          "link": "/2_0_0-beta_1/class/Music"
+          "link": "/class/Music"
         },
         {
           "text": "Playlist",
-          "link": "/2_0_0-beta_1/class/Playlist"
+          "link": "/class/Playlist"
         },
         {
           "text": "Thumbnail",
-          "link": "/2_0_0-beta_1/class/Thumbnail"
+          "link": "/class/Thumbnail"
         }
       ]
     }

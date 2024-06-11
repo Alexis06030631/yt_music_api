@@ -70,4 +70,4 @@ Artist.thumbnails
 
 
 **Return:**
-<span class="flex_return">[Thumbnail](/2_0_0-beta_1/class/Thumbnail)</span>
+<span class="flex_return">[Thumbnail](/class/Thumbnail)</span>
