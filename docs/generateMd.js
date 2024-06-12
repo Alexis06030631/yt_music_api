@@ -309,8 +309,8 @@ function generateSidebar() {
 		text: 'Introduction',
 		collapsed: false,
 		items: [
-			{text: 'What is YouTubeMusic?', link: '/what-is-ytmusic'},
-			{text: 'Getting Started', link: '/getting-started'}
+			{text: 'What is YouTubeMusic?', link: '/documentation/what-is-ytmusic'},
+			{text: 'Getting Started', link: '/documentation/getting-started'}
 		]
 	},]
 	Object.keys(types).forEach(key => {
