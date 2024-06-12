@@ -25,10 +25,24 @@ export default class StreamPlayer {
 	public maxBitrate: number;
 
 	constructor(data: any) {
-		this.audios = data.audios.map((item: any) => item)
-		this.videos = data.videos.map((item: any) => item)
+		this.audios = data.audios.map((item: any) => new Player(item))
+		this.videos = data.videos.map((item: any) => new Player(item))
 		this.available = data.available
 		if (!this.available) this.unplayable_reason = data.unplayable_reason
 		this.maxBitrate = data.maxBitrate
+	}
+
+	/**
+	 * Get the best audio quality
+	 */
+	bestAudio(): Player {
+		return this.audios[0]
+	}
+
+	/**
+	 * Get the best video quality
+	 */
+	bestVideo(): Player {
+		return this.videos[0]
 	}
 }

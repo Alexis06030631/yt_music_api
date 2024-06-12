@@ -1,12 +1,6 @@
 const date = new Date()
 
-export class AvailableQuality_ {
-	static readonly low = 'low'
-	static readonly medium = 'medium'
-	static readonly high = 'high'
-}
-
-export const AvailableQuality = Object.values(AvailableQuality_)
+export const AvailableQuality = ['low', 'medium', 'high']
 export const AvailableFormat = ['mp3', 'webm']
 export const UN_TYPES = ["song", "video", "playlist", "artist", "podcast", "profile", "station", "episode"]
 export const all_TYPES = ["album", ...UN_TYPES]

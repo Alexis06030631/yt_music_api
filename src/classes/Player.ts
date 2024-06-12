@@ -1,8 +1,14 @@
+import {getUrlDecode} from "../utils/decode";
+
 export default class Player {
 	/**
 	 * The url of the player content
 	 */
-	public url: string;
+	public url: () => Promise<string>;
+	/**
+	 * The url of the player content decoded
+	 */
+	public urlDecoded: string;
 	/**
 	 * The type of the content (audio/mp4, audio/webm, ...)
 	 */
@@ -44,8 +50,9 @@ export default class Player {
 	 */
 	public expireDate: Date;
 
-	constructor(data: any) {
-		this.url = data.url;
+	constructor(data: any, decode: boolean = false) {
+		this.url = () => getUrlDecode(data)
+		this.urlDecoded = data.urlDecoded
 		this.type = data.mimeType;
 		this.bitrate = data.bitrate;
 		this.averageBitrate = data.averageBitrate;
@@ -56,6 +63,5 @@ export default class Player {
 		this.DurationMs = Number(data.approxDurationMs);
 		this.dB = data.loudnessDb;
 		this.expireDate = data.expireDate;
-
 	}
 }

@@ -39,7 +39,7 @@ import Album from "../classes/Album";
 import Playlist from "../classes/Playlist";
 import {error} from "./error";
 import request from "./request";
-import {getSignatureTimestamp, getUrlDecode} from "./decode";
+import {getSignatureTimestamp} from "./decode";
 import StreamPlayers from "../classes/StreamPlayer";
 import Player from "../classes/Player";
 
@@ -446,13 +446,13 @@ export function downloadYTDL(query: string, format: AvailableFormat = AvailableF
 			} else if (quality === 'medium') {
 				downloads = downloads.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(downloads.length / 2) - 1]
 			}
-			downloads.url = await getUrlDecode(downloads)
+			downloads.urlDecoded = await downloads.url()
 			resolve(new Player(downloads))
 		}).catch(reject)
 	})
 }
 
-export function getPlayers_dv(id: string): Promise<any> {
+export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 	return new Promise(async (resolve, reject) => {
 		request('player?key=', {
 			videoId: id,

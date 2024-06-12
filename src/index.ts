@@ -22,6 +22,7 @@ import {
 import Music from "./classes/Music";
 import Artist from "./classes/Artist";
 import Playlist from "./classes/Playlist";
+import StreamPlayers from "./classes/StreamPlayer";
 
 
 /**
@@ -174,6 +175,6 @@ export function download(query: string, format: AvailableFormat = AvailableForma
  * getPlayers is a function that returns the available players (music, video) in all qualities
  * @param query The music ID or URL
  */
-export function getPlayers(query: string): Promise<any> {
+export function getPlayers(query: string): Promise<StreamPlayers> {
 	return getPlayers_dv(query)
 }
