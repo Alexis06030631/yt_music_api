@@ -63,6 +63,7 @@ export const TASTE_PROFILE_ITEMS: any[] = ["contents", "tastebuilderRenderer", "
 export const TASTE_PROFILE_ARTIST: any[] = ["title", "runs"];
 export const SECTION_LIST_CONTINUATION: any[] = ["continuationContents", "sectionListContinuation"];
 export const MENU_PLAYLIST_ID: any[] = [...MENU_ITEMS, 0, MNIR, ...NAVIGATION_WATCH_PLAYLIST_ID];
+export const MENU_RADIO_PLAYLIST_ID: any[] = [...MENU_ITEMS, 0, MNIR, "navigationEndpoint", "watchEndpoint", "playlistId"];
 export const MULTI_SELECT: any[] = ["musicMultiSelectMenuItemRenderer"];
 export const HEADER: any[] = ["header"];
 export const HEADER_DETAIL: any[] = [...HEADER, "musicDetailHeaderRenderer"];

@@ -9,6 +9,7 @@ import client from "..";
 import {downloadYTDL, parseGetResult} from "../utils/utils";
 import {nav} from "../utils/responseBuilder";
 import {error} from "../utils/error";
+import Playlist from "./Playlist";
 
 export default class Music {
 	/**
@@ -99,6 +100,15 @@ export default class Music {
 	 */
 	public isExplicit: boolean
 
+	/**
+	 * The relative browseId of the music (used for fetching related songs)
+	 * @example "MPREb_5eN7fQq3J9_"
+	 */
+	public relativeBrowseID: string
+
+	private radioPlaylistID: string
+	private radioPlaylistCode: string
+
 	constructor(data: any) {
 		this.thumbnails = data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))
 		this.id = data.videoId
@@ -113,8 +123,11 @@ export default class Music {
 		this.videoType = data.videoType
 		this.duration = new Duration(data.duration)
 		this.year = data.year
-		this.isAudioOnly = this.videoType.includes('ATV')
+		this.isAudioOnly = this.videoType?.includes('ATV')
 		this.isExplicit = !!data.isExplicit
+		this.radioPlaylistID = data.radioPlID?.playlistId
+		this.radioPlaylistCode = data.radioPlID?.params
+		this.relativeBrowseID = data.relativeBrowseID
 	}
 
 	/**
@@ -151,5 +164,22 @@ export default class Music {
 	 **/
 	download(format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<any> {
 		return downloadYTDL(this.id, format, quality)
+	}
+
+	/**
+	 * Get the radio playlist of the music
+	 */
+	getRadioPlaylist(): Promise<Playlist> {
+		return new Promise((resolve, reject) => {
+			request('next', {
+				playlistId: this.radioPlaylistID,
+				params: this.radioPlaylistCode,
+				tunerSettingValue: "AUTOMIX_SETTING_NORMAL",
+				enablePersistentPlaylistPanel: true,
+				isAudioOnly: true
+			}).then((res: any) => {
+				return resolve(parseGetResult(res, 'autoMix') as Playlist);
+			}).catch(reject)
+		})
 	}
 }

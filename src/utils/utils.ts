@@ -276,6 +276,21 @@ export function getFlexColumnItem(item: any, index: number): any {
 	} else return item.flexColumns[index].musicResponsiveListItemFlexColumnRenderer;
 }
 
+export function parseSongFromFollowList(response: any): any {
+	let music: any = {}
+	music.resultType = "song"
+	music.title = nav(response, TITLE_TEXT, true)
+	music.thumbnails = nav(response, THUMBNAIL, true)
+	music.videoId = response.videoId
+	music.isExplicit = nav(response, BADGE_LABEL, true) !== null;
+	music.videoType = nav(response, ['navigationEndpoint', ...NAVIGATION_VIDEO_TYPE], true)
+	music = {...music, ...parseSongRuns(response?.longBylineText?.runs)};
+	music.duration = parseDuration(nav(response, ["lengthText", "runs", 0, "text"], true) || 'NaN:NaN');
+	music.radioPlID = nav(response, [...MENU_ITEMS, 0, 'menuNavigationItemRenderer', "navigationEndpoint", "watchEndpoint"], true)
+
+	return new Music(music);
+}
+
 export function getItemText(item: any, index: number, run_index: number = 0, none_if_absent: boolean = false): string | null {
 	const column = getFlexColumnItem(item, index);
 	if (!column) {
@@ -294,9 +309,19 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	if (['song'].includes(type)) {
 		response = response.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs
 		searchResult.browseID = nav(response, ["0", "tabRenderer", "content", "musicQueueRenderer", "queue", "playlistId"], true) || nav(response, [1, "tabRenderer", "endpoint", "browseEndpoint", "browseId"], true)
+		searchResult.relativeBrowseID = nav(response, [2, "tabRenderer", "endpoint", "browseEndpoint", "browseId"], true)
+		searchResult.radioPlID = nav(response[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[1], ["automixPreviewVideoRenderer", "content", "automixPlaylistVideoRenderer", "navigationEndpoint", "watchPlaylistEndpoint"], true)
 		response = response[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
 		searchResult.videoType = nav(response, ["navigationEndpoint", ...NAVIGATION_VIDEO_TYPE], true)
 		searchResult.thumbnails = nav(response, THUMBNAIL, true)
+
+	}
+
+	if (["autoMix"].includes(type)) {
+		response = nav(response, ['contents', 'singleColumnMusicWatchNextResultsRenderer', 'tabbedRenderer', 'watchNextTabbedResultsRenderer', 'tabs', 0, 'tabRenderer', 'content', 'musicQueueRenderer', 'content', 'playlistPanelRenderer'], true)
+		searchResult.name = response.title + " - AutoMix"
+		searchResult.musics = (nav(response, ["contents"], true) || []).map((e) => parseSongFromFollowList(e.playlistPanelVideoRenderer))
+
 	}
 
 
@@ -363,6 +388,8 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		case "artist":
 			return new Artist(searchResult);
 		case "playlist":
+			return new Playlist(searchResult);
+		case "autoMix":
 			return new Playlist(searchResult);
 		default:
 			console.log("Unknown result type: ", searchResult)
