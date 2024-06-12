@@ -1,6 +1,13 @@
 import request from './utils/request'
 import {MUSIC_SHELF, nav, TITLE_TEXT} from "./utils/responseBuilder";
-import {downloadYTDL, getYTIdFromText, parseGetResult, parseSearchResults, topResults} from "./utils/utils";
+import {
+	downloadYTDL,
+	getPlayers_dv,
+	getYTIdFromText,
+	parseGetResult,
+	parseSearchResults,
+	topResults
+} from "./utils/utils";
 import {error} from "./utils/error";
 import {
 	all_TYPES,
@@ -161,4 +168,12 @@ export function download(query: string, format: AvailableFormat = AvailableForma
 			resolve(res)
 		}).catch(reject)
 	})
+}
+
+/**
+ * getPlayers is a function that returns the available players (music, video) in all qualities
+ * @param query The music ID or URL
+ */
+export function getPlayers(query: string): Promise<any> {
+	return getPlayers_dv(query)
 }

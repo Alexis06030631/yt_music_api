@@ -437,7 +437,7 @@ export function downloadYTDL(query: string, format: AvailableFormat = AvailableF
 		const id = getYTIdFromText(query, true)
 		if (!id) return reject(error(1005, query))
 
-		getPlayers(id.id).then(async (res: any) => {
+		getPlayers_dv(id.id).then(async (res: any) => {
 			let downloads = format === 'mp4' ? res.videos : res.audios
 			if (quality === 'high') {
 				downloads = downloads.sort((a: any, b: any) => b.bitrate - a.bitrate)[0]
@@ -452,7 +452,7 @@ export function downloadYTDL(query: string, format: AvailableFormat = AvailableF
 	})
 }
 
-export function getPlayers(id: string): Promise<any> {
+export function getPlayers_dv(id: string): Promise<any> {
 	return new Promise(async (resolve, reject) => {
 		request('player?key=', {
 			videoId: id,
