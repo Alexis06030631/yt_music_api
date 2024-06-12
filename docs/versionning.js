@@ -1,4 +1,4 @@
-const version = require('./version.json')
+const version = require('./.vitepress/version.json')
 
 const c_version = require('../package.json')
 const {writeFileSync} = require("node:fs");
@@ -17,5 +17,5 @@ if (version.versions.find(v => v.version === c_version.version)) {
 }
 
 // Write the new version.json
-writeFileSync('./docs/version.json', JSON.stringify(version, null, 2))
+writeFileSync('./docs/.vitepress/version.json', JSON.stringify(version, null, 2))
 

@@ -1,68 +1,68 @@
 {
-	"sidebar": [
-		{
-			"text": "Introduction",
-			"collapsed": false,
-			"items": [
-				{
-					"text": "What is YouTubeMusic?",
-					"link": "/what-is-ytmusic"
-				},
-				{
-					"text": "Getting Started",
-					"link": "/getting-started"
-				}
-			]
-		},
-		{
-			"text": "Methods",
-			"items": [
-				{
-					"text": "charts",
-					"link": "/method/charts"
-				},
-				{
-					"text": "download",
-					"link": "/method/download"
-				},
-				{
-					"text": "get",
-					"link": "/method/get"
-				},
-				{
-					"text": "search",
-					"link": "/method/search"
-				}
-			]
-		},
-		{
-			"text": "Classes",
-			"items": [
-				{
-					"text": "Album",
-					"link": "/class/Album"
-				},
-				{
-					"text": "Artist",
-					"link": "/class/Artist"
-				},
-				{
-					"text": "Duration",
-					"link": "/class/Duration"
-				},
-				{
-					"text": "Music",
-					"link": "/class/Music"
-				},
-				{
-					"text": "Playlist",
-					"link": "/class/Playlist"
-				},
-				{
-					"text": "Thumbnail",
-					"link": "/class/Thumbnail"
-				}
-			]
-		}
-	]
+  "sidebar": [
+    {
+      "text": "Introduction",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "What is YouTubeMusic?",
+          "link": "/what-is-ytmusic"
+        },
+        {
+          "text": "Getting Started",
+          "link": "/getting-started"
+        }
+      ]
+    },
+    {
+      "text": "Methods",
+      "items": [
+        {
+          "text": "charts",
+          "link": "/documentation/method/charts"
+        },
+        {
+          "text": "download",
+          "link": "/documentation/method/download"
+        },
+        {
+          "text": "get",
+          "link": "/documentation/method/get"
+        },
+        {
+          "text": "search",
+          "link": "/documentation/method/search"
+        }
+      ]
+    },
+    {
+      "text": "Classes",
+      "items": [
+        {
+          "text": "Album",
+          "link": "/documentation/class/Album"
+        },
+        {
+          "text": "Artist",
+          "link": "/documentation/class/Artist"
+        },
+        {
+          "text": "Duration",
+          "link": "/documentation/class/Duration"
+        },
+        {
+          "text": "Music",
+          "link": "/documentation/class/Music"
+        },
+        {
+          "text": "Playlist",
+          "link": "/documentation/class/Playlist"
+        },
+        {
+          "text": "Thumbnail",
+          "link": "/documentation/class/Thumbnail"
+        }
+      ]
+    }
+  ]
 }

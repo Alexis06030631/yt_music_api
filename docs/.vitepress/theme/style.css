@@ -43,7 +43,8 @@ th, td {
 	vertical-align: center;
 }
 
-tread > tr > th {
+thead > tr > th {
+	vertical-align: top;
 	width: 100vh;
 }
 

@@ -11,12 +11,12 @@ search(query, filter)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| query | [string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
+| query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
 | filter |  | ex: "SONG" (Check available types) | <h1 style="color: darkred">𐄂</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
     query: string;
     filter: ;
     content: any[];

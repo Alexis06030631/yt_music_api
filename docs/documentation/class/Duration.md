@@ -22,7 +22,7 @@ Duration.duration
 
 
 **Return:**
-<span class="flex_return">[number![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
+<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## formatted
 The parsed duration in a human-readable format
 
@@ -34,7 +34,7 @@ Duration.formatted
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## formattedLong
 The duration in a human-readable long format
 
@@ -46,4 +46,4 @@ Duration.formattedLong
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>

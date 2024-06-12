@@ -27,7 +27,7 @@ Music.download(format, quality)
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
 ## Function getLyrics() 
 Get the lyrics of the music if it's available
 
@@ -39,7 +39,7 @@ Music.getLyrics()
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
         lyrics: string;
         source: any;
     }&gt;</span>
@@ -59,7 +59,7 @@ Music.album
 
 
 **Return:**
-<span class="flex_return">[Album](/class/Album)</span>
+<span class="flex_return">[Album](/documentation/class/Album)</span>
 ## artists
 An array of Artist objects
 
@@ -71,7 +71,7 @@ Music.artists
 
 
 **Return:**
-<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/class/Artist)&gt;</span>
+<span class="flex_return">[array![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/documentation/class/Artist)&gt;</span>
 ## browseID
 The browseId of the music (NOT WORKING)
 
@@ -83,7 +83,7 @@ Music.browseID
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## duration
 The duration of the music
 
@@ -95,7 +95,7 @@ Music.duration
 
 
 **Return:**
-<span class="flex_return">[Duration](/class/Duration)</span>
+<span class="flex_return">[Duration](/documentation/class/Duration)</span>
 ## id
 The YTmusic id of the music
 
@@ -107,7 +107,7 @@ Music.id
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## isAudioOnly
 If the music is audio only (considerably reduces the risk of unwanted sounds in the middle of a song)
 
@@ -119,7 +119,7 @@ Music.isAudioOnly
 
 
 **Return:**
-<span class="flex_return">[boolean![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
+<span class="flex_return">[boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
 ## isExplicit
 If the music contains explicit content
 
@@ -131,7 +131,7 @@ Music.isExplicit
 
 
 **Return:**
-<span class="flex_return">[boolean![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
+<span class="flex_return">[boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
 ## resultType
 The type of the video
 
@@ -143,7 +143,7 @@ Music.resultType
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## thumbnails
 An array of available Artwork in different sizes
 
@@ -155,7 +155,7 @@ Music.thumbnails
 
 
 **Return:**
-<span class="flex_return">[array![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Thumbnail](/class/Thumbnail)&gt;</span>
+<span class="flex_return">[array![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Thumbnail](/documentation/class/Thumbnail)&gt;</span>
 ## title
 The title of the music
 
@@ -167,7 +167,7 @@ Music.title
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## videoType
 The YouTube type of the music
 
@@ -179,7 +179,7 @@ Music.videoType
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## year
 The year of the music if it's available
 
@@ -191,4 +191,4 @@ Music.year
 
 
 **Return:**
-<span class="flex_return">[number![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
+<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>

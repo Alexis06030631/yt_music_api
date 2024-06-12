@@ -22,7 +22,7 @@ Artist.description
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## followers
 The artist's followers count
 
@@ -34,7 +34,7 @@ Artist.followers
 
 
 **Return:**
-<span class="flex_return">[number![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
+<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## id
 The YouTube Music artist id
 
@@ -46,7 +46,7 @@ Artist.id
 
 
 **Return:**
-<span class="flex_return">[number![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
+<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## name
 The artist name
 
@@ -58,7 +58,7 @@ Artist.name
 
 
 **Return:**
-<span class="flex_return">[string![Link](/yt_music_api/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## thumbnails
 Thumbnails of the user
 
@@ -70,4 +70,4 @@ Artist.thumbnails
 
 
 **Return:**
-<span class="flex_return">[Thumbnail](/class/Thumbnail)</span>
+<span class="flex_return">[Thumbnail](/documentation/class/Thumbnail)</span>

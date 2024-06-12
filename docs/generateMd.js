@@ -4,12 +4,12 @@ const fs = require("fs");
 const {copySync} = require("fs-extra");
 const {parse} = require('comment-parser')
 require('./versionning.js')
-const version = require('./version.json')
-const {MozillaType, build} = require('./default.json')
+const version = require('./.vitepress/version.json')
+const {MozillaType} = require('./default.json')
 
 const thisVersion = version.versions.find(v => v.version === version.latestVersion)
 
-const pathDocVersion = path.join(__dirname, build)
+const pathDocVersion = path.join(__dirname, './documentation/')
 const defaultDir = path.join(__dirname, 'default')
 const themeConfig = path.join(__dirname, ".vitepress/themeConfig.json");
 const types = {
@@ -17,14 +17,14 @@ const types = {
 		pos: 1,
 		path: `${pathDocVersion}/method/`,
 		data: [],
-		url: `/method/`,
+		url: `/documentation/method/`,
 		name: 'Methods'
 	},
 	Class: {
 		pos: 2,
 		path: `${pathDocVersion}/class/`,
 		data: [],
-		url: `/class/`,
+		url: `/documentation/class/`,
 		name: 'Classes'
 	}
 }
@@ -35,7 +35,7 @@ if (!fs.existsSync(pathDocVersion)) fs.mkdirSync(pathDocVersion);
 ApiDocumenter.members[0].members.forEach(member => {
 	createFile(member)
 });
-fs.readFile(path.join(__dirname, 'default', 'index.md'), 'utf8', (err, data) => {
+fs.readFile(path.join(__dirname, 'index.md'), 'utf8', (err, data) => {
 	if (err) throw err;
 	fs.writeFileSync(path.join(pathDocVersion, 'index.md'), data.replace(/{version__}/gi, version.latestVersion), 'utf8')
 })
@@ -262,7 +262,7 @@ function extractDataFormDocCommentProp(prop) {
 function typeUrlGenerator(type, isSingle = false) {
 	const TypeLower = type.text.toLowerCase();
 	if (MozillaType[TypeLower]) {
-		return `[${TypeLower}![Link](/yt_music_api/assets/img/external_link.svg)](${MozillaType[TypeLower]})`
+		return `[${TypeLower}![Link](/assets/img/external_link.svg)](${MozillaType[TypeLower]})`
 	} else if (type.kind !== 'Reference') return type.text
 	else {
 		const dt = ApiDocumenter.members[0].members.find(e => e.canonicalReference.includes(`~${type.text}:`))
@@ -270,7 +270,7 @@ function typeUrlGenerator(type, isSingle = false) {
 		if (dt && attributeType(dt, true)) {
 			return `[${type.text}](${path.join(types[attributeType(dt, true)].url, type.text)})`
 		} else {
-			return `[${type.text}![Link](/yt_music_api/assets/img/external_link.svg)](https://www.google.com/search?q=${type.text})`
+			return `[${type.text}![Link](/assets/img/external_link.svg)](https://www.google.com/search?q=${type.text})`
 		}
 	}
 }

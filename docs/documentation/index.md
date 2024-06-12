@@ -16,7 +16,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /what-is-ytmusic
+      link: /documentation/what-is-ytmusic
     - theme: alt
       text: View on GitHub
       link: https://github.com/Alexis06030631/yt_music_api
