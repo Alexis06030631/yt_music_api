@@ -17,4 +17,4 @@ download(query, format, quality)
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;any&gt;</span>
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Player](/documentation/class/Player)&gt;</span>

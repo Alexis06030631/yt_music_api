@@ -3,7 +3,7 @@
 
 
 ---
-| <details open><summary>Properties</summary><p>[album](#album)<br>[artists](#artists)<br>[browseID](#browseid)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[isExplicit](#isexplicit)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[title](#title)<br>[videoType](#videotype)<br>[year](#year)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)</p></details> |
+| <details open><summary>Properties</summary><p>[album](#album)<br>[artists](#artists)<br>[browseID](#browseid)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[isExplicit](#isexplicit)<br>[relativeBrowseID](#relativebrowseid)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[title](#title)<br>[videoType](#videotype)<br>[year](#year)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)<br>[getRadioPlaylist](#function-getradioplaylist)</p></details> |
 | --- | --- |
 
 
@@ -43,6 +43,18 @@ Music.getLyrics()
         lyrics: string;
         source: any;
     }&gt;</span>
+## Function getRadioPlaylist() 
+Get the radio playlist of the music
+
+**Builder**:
+````javascript
+Music.getRadioPlaylist()
+````
+
+
+
+<span class="flex_return">**Return:**&nbsp;
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Playlist](/documentation/class/Playlist)&gt;</span>
 
 
  # Properties
@@ -132,6 +144,18 @@ Music.isExplicit
 
 **Return:**
 <span class="flex_return">[boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
+## relativeBrowseID
+The relative browseId of the music (used for fetching related songs)
+
+**Builder**:
+````javascript
+Music.relativeBrowseID
+````
+
+
+
+**Return:**
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## resultType
 The type of the video
 

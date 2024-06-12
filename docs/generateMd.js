@@ -218,7 +218,7 @@ function createTab(header = [], properties = [], center = []) {
 }
 
 function attributeType(method, v2 = false) {
-	switch (method.kind) {
+	switch (method?.kind) {
 		case 'Class':
 			if (method.fileUrlPath.includes('src/types')) return 'Interface'
 			else return method.kind
@@ -230,7 +230,7 @@ function attributeType(method, v2 = false) {
 			if (v2 && method.fileUrlPath.includes('src/types')) return 'Interface'
 			else return method.kind
 		default:
-			return method.kind
+			return method?.kind
 	}
 }
 

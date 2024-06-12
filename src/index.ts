@@ -22,7 +22,8 @@ import {
 import Music from "./classes/Music";
 import Artist from "./classes/Artist";
 import Playlist from "./classes/Playlist";
-import StreamPlayers from "./classes/StreamPlayer";
+import Player from "./classes/Player";
+import StreamPlayer from "./classes/StreamPlayer";
 
 
 /**
@@ -36,7 +37,7 @@ import StreamPlayers from "./classes/StreamPlayer";
 export function search(query: string, filter: AvailableTypes): Promise<{
 	query: string,
 	filter: AvailableTypes,
-	content: any[]
+	content: Music[] | Artist[] | Playlist[]
 }> {
 	return new Promise(async (resolve, reject) => {
 		filter = filter?.toLowerCase() as AvailableTypes
@@ -145,12 +146,12 @@ export function get(query: string): Promise<Music | Artist | Playlist | null> {
  * Get chart music from YouTube Music by country or global
  * @param country The country code (Check available countries)
  */
-export function charts(country: AvailableCountries = 'global'): Promise<any> {
+export function charts(country: AvailableCountries = 'global'): Promise<Playlist> {
 	return new Promise((resolve, reject) => {
 		country = country?.toLowerCase() as AvailableCountries
 		if (!countries.includes(country)) return reject(error(1007, `Available countries: ${countries.join(", ")}`))
 		request('browse', {browseId: COUNTRIES.find((c) => c.name === country)?.code}).then((res: any) => {
-			resolve(parseGetResult(res, 'playlist'))
+			resolve(parseGetResult(res, 'playlist') as Playlist)
 		}).catch(reject)
 	})
 }
@@ -163,7 +164,7 @@ export function charts(country: AvailableCountries = 'global'): Promise<any> {
  * @param quality The quality of the music (Check available qualities)
  * @example
  */
-export function download(query: string, format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<any> {
+export function download(query: string, format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<Player> {
 	return new Promise((resolve, reject) => {
 		downloadYTDL(query, format, quality).then((res) => {
 			resolve(res)
@@ -175,6 +176,6 @@ export function download(query: string, format: AvailableFormat = AvailableForma
  * getPlayers is a function that returns the available players (music, video) in all qualities
  * @param query The music ID or URL
  */
-export function getPlayers(query: string): Promise<StreamPlayers> {
+export function getPlayers(query: string): Promise<StreamPlayer> {
 	return getPlayers_dv(query)
 }

@@ -6,11 +6,11 @@
       "items": [
         {
           "text": "What is YouTubeMusic?",
-          "link": "/what-is-ytmusic"
+          "link": "/documentation/what-is-ytmusic"
         },
         {
           "text": "Getting Started",
-          "link": "/getting-started"
+          "link": "/documentation/getting-started"
         }
       ]
     },
@@ -28,6 +28,10 @@
         {
           "text": "get",
           "link": "/documentation/method/get"
+        },
+        {
+          "text": "getPlayers",
+          "link": "/documentation/method/getPlayers"
         },
         {
           "text": "search",
@@ -55,8 +59,16 @@
           "link": "/documentation/class/Music"
         },
         {
+          "text": "Player",
+          "link": "/documentation/class/Player"
+        },
+        {
           "text": "Playlist",
           "link": "/documentation/class/Playlist"
+        },
+        {
+          "text": "StreamPlayer",
+          "link": "/documentation/class/StreamPlayer"
         },
         {
           "text": "Thumbnail",
