@@ -309,8 +309,8 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		response = response.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs
 		searchResult.browseID = nav(response, ["0", "tabRenderer", "content", "musicQueueRenderer", "queue", "playlistId"], true) || nav(response, [1, "tabRenderer", "endpoint", "browseEndpoint", "browseId"], true)
 		searchResult.relativeBrowseID = nav(response, [2, "tabRenderer", "endpoint", "browseEndpoint", "browseId"], true)
-		searchResult.radioPlID = nav(response[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[1], ["automixPreviewVideoRenderer", "content", "automixPlaylistVideoRenderer", "navigationEndpoint", "watchPlaylistEndpoint"], true)
-		response = response[0].tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents[0].playlistPanelVideoRenderer
+		searchResult.radioPlID = nav(response[0].tabRenderer.content, ['musicQueueRenderer', 'content', 'playlistPanelRenderer', 'contents', 1, "automixPreviewVideoRenderer", "content", "automixPlaylistVideoRenderer", "navigationEndpoint", "watchPlaylistEndpoint"], true)
+		response = nav(response[0].tabRenderer.content, ['musicQueueRenderer', 'content', 'playlistPanelRenderer', 'contents', 0, 'playlistPanelVideoRenderer'], true)
 		searchResult.videoType = nav(response, ["navigationEndpoint", ...NAVIGATION_VIDEO_TYPE], true)
 		searchResult.thumbnails = nav(response, THUMBNAIL, true)
 
@@ -319,9 +319,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	if (["autoMix"].includes(type)) {
 		response = nav(response, ['contents', 'singleColumnMusicWatchNextResultsRenderer', 'tabbedRenderer', 'watchNextTabbedResultsRenderer', 'tabs', 0, 'tabRenderer', 'content', 'musicQueueRenderer', 'content', 'playlistPanelRenderer'], true)
 		searchResult.name = response.title + " - AutoMix"
-		searchResult.musics = (nav(response, ["contents"], true) || []).filter((e: any) => e.playlistPanelVideoRenderer).map((e: any) => {
-			parseSongFromFollowList(e.playlistPanelVideoRenderer)
-		})
+		searchResult.musics = (nav(response, ["contents"], true) || []).filter((e: any) => e.playlistPanelVideoRenderer.videoId).map((e: any) => parseSongFromFollowList(e.playlistPanelVideoRenderer))
 	}
 
 

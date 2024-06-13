@@ -174,9 +174,7 @@ export default class Music {
 			request('next', {
 				playlistId: this.radioPlaylistID,
 				params: this.radioPlaylistCode,
-				tunerSettingValue: "AUTOMIX_SETTING_NORMAL",
-				enablePersistentPlaylistPanel: true,
-				isAudioOnly: true
+				isAudioOnly: this.isAudioOnly
 			}).then((res: any) => {
 				return resolve(parseGetResult(res, 'autoMix') as Playlist);
 			}).catch(reject)
