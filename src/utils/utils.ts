@@ -319,8 +319,9 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	if (["autoMix"].includes(type)) {
 		response = nav(response, ['contents', 'singleColumnMusicWatchNextResultsRenderer', 'tabbedRenderer', 'watchNextTabbedResultsRenderer', 'tabs', 0, 'tabRenderer', 'content', 'musicQueueRenderer', 'content', 'playlistPanelRenderer'], true)
 		searchResult.name = response.title + " - AutoMix"
-		searchResult.musics = (nav(response, ["contents"], true) || []).map((e) => parseSongFromFollowList(e.playlistPanelVideoRenderer))
-
+		searchResult.musics = (nav(response, ["contents"], true) || []).filter((e: any) => e.playlistPanelVideoRenderer).map((e: any) => {
+			parseSongFromFollowList(e.playlistPanelVideoRenderer)
+		})
 	}
 
 
