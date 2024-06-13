@@ -155,7 +155,7 @@ export function topResults(response: any): any {
 		case "video":
 			return new Music(searchResult);
 		default:
-			if (process.env.YT_DEBUG_MODE === "true") console.log("Unknown result type: ", searchResult.resultType)
+			if (process.env.YT_DEBUG_MODE === "true") console.log("tpRs", "Unknown result type:", searchResult.resultType)
 	}
 }
 
@@ -209,9 +209,8 @@ export function parseSearchResult(response: any, category: string = ""): any {
 			resultType = videoType === "MUSIC_VIDEO_TYPE_ATV" ? "song" : "video";
 		}
 	}
-	resultType = detectType(resultType, true) || ""
 	let searchResult: any = {}
-	searchResult.resultType = resultType;
+	searchResult.resultType = detectType(resultType, true) || ""
 
 	if (resultType !== "artist") searchResult.title = getItemText(response, 0)
 	else {
@@ -222,12 +221,12 @@ export function parseSearchResult(response: any, category: string = ""): any {
 		parseMenuPlaylists(response, searchResult)
 	}
 
-	if (["profile"].includes(resultType)) searchResult.name = getItemText(response, 1, 2, true)
-	if (["song", "video", "episode"].includes(resultType)) {
+	if (["profile"].includes(searchResult.resultType)) searchResult.name = getItemText(response, 1, 2, true)
+	if (["song", "video", "episode"].includes(searchResult.resultType)) {
 		searchResult.videoId = nav(response, [...PLAY_BUTTON, "playNavigationEndpoint", "watchEndpoint", "videoId"], true) || nav(response, ["playlistItemData", "videoId"], true)
 		searchResult.videoType = videoType
 	}
-	if (["song", "video", "album"].includes(resultType)) {
+	if (["song", "video", "album"].includes(searchResult.resultType)) {
 		searchResult.duration = null
 		searchResult.year = null
 		const nav_ = nav(getFlexColumnItem(response, 1), TEXT_RUNS, false)
@@ -235,18 +234,18 @@ export function parseSearchResult(response: any, category: string = ""): any {
 		searchResult = {...searchResult, ...parseSongRuns(nav_.slice(nav_Offset))};
 	}
 
-	if (["song", "album"].includes(resultType)) searchResult.isExplicit = nav(response, BADGE_LABEL, true) !== null;
+	if (["song", "album"].includes(searchResult.resultType)) searchResult.isExplicit = nav(response, BADGE_LABEL, true) !== null;
 
-	if (["artist", "album", "playlist", "profile", "podcast"].includes(resultType)) searchResult.id = nav(response, NAVIGATION_BROWSE_ID, true);
+	if (["artist", "album", "playlist", "profile", "podcast"].includes(searchResult.resultType)) searchResult.id = nav(response, NAVIGATION_BROWSE_ID, true);
 
-	if (resultType === "album") {
+	if (searchResult.resultType === "album") {
 		searchResult.browseId = nav(response, [...TITLE, ...NAVIGATION_BROWSE_ID], true);
 	}
 
 	searchResult.thumbnails = nav(response, THUMBNAILS, true)
 
 
-	switch (resultType) {
+	switch (searchResult.resultType) {
 		case "profile":
 			searchResult.name = getItemText(response, 1, 2, true);
 			return new User(searchResult);
@@ -261,7 +260,7 @@ export function parseSearchResult(response: any, category: string = ""): any {
 		case"":
 			break;
 		default:
-			if (process.env.YT_DEBUG_MODE === "true") console.log("Unknown result type:", searchResult.resultType)
+			if (process.env.YT_DEBUG_MODE === "true") console.log("srRs", "Unknown result type:", searchResult.resultType)
 	}
 	return null
 }
@@ -392,7 +391,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		case "autoMix":
 			return new Playlist(searchResult);
 		default:
-			console.log("Unknown result type: ", searchResult)
+			console.log("gtRs", "Unknown result type: ", searchResult)
 	}
 	return null
 }

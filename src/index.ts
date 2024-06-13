@@ -12,11 +12,12 @@ import {error} from "./utils/error";
 import {
 	all_TYPES,
 	AvailableCountries,
+	AvailableCountriesCodes,
 	AvailableFormat,
 	AvailableQuality,
 	AvailableTypes,
 	countries,
-	COUNTRIES,
+	countriesCodes,
 	TYPE_SEARCH_CODE
 } from "./utils/default";
 import Music from "./classes/Music";
@@ -24,6 +25,7 @@ import Artist from "./classes/Artist";
 import Playlist from "./classes/Playlist";
 import Player from "./classes/Player";
 import StreamPlayer from "./classes/StreamPlayer";
+import {COUNTRIES} from "./utils/countries";
 
 
 /**
@@ -148,9 +150,9 @@ export function get(query: string): Promise<Music | Artist | Playlist | null> {
  */
 export function charts(country: AvailableCountries = 'global'): Promise<Playlist> {
 	return new Promise((resolve, reject) => {
-		country = country?.toLowerCase() as AvailableCountries
-		if (!countries.includes(country)) return reject(error(1007, `Available countries: ${countries.join(", ")}`))
-		request('browse', {browseId: COUNTRIES.find((c) => c.name === country)?.code}).then((res: any) => {
+		country = country?.toUpperCase() as AvailableCountries | AvailableCountriesCodes
+		if (!countries.includes(country) && !countriesCodes.includes(country)) return reject(error(1007, `Available countries: ${countries.join(", ")}`))
+		request('browse', {browseId: (COUNTRIES.find((c) => c.name === country)?.id || COUNTRIES.find((c) => c.codeCountry === country)?.id)}).then((res: any) => {
 			resolve(parseGetResult(res, 'playlist') as Playlist)
 		}).catch(reject)
 	})

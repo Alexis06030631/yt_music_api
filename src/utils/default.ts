@@ -1,3 +1,5 @@
+import {COUNTRIES} from "./countries";
+
 const date = new Date()
 
 export const AvailableQuality = ['low', 'medium', 'high']
@@ -9,21 +11,6 @@ export const TYPE_SEARCH_CODE = {
 	video: 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D',
 	album: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D'
 }
-
-export const COUNTRIES = [{
-	name: "global",
-	code: "VLPL4fGSI1pDJn5kI81J1fYWK5eZRl1zJ5kM"
-},
-	{
-		name: "argentina",
-		code: "VLPL4fGSI1pDJn403fWAsjzCMsLEgBTOa25K"
-	},
-	{
-		name: "australia",
-		code: "VLPL4fGSI1pDJn44PMHPLYatj8rta8WYtZ8_"
-	},
-
-]
 
 export default {
 	apiUrl: 'https://music.youtube.com/youtubei/v1/',
@@ -46,7 +33,9 @@ export default {
 	},
 }
 export const countries = COUNTRIES.map((country) => country.name) || []
+export const countriesCodes = COUNTRIES.map((country) => country.codeCountry) || []
 export declare type AvailableTypes = typeof all_TYPES[number];
 export declare type AvailableQuality = typeof AvailableQuality[number];
 export declare type AvailableFormat = typeof AvailableFormat[number];
 export declare type AvailableCountries = typeof countries[number];
+export declare type AvailableCountriesCodes = typeof countriesCodes[number];
