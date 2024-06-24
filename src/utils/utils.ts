@@ -120,7 +120,7 @@ function parseDuration(duration: string): number | string {
 
 export function topResults(response: any): any {
 	let searchResult: any = {}
-	searchResult.resultType = detectType(nav(response, SUBTITLE))
+	searchResult.resultType = detectType(nav(response, SUBTITLE), true)
 	searchResult.category = nav(response, CARD_SHELF_TITLE)
 	searchResult.thumbnails = nav(response, THUMBNAILS, true)
 
@@ -395,14 +395,19 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	return null
 }
 
-export function getYTIdFromText(text: string, precise: boolean = false): { id: string; type: null | string } {
+export function getYTIdFromText(text: string, precise: boolean = false): {
+	id: any;
+	isValidId: boolean;
+	type: null | string
+} {
 	const reg = /https?:\/\/(?:music\.|www\.)?youtube\.com\/(?:watch\?v=|v\/|channel\/|playlist\?list=)([A-Za-z0-9_-]+)/m
-	const id = text.match(reg)
+	let id: any = null
+	if (!text.includes(' ')) id = text.match(reg)
 	if (id) {
 		const type = getTypeByID(id[1])
 		if (type === "playlist" && (id[1].startsWith("PL") || id[1].startsWith("OL"))) id[1] = 'VL' + id[1]
-		return {id: id[1], type: type}
-	} else return {id: text, type: getTypeByID(text)}
+		return {id: id[1], type: type, isValidId: true}
+	} else return {isValidId: false, id: text, type: getTypeByID(text)}
 }
 
 type AvailableTypes = typeof all_TYPES[number];
