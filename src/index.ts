@@ -32,24 +32,26 @@ import {COUNTRIES} from "./utils/countries";
  * Search for a query in YouTube Music
  * @param query ex: "Hello Adele"
  * @param filter ex: "SONG" (Check available types)
+ * @param fetch ex: false (If you want to get complete results, but it will take more time)
  * @example
  * const search = await client.search("Hello Adele", "SONG")
  * console.log(search)
  */
-export function search(query: string, filter: AvailableTypes): Promise<{
+export function search(query: string, filter?: AvailableTypes, fetch?: false): Promise<{
 	query: string,
 	filter: AvailableTypes,
 	content: Music[] | Artist[] | Playlist[]
 }> {
 	return new Promise(async (resolve, reject) => {
-		filter = filter?.toLowerCase() as AvailableTypes
-		if (filter && !all_TYPES.includes(filter)) return reject(error(1001, `Available types: ${all_TYPES.join(", ")}`))
-		const result: any = {query, filter, content: []}
-		if (getYTIdFromText(query).type) {
+		const hasFilter: boolean = !!filter
+		filter = filter?.toString()?.toLowerCase() as AvailableTypes
+		if (hasFilter && !all_TYPES.includes(filter)) return reject(error(1001, `Available types: ${all_TYPES.join(", ")}`))
+		const result: any = {query, filter: hasFilter ? filter : false, content: []}
+		if (getYTIdFromText(query).isValidId) {
 			result.content = [await this.get(query).catch(reject)]
 			return resolve(result)
 		}
-		request('search', {query, params: TYPE_SEARCH_CODE[filter]}).then((response: any) => {
+		request('search', {query, params: hasFilter ? TYPE_SEARCH_CODE[filter] : ''}).then(async (response: any) => {
 			try {
 				if (response.content) return resolve(result)
 				else response = response.contents
@@ -75,9 +77,22 @@ export function search(query: string, filter: AvailableTypes): Promise<{
 					shelf_contents = shelf_contents.filter((item: any) => item.musicResponsiveListItemRenderer || item.musicTwoRowItemRenderer || item.musicMultiRowListItemRenderer)
 
 					parseSearchResults(shelf_contents, category).forEach((content: any, i: number) => {
-						if (!content || (filter && content?.resultType !== filter)) return
+						if (!content || (hasFilter && content?.resultType !== filter)) return
 						result.content.push(content)
 					})
+				}
+				if (fetch) {
+					result.content = result.content.filter((content: any) => !!content?.id)
+					const promises = result.content.map(async (content: any) => {
+						if (content.id) return await this.get(content.id).catch((e) => {
+							process.emitWarning(`Please report this issue on the GitHub repository, this is a bug.: ${e}`, 'uncaughtException')
+							console.log(e)
+							return null
+						})
+						else return null
+					})
+					result.content = await Promise.all(promises)
+					result.content = result.content.filter((content: any) => !!content?.id)
 				}
 				return resolve(result)
 			} catch (e) {

@@ -5,7 +5,7 @@ const date = new Date()
 export const AvailableQuality = ['low', 'medium', 'high']
 export const AvailableFormat = ['mp3', 'webm']
 export const UN_TYPES = ["song", "video", "playlist", "artist", "podcast", "profile", "station", "episode"]
-export const all_TYPES = ["album", ...UN_TYPES]
+export const all_TYPES = ['false', "album", ...UN_TYPES]
 export const TYPE_SEARCH_CODE = {
 	song: 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
 	video: 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D',
