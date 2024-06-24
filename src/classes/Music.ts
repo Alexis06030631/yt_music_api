@@ -6,7 +6,7 @@ import Album from "./Album";
 import request from "../utils/request";
 // @ts-ignore
 import client from "..";
-import {downloadYTDL, parseGetResult} from "../utils/utils";
+import {customThumbnailSize, downloadYTDL, parseGetResult, thumbnail_defaults_size} from "../utils/utils";
 import {nav} from "../utils/responseBuilder";
 import {error} from "../utils/error";
 import Playlist from "./Playlist";
@@ -110,7 +110,7 @@ export default class Music {
 	private radioPlaylistCode: string
 
 	constructor(data: any) {
-		this.thumbnails = data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))
+		this.thumbnails = thumbnail_defaults_size(data?.thumbnails?.[data?.thumbnails?.length - 1]?.url, data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail)))
 		this.id = data.videoId
 		this.browseID = data.browseID
 		this.title = data.title
@@ -178,6 +178,19 @@ export default class Music {
 			}).then((res: any) => {
 				return resolve(parseGetResult(res, 'autoMix') as Playlist);
 			}).catch(reject)
+		})
+	}
+
+	/**
+	 * Return Thumbnail with custom size
+	 * @param width The width of the thumbnail
+	 * @param height The height of the thumbnail
+	 */
+	getThumbnail(width: number, height: number): Thumbnail {
+		return new Thumbnail({
+			url: customThumbnailSize(this.thumbnails[0].url, width, height),
+			width: width,
+			height: height
 		})
 	}
 }

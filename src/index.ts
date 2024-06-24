@@ -81,6 +81,7 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 						result.content.push(content)
 					})
 				}
+				result.content = result.content.filter((content: any) => !!content?.id)
 				if (fetch) {
 					result.content = result.content.filter((content: any) => !!content?.id)
 					const promises = result.content.map(async (content: any) => {

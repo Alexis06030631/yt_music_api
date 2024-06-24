@@ -42,6 +42,7 @@ import request from "./request";
 import {getSignatureTimestamp} from "./decode";
 import StreamPlayers from "../classes/StreamPlayer";
 import Player from "../classes/Player";
+import {Thumbnail} from "../classes/Thumbnail";
 
 
 export function detectType(type: string, none_if_empty: boolean = false): string | null {
@@ -487,4 +488,26 @@ export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 			resolve(new StreamPlayers(items))
 		}).catch(reject)
 	})
+}
+
+export function customThumbnailSize(url: string, width: number, height: number): string {
+	const match = url.match(/=w(?<width>\d+)-h(?<height>\d+)/)
+	if (match) url = url.replace(match[0], `=w${width}-h${height}`)
+	return url
+}
+
+const defaultsSize = [60, 120, 180, 226, 302, 480, 544, 720, 1080]
+
+export function thumbnail_defaults_size(url: string, thumbnails_defaults?: Thumbnail[]) {
+	let thumbnails: Thumbnail[] = []
+	for (const size of defaultsSize) {
+		if (new URL(url).origin.includes('googleusercontent')) thumbnails.push(new Thumbnail({
+			url: customThumbnailSize(url, size, size),
+			width: size,
+			height: size
+		}))
+	}
+	if (thumbnails.length === 0) thumbnails = thumbnails_defaults || []
+	return thumbnails
+
 }
