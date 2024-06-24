@@ -37,7 +37,7 @@ import {COUNTRIES} from "./utils/countries";
  * const search = await client.search("Hello Adele", "SONG")
  * console.log(search)
  */
-export function search(query: string, filter?: AvailableTypes, fetch?: false): Promise<{
+export function search(query: string, filter?: AvailableTypes, fetch?: boolean = false): Promise<{
 	query: string,
 	filter: AvailableTypes,
 	content: Music[] | Artist[] | Playlist[]
