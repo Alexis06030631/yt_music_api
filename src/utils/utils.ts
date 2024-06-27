@@ -100,8 +100,6 @@ function parseSongRuns(runs: any[]): Record<string, any> {
 				parsed.duration = parseDuration(text);
 			} else if (/^\d{4}$/.test(text)) {
 				parsed.year = Number(text);
-			} else {
-				parsed.artists.push({name: text, id: null});
 			}
 		}
 	});
@@ -139,6 +137,13 @@ export function topResults(response: any): any {
 		const songInfo = parseSongRuns(runs.slice(2));
 		searchResult = {...searchResult, ...songInfo};
 	}
+	if (["artist"].includes(searchResult.resultType)) {
+		searchResult.name = nav(response, TITLE_TEXT)
+		searchResult.followers = nav(response, ['subtitle', 'runs', 2, 'text'], true)
+		searchResult.id = nav(response, ['onTap', "browseEndpoint", "browseId"], true)
+		if (searchResult.followers) searchResult.followers = searchResult.followers.split(' ')[0].includes('K') ? Number(searchResult.followers.split(' ')[0].replace('K', '')) * 1000 : searchResult.followers.split(' ')[0].includes('M') ? Number(searchResult.followers.split(' ')[0].replace('M', '')) * 1000000 : Number(searchResult.followers.split(' ')[0])
+		parseMenuPlaylists(response, searchResult)
+	}
 
 	switch (searchResult.resultType) {
 		/*
@@ -155,6 +160,8 @@ export function topResults(response: any): any {
 		case "song":
 		case "video":
 			return new Music(searchResult);
+		case "artist":
+			return new Artist(searchResult);
 		default:
 			if (process.env.YT_DEBUG_MODE === "true") console.log("tpRs", "Unknown result type:", searchResult.resultType)
 	}
@@ -499,6 +506,7 @@ export function customThumbnailSize(url: string, width: number, height: number):
 const defaultsSize = [60, 120, 180, 226, 302, 480, 544, 720, 1080]
 
 export function thumbnail_defaults_size(url: string, thumbnails_defaults?: Thumbnail[]) {
+	if (!url) return []
 	let thumbnails: Thumbnail[] = []
 	for (const size of defaultsSize) {
 		if (new URL(url).origin.includes('googleusercontent')) thumbnails.push(new Thumbnail({

@@ -1,4 +1,5 @@
 import {Thumbnail} from "./Thumbnail";
+import {thumbnail_defaults_size} from "../utils/utils";
 
 export default class Artist {
 	/**
@@ -29,7 +30,7 @@ export default class Artist {
 	 * 		}
 	 * 		```
 	 */
-	public thumbnails: Thumbnail
+	public thumbnails: Array<Thumbnail>
 
 	/**
 	 * The artist's description
@@ -38,7 +39,7 @@ export default class Artist {
 	public description: string
 
 	constructor(artist: any) {
-		this.thumbnails = artist?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))
+		this.thumbnails = thumbnail_defaults_size(artist?.thumbnails?.[artist?.thumbnails?.length - 1]?.url, artist?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))) || []
 		this.name = artist.name
 		this.id = artist?.id
 		this.followers = artist?.followers

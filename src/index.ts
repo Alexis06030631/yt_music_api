@@ -78,7 +78,7 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 
 					parseSearchResults(shelf_contents, category).forEach((content: any, i: number) => {
 						if (!content || (hasFilter && content?.resultType !== filter)) return
-						result.content.push(content)
+						else result.content.push(content)
 					})
 				}
 				result.content = result.content.filter((content: any) => !!content?.id)
