@@ -170,7 +170,12 @@ export default class Music {
 	 * Get the radio playlist of the music
 	 */
 	getRadioPlaylist(): Promise<Playlist> {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
+			if (!this.radioPlaylistID || !this.radioPlaylistCode) {
+				await request("next", {videoId: this.id}).then((res: any) => {
+					Object.assign(this, parseGetResult(res, 'song'))
+				}).catch(reject)
+			}
 			request('next', {
 				playlistId: this.radioPlaylistID,
 				params: this.radioPlaylistCode,
