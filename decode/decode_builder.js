@@ -50,9 +50,10 @@ function buildFunc_keyDecrypt(data = searchInFunction('set\\("alr","yes"\\).*dec
 buildFunc_fastDownload()
 
 function buildFunc_fastDownload() {
-	let data = jsbase.match(/(var b=a\.split\(""\),c=(.|\n)*?};$)/m)
-	data = `function fastDownload(a){` + data[0]
-	fs.writeFileSync(path.join(__dirname, './mappers/temp_fastDownload.js'), data)
+
+	let data2 = jsbase.match(/^.*(var b=.+.split?.+\(.*\),c=(.|\n)*?};)$/m)
+	data2 = `function fastDownload(a){` + data2[1]
+	fs.writeFileSync(path.join(__dirname, './mappers/temp_fastDownload.js'), data2)
 }
 
 // Search SignatureTimestamp
