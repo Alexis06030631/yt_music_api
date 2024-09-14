@@ -47,8 +47,8 @@ function checkUrlIsMusic(url: string): Promise<string> {
 
 function fetchScript(): Promise<any> {
 	return new Promise((resolve) => {
-		if (process.env.buildProd) {
-			process.emitWarning('You are using a production build, the decoder will be downloaded from the internet. If you want to use a local decoder, please use a development build.')
+		if (process.env.buildDev) {
+			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
 			return resolve(require(path.join(__dirname, '../../decode/build/decoder.js')))
 		}
 		if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
