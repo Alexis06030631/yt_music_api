@@ -4,7 +4,7 @@
 
 ## Disclaimer
 
-this module is under development and is not yet ready for a production use.<br/>If you want to help me, you can contact
+this module is under development. <br/>If you want to help me, you can contact
 me on [Instagram](https://www.instagram.com/leko_system/)
 
 ## Description

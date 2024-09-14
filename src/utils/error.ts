@@ -27,6 +27,7 @@ export const errors = [
 	{code: 2002, message: 'No results found for the id:'},
 	{code: 2003, message: 'Lyrics not available for the music'},
 	{code: 2004, message: 'Song is not streamable, please check the unplayable reason'},
+	{code: 2005, message: 'The download link returned is not valid, please retry or report the error'},
 
 ]
 

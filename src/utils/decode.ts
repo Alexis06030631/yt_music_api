@@ -1,10 +1,11 @@
 import path from "path";
 import NodeCache from "node-cache";
+import {error} from "./error";
 
 const cache = new NodeCache({stdTTL: 3600})
 
 export function getSignatureTimestamp(): Promise<number> {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		fetchScript().then((res) => {
 			resolve(res.signatureTimestamp)
 		})
@@ -12,7 +13,7 @@ export function getSignatureTimestamp(): Promise<number> {
 }
 
 export function getDecodeScript(): Promise<any> {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		fetchScript().then((res) => {
 			resolve(res.decode)
 		})
@@ -22,7 +23,7 @@ export function getDecodeScript(): Promise<any> {
 export function getUrlDecode(url: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getDecodeScript().then(async (decode: any) => {
-			checkUrlIsMusic(decode(url)).then(resolve)
+			checkUrlIsMusic(decode(url)).then(resolve).catch(reject)
 		})
 	})
 }
@@ -31,13 +32,21 @@ function checkUrlIsMusic(url: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		fetch(url).then(async res => {
 			if ((res.headers.get('content-type') || '').match(/audio|video/gm)) return resolve(url)
-			else resolve(checkUrlIsMusic(await res.text()))
+			else {
+				if (res.status === 403) return reject(error(2005, {
+					url,
+					error: 'The download link returned is not valid, please retry or report the error'
+				}))
+				resolve(checkUrlIsMusic(await res.text()))
+			}
+		}).catch((e) => {
+			reject(error(2005, {url, error: e.message}))
 		})
 	})
 }
 
 function fetchScript(): Promise<any> {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		if (process.env.buildProd) {
 			process.emitWarning('You are using a production build, the decoder will be downloaded from the internet. If you want to use a local decoder, please use a development build.')
 			return resolve(require(path.join(__dirname, '../../decode/build/decoder.js')))
