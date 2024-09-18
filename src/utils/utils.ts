@@ -170,17 +170,17 @@ export function rankingResponse(data: any, query: string): any {
 		let ranking = countIdenticalWordsAndRank(item.title + ' - ' + item.artists.toString(), query)
 		if (item.title.match("clip") || item.title.match("official") || item.title.match("video")) ranking -= 10
 		if (item.isTopResult) ranking += 50;
-		else if (item.isAudioOnly) {
-			ranking += 20;
+		else {
 			const topResult = data.find((x: any) => x.isTopResult);
 			if (topResult) {
 				if (Math.abs(item.duration.duration - topResult.duration.duration) <= 15) ranking += 20;
 				if (topResult.artists.some((x: any) => item.artists.some((y: any) => x.id === y.id))) ranking += 15
 			}
 		}
+		if (item.isAudioOnly) ranking += 20;
 		item.searchRanking = ranking
 	}
-	
+
 	return data.sort((a, b) => b.searchRanking - a.searchRanking)
 }
 
