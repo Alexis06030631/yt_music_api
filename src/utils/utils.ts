@@ -117,6 +117,73 @@ function parseDuration(duration: string): number | string {
 	}, 0);
 }
 
+function countIdenticalWords(text) {
+	// Remove punctuation, convert to lowercase, and split text into words
+	let words = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
+
+	// Create an object to count identical words
+	let wordCount = {};
+
+	// Loop through words and count occurrences
+	words.forEach(word => {
+		if (wordCount[word]) {
+			wordCount[word]++;
+		} else {
+			wordCount[word] = 1;
+		}
+	});
+
+	return wordCount;
+}
+
+function getWords(text: string) {
+	return text
+		.toLowerCase() // Convert to lowercase for case-insensitive comparison
+		.replace(/[^\w\s]/g, "") // Remove non-word characters like punctuation
+		.split(/\s+/); // Split text by whitespace
+}
+
+// Function to count identical words and rank them by length
+function countIdenticalWordsAndRank(text1, text2) {
+	const words1 = getWords(text1);
+	const words2 = getWords(text2);
+
+	// Create a set of words from each text
+	const set1 = new Set(words1);
+	const set2 = new Set(words2);
+
+	// Find common words in both sets
+	const commonWords = [...set1].filter(word => set2.has(word));
+
+	// Sort common words by length in descending order and rank them
+	const rankedWords = commonWords
+		.sort((a, b) => b.length - a.length)
+		.map((word, index) => ({word, rank: index + 1, length: word.length}));
+
+	return rankedWords.reduce((total, word) => total + word.length, 0)
+}
+
+export function rankingResponse(data: any, query: string): any {
+
+	for (const item of data) {
+		if (item.title === undefined) continue
+		let ranking = countIdenticalWordsAndRank(item.title + ' - ' + item.artists.toString(), query)
+		if (item.title.match("clip") || item.title.match("official") || item.title.match("video")) ranking -= 10
+		if (item.isTopResult) ranking += 50;
+		else if (item.isAudioOnly) {
+			ranking += 20;
+			const topResult = data.find((x: any) => x.isTopResult);
+			if (topResult) {
+				if (Math.abs(item.duration.duration - topResult.duration.duration) <= 15) ranking += 20;
+				if (topResult.artists.some((x: any) => item.artists.some((y: any) => x.id === y.id))) ranking += 15
+			}
+		}
+		item.searchRanking = ranking
+	}
+	
+	return data.sort((a, b) => b.searchRanking - a.searchRanking)
+}
+
 export function topResults(response: any): any {
 	let searchResult: any = {}
 	searchResult.resultType = detectType(nav(response, SUBTITLE), true)
@@ -159,6 +226,7 @@ export function topResults(response: any): any {
 		 */
 		case "song":
 		case "video":
+			searchResult.isTopResult = true;
 			return new Music(searchResult);
 		case "artist":
 			return new Artist(searchResult);

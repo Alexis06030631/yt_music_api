@@ -106,8 +106,21 @@ export default class Music {
 	 */
 	public relativeBrowseID: string
 
-	private radioPlaylistID: string
-	private radioPlaylistCode: string
+	/**
+	 * Is defined as a top result by YouTube Music (but not always true. Please refer to searchRanking field)
+	 * @example false
+	 */
+	public isTopResult: boolean
+
+	/**
+	 * Search matching index
+	 * @public
+	 * @example 0
+	 */
+	public searchRanking: number
+
+	private readonly radioPlaylistID: string
+	private readonly radioPlaylistCode: string
 
 	constructor(data: any) {
 		this.thumbnails = thumbnail_defaults_size(data?.thumbnails?.[data?.thumbnails?.length - 1]?.url, data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail)))
@@ -128,6 +141,22 @@ export default class Music {
 		this.radioPlaylistID = data.radioPlID?.playlistId
 		this.radioPlaylistCode = data.radioPlID?.params
 		this.relativeBrowseID = data.relativeBrowseID
+		this.isTopResult = !!data.isTopResult
+	}
+
+	/**
+	 * Get the name of the artists separated by a comma
+	 * @example "Rick Astley, Foo Fighters"
+	 * @example
+	 * ```js
+	 * const get = await ytMusic.get("Never Gonna Give You Up")
+	 * console.log(get.artistsNames)
+	 * // Output: "Rick Astley"
+	 * ```
+	 * @returns The name of the artists
+	 */
+	get artistsNames(): string {
+		return this.artists.map(artist => artist.name).join(', ')
 	}
 
 	/**

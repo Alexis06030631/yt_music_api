@@ -6,6 +6,7 @@ import {
 	getYTIdFromText,
 	parseGetResult,
 	parseSearchResults,
+	rankingResponse,
 	topResults
 } from "./utils/utils";
 import {error} from "./utils/error";
@@ -95,7 +96,7 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 					result.content = await Promise.all(promises)
 					result.content = result.content.filter((content: any) => !!content?.id)
 				}
-				return resolve(result)
+				return resolve(rankingResponse(result.content, query))
 			} catch (e) {
 				process.emitWarning(`Please report this issue on the GitHub repository, this is a bug.: ${e}`, 'uncaughtException')
 				console.log(e)
