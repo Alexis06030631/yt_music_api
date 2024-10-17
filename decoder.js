@@ -1,5 +1,5 @@
 const gma = /^[\w.]*$/
-const signatureTimestamp = 20010
+const signatureTimestamp = 20011
 
 /**
  * Decode the string with the given separator
@@ -72,7 +72,7 @@ function decode(format){
 	let m, url = {}
 	if (!format.url) {
 		m = mapDecompose(format)
-		url = orgaCompose(m.ZE,m.rI,m.s)
+		url = orgaCompose(m.YE,m.oI,m.s)
 	} else {
 		url.B = format.url
 		url.j = {}
@@ -100,50 +100,52 @@ module.exports = {
 
 function mapDecompose(a) {
 	let b = a.signatureCipher;
-	a={HZ:!1,ZE:"",rI:"",s:""};
+	a={EZ:!1,YE:"",oI:"",s:""};
 if(!b)return a;
 b=urlDecode(b);
-a.HZ=!0;
-a.ZE=b.url;
-a.rI=b.sp;
+a.EZ=!0;
+a.YE=b.url;
+a.oI=b.sp;
 a.s=b.s;
 return a
 }
 
 function keyDecrypt(a) {
 	a=a.split("");
-NL.sC(a,7);
-NL.Nh(a,2);
-NL.sC(a,4);
-NL.sC(a,64);
-NL.sC(a,44);
+NL.BY(a,51);
+NL.Ek(a,80);
+NL.Gh(a,2);
 return a.join("")
 }
 
-var NL={sC:function(a,b){var c=a[0];a[0]=a[b%a.length];a[b%a.length]=c},
-Nh:function(a,b){a.splice(0,b)},
-DP:function(a){a.reverse()}};
+var NL={Gh:function(a,b){a.splice(0,b)},
+Ek:function(a){a.reverse()},
+BY:function(a,b){var c=a[0];a[0]=a[b%a.length];a[b%a.length]=c}};
 
-function fastDownload(a){var b=a.split(a.slice(0,0)),c=[1848841218,-874912238,null,function(d,e){for(d=(d%e.length+e.length)%e.length;d--;)e.unshift(e.pop())},
-79825781,-79408577,150495247,1191710668,-1763182812,function(){for(var d=64,e=[];++d-e.length-32;){switch(d){case 58:d-=14;case 91:case 92:case 93:continue;case 123:d=47;case 94:case 95:case 96:continue;case 46:d=95}e.push(String.fromCharCode(d))}return e},
--122138066,1918869536,function(d,e){e=(e%d.length+d.length)%d.length;d.splice(-e).reverse().forEach(function(f){d.unshift(f)})},
-null,1999517163,-1042849543,1775879186,function(){for(var d=64,e=[];++d-e.length-32;)switch(d){case 58:d=96;continue;case 91:d=44;break;case 65:d=47;continue;case 46:d=153;case 123:d-=58;default:e.push(String.fromCharCode(d))}return e},
-265240597,-1428796516,-122138066,1547644485,function(d,e,f,h,l,m,n,p){return e(f,h,l,m,n,p)},
--350422976,b,function(d){for(var e=d.length;e;)d.push(d.splice(--e,1)[0])},
-b,-53940587,-166281811,1516554785,1083842025,-430473325,function(d,e){e=(e%d.length+d.length)%d.length;d.splice(e,1)},
-1527895038,-1696866937,"catch",-1717171495,-1622393632,b,1330398279,72001538,null,function(){for(var d=64,e=[];++d-e.length-32;){switch(d){case 91:d=44;continue;case 123:d=65;break;case 65:d-=18;continue;case 58:d=96;continue;case 46:d=95}e.push(String.fromCharCode(d))}return e},
--1656542148,150495247,-2017745242,";,,,{",function(d,e,f,h,l,m){return e(h,l,m)},
-function(d,e,f,h,l,m,n){return d(l,m,n)},
--1763182812,-1081112170,1000609853,774091175,667684678,1014178162,function(){for(var d=64,e=[];++d-e.length-32;){switch(d){case 91:d=44;continue;case 123:d=65;break;case 65:d-=18;continue;case 58:d=96;continue;case 46:d=95}e.push(String.fromCharCode(d))}return e},
--960483154,2106945136,-609604351,1032749170,function(d,e,f){var h=d.length;f.forEach(function(l,m,n){this.push(n[m]=d[(d.indexOf(l)-d.indexOf(this[m])+m+h--)%d.length])},e.split(""))},
-function(){for(var d=64,e=[];++d-e.length-32;)switch(d){case 46:d=95;default:e.push(String.fromCharCode(d));case 94:case 95:case 96:break;case 123:d-=76;case 92:case 93:continue;case 58:d=44;case 91:}return e},
-function(d){d.reverse()},
-function(d,e){e.length!=0&&(d=(d%e.length+e.length)%e.length,e.splice(0,1,e.splice(d,1,e[0])[0]))},
--507702933,function(d,e){if(d.length!=0){e=(e%d.length+d.length)%d.length;var f=d[0];d[0]=d[e];d[e]=f}},
-1488719308,859121672,755336994,120389004,-1998875686,530940666,679278761,-285911365,537919666,-538320350,-1138721121,-1310769415,function(d,e,f,h,l){return e(f,h,l)}];
-c[2]=c;c[13]=c;c[41]=c;try{try{(c[1]!==6||((0,c[32])(c[24],c[43]),""))&&(0,c[63])(c[0],c[41])}catch(d){(0,c[32])(c[26],c[53])}finally{c[36]<-10&&(c[new Date("1969-12-31T16:16:11.000-07:45")/1E3]>6?(0,c[47])(((0,c[3])(c[69],c[24]),c[12])(c[2],c[27]),c[72],(0,c[72])(c[62],c[40]),c[18],c[new Date("1969-12-31T19:00:12.000-05:00")/1E3]):(((0,c[1])(c[44]),c[78])((0,c[60])(),c[53],c[44]),c[2])(c[70],c[31])>(0,c[30])(c[42],c[11])),(c[75]!=4||((0,c[17])(((0,c[17])((0,c[30])(c[20],c[7]),c[50],c[44],c[new Date("1969-12-31T20:15:16.000-03:45")/
-1E3]),c[43])(c[56]),c[50],c[56],c[37]),0))&&(((0,c[17])((0,c[30])(c[44],c[10]),c[1],c[31]),c[74])(c[22],c[46]),c[74])(c[19],c[60]),(c[41]!=3||((0,c[61])((0,c[28])(c[22],c[69]),c[45],(0,c[78])(),c[25],c[36]),0))&&((0,c[76])(c[72],c[34]),c[76])(c[31],c[19]),c[new Date("1969-12-31T20:15:37.000-03:45")/1E3]!=-2&&(c[66]!=-4&&((((((0,c[76])(c[4],c[19]),c[76])(c[27],c[58]),c[76])(c[9],c[34]),c[48])(c[36],c[63]),c[48])(c[47],c[new Date("1969-12-31T22:15:32.000-01:45")/1E3]),(0,c[24])(c[32],c[51]),1)||((0,c[41])((0,c[39])(),
-c[21],c[32]),(0,c[41])((0,c[74])(),c[21],c[18]),c[8])(c[41],(0,c[24])(c[32],c[60]),(0,c[24])(c[43],c[77]),(0,c[73])(c[32]),(0,c[74])(),c[21],c[32])),c[23]>-6&&(c[46]>9||((0,c[72])(c[62],c[30]),0))&&(0,c[24])(c[15],c[61]),c[77]<=-4&&((((0,c[44])(c[15],c[6]),c[43])((0,c[17])(c[4]),c[58],c[6],c[40]),c[39])(c[12],c[1])+((0,c[1])(c[40],c[32]),c[41])(c[new Date("1970-01-01T09:31:04.000+09:30")/1E3])>=(0,c[74])(c[14]),7)||(((0,c[3])(c[56],c[40]),c[51])((0,c[5])(),c[31],c[40]),(((0,c[51])((0,c[49])(),c[31],
-c[28]),c[4])(c[25]),(0,c[51])((0,c[21])(),c[31],c[28]),c[51])((0,c[57])(),c[31],c[42]),c[41])(c[40]),c[9]!=1&&(c[48]===6||((0,c[new Date("1970-01-01T09:45:34.000+09:45")/1E3])(c[40],c[26]),0))&&(0,c[1])(c[42],c[12]),c[76]>=10&&(c[43]==2&&((((0,c[34])(c[40],c[0]),c[67])((0,c[51])((0,c[49])(),c[31],c[40]),c[34],c[42],c[9]),(0,c[51])((0,c[11])(),c[31],c[42]),(0,c[51])((0,c[11])(),c[31],c[42]),c[67])((0,c[51])((0,c[49])(),c[31],c[40]),c[34],c[64],c[55]),(0,c[34])(c[25],c[29]),6)||((((((0,c[3])(c[27],
-c[53]),c[67])((0,c[3])(c[62],c[25]),c[63],c[24],c[53]),c[53])(c[52],c[47]),c[26])(c[20],c[57]),c[26])(c[20],c[78]),c[59])((0,c[55])(c[42],c[34]),c[75],c[20])),(c[31]==-9||((0,c[36])((0,c[55])(c[52],c[32]),c[11],(0,c[43])((0,c[76])(),c[23],c[34]),c[46],(0,c[74])(c[73],c[34]),c[20],c[37]),void 0))&&((0,c[43])((0,c[76])(),c[23],c[32]),(0,c[43])((0,c[76])(),c[23],c[34]),c[59])((0,c[26])(c[20],c[65]),c[43],(0,c[76])(),c[23],c[32]),c[42]>=9&&(c[new Date("1969-12-31T17:01:13.000-07:00")/1E3]>4&&((0,c[43])((0,c[13])(),
-c[23],c[34]),1)||(0,c[46])(c[32],c[9]))}}catch(d){return"enhanced_except_qpwB1eP-_w8_"+a}return b.join("")};
+function fastDownload(a){var b=a.split(a.slice(0,0)),c=[97569226,-1048227574,1182824511,-1583998409,function(d){d.reverse()},
+function(d,e){for(e=(e%d.length+d.length)%d.length;e--;)d.unshift(d.pop())},
+1423861242,function(){for(var d=64,e=[];++d-e.length-32;)switch(d){case 58:d=96;continue;case 91:d=44;break;case 65:d=47;continue;case 46:d=153;case 123:d-=58;default:e.push(String.fromCharCode(d))}return e},
+698353399,function(d,e,f){var h=e.length;f.forEach(function(l,m,n){this.push(n[m]=e[(e.indexOf(l)-e.indexOf(this[m])+m+h--)%e.length])},d.split(""))},
+-1846148549,515706375,-778935655,function(d,e,f,h,l){return e(f,h,l)},
+257998083,882345988,511928128,function(d,e){d.length!=0&&(e=(e%d.length+d.length)%d.length,d.splice(0,1,d.splice(e,1,d[0])[0]))},
+b,-564485778,null,function(d){for(var e=d.length;e;)d.push(d.splice(--e,1)[0])},
+function(){for(var d=64,e=[];++d-e.length-32;){switch(d){case 91:d=44;continue;case 123:d=65;break;case 65:d-=18;continue;case 58:d=96;continue;case 46:d=95}e.push(String.fromCharCode(d))}return e},
+null,function(d){throw d;},
+-521550657,-1071007549,-1239738403,-2111566245,6417168,-374856876,-123818450,680128441,380376714,-18305543,"K8iEut1",-1976932130,function(d,e,f,h,l,m,n){return d(l,m,n)},
+1205576120,378473785,-1534903144,1404445164,-1043678670,1270982983,2094035365,-1846148549,698353399,function(d,e){e=(e%d.length+d.length)%d.length;d.splice(e,1)},
+-948815797,850114719,-489995598,-1446996758,b,function(d,e){e=(e%d.length+d.length)%d.length;d.splice(-e).reverse().forEach(function(f){d.unshift(f)})},
+function(d,e,f,h,l){return e(f,h,l)},
+function(){for(var d=64,e=[];++d-e.length-32;){switch(d){case 58:d-=14;case 91:case 92:case 93:continue;case 123:d=47;case 94:case 95:case 96:continue;case 46:d=95}e.push(String.fromCharCode(d))}return e},
+function(){for(var d=[],e=64;++e-d.length-32;){switch(e){case 58:e-=14;case 91:case 92:case 93:continue;case 123:e=47;case 94:case 95:case 96:continue;case 46:e=95}d.push(String.fromCharCode(e))}return e},
+1011209391,/((,))\/((,))"/,1210116908,function(d,e,f,h,l,m,n,p){return e(f,h,l,m,n,p)},
+function(d,e,f,h,l,m){return e(h,l,m)},
+-1418151754,656150441,function(d,e){if(e.length!=0){d=(d%e.length+e.length)%e.length;var f=e[0];e[0]=e[d];e[d]=f}},
+function(d,e){d.push(e)},
+-1650375383,-1048227574,-1450164701,1056585716,function(){for(var d=64,e=[];++d-e.length-32;)switch(d){case 46:d=95;default:e.push(String.fromCharCode(d));case 94:case 95:case 96:break;case 123:d-=76;case 92:case 93:continue;case 58:d=44;case 91:}return e},
+-1730742819,-71573892,-862437919,6417168,1322291920,function(d,e){d.splice(d.length,0,e)},
+1182824511,b,1285225672,286625209,-1797381002,null,820148780];c[20]=c;c[23]=c;c[82]=c;try{try{(c[15]>=3||(((0,c[9])(c[35],(0,c[70])(),c[52])<(((0,c[47])(c[78],c[72]),c[17])(c[20],c[80]),c[5])(c[23],c[19]),(0,c[9])(c[35],(0,c[7])(),c[18]),c[4])(c[23]),NaN))&&(0,c[54])((0,c[13])((0,c[17])(c[78],c[67]),c[17],c[52],c[15]),c[53],c[52],c[34])-(((0,c[64])(c[59],c[52]),c[5])(c[18],c[77])^(0,c[5])(c[82],c[75])),(0,c[10])((0,c[49])(c[75],c[12],c[60]),c[49],c[75],(0,c[47])(),c[58])}catch(d){c[80]<0&&(c[37]===
+-8&&((0,c[61])(c[34]),1)||(0,c[44])(c[8]))}try{c[33]!==4&&(((0,c[16])((0,c[77])(c[57],(0,c[9])(c[34],c[18]),(0,c[45])(c[38],c[25]),(0,c[35])(c[6],c[36]),c[70],c[69]),c[42],(((0,c[81])(c[23],(0,c[58])(),c[6]),(0,c[41])(c[8],c[10]),c[34])(c[52],c[29]),c[55])(c[83],c[41]),c[32],c[61],c[7]),(((0,c[58])(c[32],c[17]),(0,c[59])(c[13],c[43]),(0,c[10])(c[11],c[21]),c[10])(c[17],c[85]),(0,c[83])(c[11],c[19]),c[58])(c[30],c[76]),c[41])(c[72],c[27]),1)||(0,c[31])(c[47],(0,c[48])((0,c[6])((0,c[83])(c[76],c[7]),
+c[2],c[29],(0,c[49])(),c[11]),c[41],c[72],c[36]),(((0,c[2])(c[29],(0,c[40])(),c[72]),c[48])((0,c[2])(c[29],(0,c[40])(),c[11]),c[2],c[29],(0,c[40])(),c[72]),(0,c[6])((0,c[47])(c[76],c[84]),c[82],c[13]),(0,c[2])(c[29],(0,c[-18067+Math.pow(2,new Date("1969-12-31T19:15:03.000-04:45")/1E3)+18108])(),c[72]),c[10])(c[76],c[new Date("1969-12-31T19:16:08.000-04:45")/1E3]),(0,c[6])((0,c[41])(c[46],c[60]),c[2],c[29],(0,c[40])(),c[46]),c[76],c[77])>>(0,c[55])((0,c[41])(c[72],c[26]),c[2],(0,c[41])(c[76],c[37]),
+c[29],(0,c[5])(),c[72]),(0,c[6])((0,c[82])(c[35]),c[15],c[46])}catch(d){c[45]!=-3&&((((0,c[15])(c[17]),c[75])(c[13],c[12]),c[38])(c[9],c[50]),c[64])(c[71],c[new Date("1970-01-01T10:00:17.000+10:00")/1E3])}try{c[37]>=5&&(c[49]<=-9?(0,c[0])(c[30],c[65]):(0,c[31])(c[28],c[70])),(0,c[79])((0,c[23])(),c[69],c[46],c[51])}catch(d){}try{c[67]==2&&((0,c[35])((0,c[79])((0,c[69])(c[8],c[28]),c[39],c[12],(0,c[78])(),c[81]),c[25],c[81],c[7]),"false")||((0,c[35])((0,c[16807-422%(new Date("1970-01-01T07:16:04.000+07:15")/
+1E3)-16725])(c[30],c[32]),c[31],c[81],c[82]),c[31])(c[28],c[new Date("1969-12-31T23:01:16.000-01:00")/1E3]),c[40]>-3&&(c[67]!==-10||((((0,c[39])(c[12],(0,c[0])(),c[30]),(0,c[39])(c[12],(0,c[0])(),c[30]),c[80])(c[24],c[21]),c[80])(c[28],c[37]),0))&&((((0,c[44])(c[28],c[new Date("1969-12-31T17:00:52.000-07:00")/1E3]),c[25])(c[55],c[69]),c[6])(c[35]),c[49])(c[83],c[61]),c[22]>2&&(0,c[15])((0,c[60])(c[4],c[42]),c[68],c[74])}catch(d){(0,c[69])((0,c[17])(c[67]),c[23],c[50],(0,c[26])(),c[67]),(0,c[68])(c[32],
+c[59])}finally{c[42]<7&&(c[15]!=-6||(((0,c[23])(c[50],(0,c[26])(),c[32]),c[18])(c[7],c[46]),0))&&((0,c[36])(c[67]),c[68])(c[67],c[2])}}catch(d){return"enhanced_except_q5wB1OP-_w8_"+a}return b.join("")};
