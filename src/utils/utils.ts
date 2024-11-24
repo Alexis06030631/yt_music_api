@@ -477,7 +477,7 @@ export function getYTIdFromText(text: string, precise: boolean = false): {
 	isValidId: boolean;
 	type: null | string
 } {
-	const reg = /https?:\/\/(?:music\.|www\.)?youtube\.com\/(?:watch\?v=|v\/|channel\/|playlist\?list=)([A-Za-z0-9_-]+)/m
+	const reg = /https?:\/\/(?:music\.|www\.)?(?:youtube\.com\/(?:watch\?v=|v\/|channel\/|playlist\?list=)|youtu\.be\/)([A-Za-z0-9_-]+)/m
 	let id: any = null
 	if (!text.includes(' ')) id = text.match(reg)
 	if (id) {

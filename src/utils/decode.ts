@@ -1,4 +1,3 @@
-import path from "path";
 import NodeCache from "node-cache";
 import {error} from "./error";
 
@@ -20,10 +19,13 @@ export function getDecodeScript(): Promise<any> {
 	})
 }
 
-export function getUrlDecode(url: string): Promise<string> {
+export function getUrlDecode(url: string, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getDecodeScript().then(async (decode: any) => {
-			checkUrlIsMusic(decode(url)).then(resolve).catch(reject)
+			checkUrlIsMusic(decode(url)).then(resolve).catch((e) => {
+				if (!retry) return resolve(getUrlDecode(url, true))
+				reject(e)
+			})
 		})
 	})
 }
@@ -46,10 +48,10 @@ function checkUrlIsMusic(url: string): Promise<string> {
 }
 
 function fetchScript(): Promise<any> {
-	return new Promise((resolve) => {
-		if (process.env.buildDev) {
+	return new Promise((resolve, reject) => {
+		if (process.env.buildDevDecoderPath) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
-			return resolve(require(path.join(__dirname, '../../decode/build/decoder.js')))
+			return resolve(require(process.env.buildDevDecoderPath))
 		}
 		if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
 		return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
