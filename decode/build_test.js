@@ -1,11 +1,11 @@
-const {decode, signatureTimestamp} = require('./build/decoder')
+const {signatureTimestamp} = require('./build/decoder')
 const ytb = require('ytmusic_api_unofficial')
 const axios = require('axios')
 const path = require("node:path");
 
 
 process.env.buildDevDecoderPath = path.resolve(__dirname, 'build/decoder.js')
-const object = ytb.download('9bZkp7q19f0', 'webm', "high")
+const object = ytb.download('https://music.youtube.com/watch?v=E5NKkXPCi80', 'webm', "high")
 object.then((data) => {
 	console.log(data)
 
