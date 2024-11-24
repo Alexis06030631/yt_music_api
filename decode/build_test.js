@@ -4,6 +4,7 @@ const axios = require('axios')
 const path = require("node:path");
 
 
+process.env.YT_DEBUG_MODE = true
 process.env.buildDevDecoderPath = path.resolve(__dirname, 'build/decoder.js')
 const object = ytb.download('https://music.youtube.com/watch?v=E5NKkXPCi80', 'webm', "high")
 object.then((data) => {
