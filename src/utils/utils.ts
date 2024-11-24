@@ -549,7 +549,10 @@ export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 				}
 			}
 		}).then(async (res: any) => {
-			if (!res.streamingData) return reject(error(2004, nav(res, ['playabilityStatus', 'status'], true) || nav(res, ['playabilityStatus', 'messages', 0, 'message'], true) || 'Unknown error'))
+			if (!res.streamingData) {
+				if (process.env.YT_DEBUG_MODE === "true") console.log('gP_dv', res)
+				return reject(error(2004, nav(res, ['playabilityStatus', 'status'], true) || nav(res, ['playabilityStatus', 'messages', 0, 'message'], true) || 'Unknown error'))
+			}
 			const items: any = {videos: [], audios: []}
 			for (const item of res.streamingData.adaptiveFormats) {
 				if (item.audioQuality) items.audios.push(item)
