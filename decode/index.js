@@ -3,10 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const pathUserData = process.platform === 'darwin' ? path.join(process.env.HOME, 'Library', 'Application Support', 'Google', 'Chrome', 'YTmusicDownloader') : process.platform === 'win32' ? path.join(process.env.APPDATA, 'Google', 'Chrome', 'YTmusicDownloader') : path.join(process.env.HOME, '.config', 'google-chrome', 'YTmusicDownloader');
-if(!fs.existsSync(pathUserData)) {
-	fs.mkdirSync(pathUserData, { recursive: true });
+if (!fs.existsSync(pathUserData)) {
+	fs.mkdirSync(pathUserData, {recursive: true});
 }
-getBaseUrl().then((url)=> {
+getBaseUrl().then((url) => {
 	console.log(url)
 	axios.get(url).then((res) => {
 		fs.writeFileSync(path.join(__dirname, 'base.js'), res.data);
@@ -17,10 +17,11 @@ getBaseUrl().then((url)=> {
 	})
 })
 
-function getBaseUrl(){
+function getBaseUrl() {
 	return new Promise(async (resolve, reject) => {
 		const browser = await puppeteer.launch({
-			headless: 'new'
+			headless: 'new',
+			args: ['--no-sandbox', '--disable-setuid-sandbox'],
 		});
 		const page = await browser.newPage();
 		await page.setRequestInterception(true);
@@ -58,7 +59,7 @@ function getBaseUrl(){
 				} else interceptedRequest.continue();
 			}
 		});
-		await page.goto('https://music.youtube.com', { waitUntil: 'domcontentloaded' });
+		await page.goto('https://music.youtube.com', {waitUntil: 'domcontentloaded'});
 		await browser.close();
 	})
 
