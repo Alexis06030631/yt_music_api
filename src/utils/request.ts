@@ -43,10 +43,14 @@ export async function headerBuilder(header: object) {
 	const headers = new Headers()
 
 	for (const key in default_const.header) {
-		headers.append(key, default_const.header[key])
+		if (default_const.header[key]) {
+			headers.append(key, default_const.header[key])
+		}
 	}
 	for (const key in header) {
-		headers.append(key, header[key])
+		if (header[key]) {
+			headers.append(key, header[key])
+		}
 	}
 
 	headers.append('X-Goog-Visitor-Id', await getVisitorId())
