@@ -1,0 +1,11 @@
+{
+	"Classes": [
+		{
+			"name": "Artist",
+			"type": "warning",
+			"title": "Incomplete artist class",
+			"description": "If the artist's content is empty except for the artist's name, this is due to a problem with Youtube that I'm trying to resolve as best I can."
+		}
+	],
+	"Methods": []
+}

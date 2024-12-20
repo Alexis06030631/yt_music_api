@@ -5,19 +5,20 @@ Search for a query in YouTube Music
 ---
 **Builder**:
 ````javascript
-search(query, filter)
+search(query, filter, fetch)
 ````
 
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
-| filter |  | ex: "SONG" (Check available types) | <h1 style="color: darkred">𐄂</h1> |
+| filter |  | ex: "SONG" (Check available types) | <h1 style="color: darkgreen">✓</h1> |
+| fetch | [boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | ex: false (If you want to get complete results, but it will take more time) | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
 [promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
     query: string;
     filter: ;
-    content: any[];
+    content: [Music](/documentation/class/Music)[] | [Artist](/documentation/class/Artist)[] | [Playlist](/documentation/class/Playlist)[];
 }&gt;</span>

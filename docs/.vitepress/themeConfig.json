@@ -15,7 +15,7 @@
       ]
     },
     {
-      "text": "Methods",
+      "text": "Methods<Badge type=\"warning\" text=\"${bugs.length}\" />",
       "items": [
         {
           "text": "charts",
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "text": "Classes",
+      "text": "Classes<Badge type=\"warning\" text=\"${bugs.length}\" />",
       "items": [
         {
           "text": "Album",

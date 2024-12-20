@@ -3,7 +3,7 @@
 
 
 ---
-| <details open><summary>Properties</summary><p>[album](#album)<br>[artists](#artists)<br>[browseID](#browseid)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[isExplicit](#isexplicit)<br>[relativeBrowseID](#relativebrowseid)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[title](#title)<br>[videoType](#videotype)<br>[year](#year)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)<br>[getRadioPlaylist](#function-getradioplaylist)</p></details> |
+| <details open><summary>Properties</summary><p>[album](#album)<br>[artists](#artists)<br>[artistsNames](#artistsnames)<br>[browseID](#browseid)<br>[duration](#duration)<br>[id](#id)<br>[isAudioOnly](#isaudioonly)<br>[isExplicit](#isexplicit)<br>[isTopResult](#istopresult)<br>[relativeBrowseID](#relativebrowseid)<br>[resultType](#resulttype)<br>[searchRanking](#searchranking)<br>[thumbnails](#thumbnails)<br>[title](#title)<br>[videoType](#videotype)<br>[year](#year)</p></details> | <details open><summary>Functions</summary><p>[download](#function-download)<br>[getLyrics](#function-getlyrics)<br>[getRadioPlaylist](#function-getradioplaylist)<br>[getThumbnail](#function-getthumbnail)</p></details> |
 | --- | --- |
 
 
@@ -55,6 +55,23 @@ Music.getRadioPlaylist()
 
 <span class="flex_return">**Return:**&nbsp;
 [promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Playlist](/documentation/class/Playlist)&gt;</span>
+## Function getThumbnail() 
+Return Thumbnail with custom size
+
+**Builder**:
+````javascript
+Music.getThumbnail(width, height)
+````
+
+### Parameters
+| Parameter | Type | Description | Optional |
+| :---: | :---: | :---: | :---: |
+| width | [number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) | The width of the thumbnail | 𐄂 |
+| height | [number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) | The height of the thumbnail | 𐄂 |
+
+
+<span class="flex_return">**Return:**&nbsp;
+[Thumbnail](/documentation/class/Thumbnail)</span>
 
 
  # Properties
@@ -84,6 +101,18 @@ Music.artists
 
 **Return:**
 <span class="flex_return">[array![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/documentation/class/Artist)&gt;</span>
+## artistsNames
+Get the name of the artists separated by a comma
+
+**Builder**:
+````javascript
+Music.artistsNames
+````
+
+
+
+**Return:**
+<span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
 ## browseID
 The browseId of the music (NOT WORKING)
 
@@ -144,6 +173,18 @@ Music.isExplicit
 
 **Return:**
 <span class="flex_return">[boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
+## isTopResult
+Is defined as a top result by YouTube Music (but not always true. Please refer to searchRanking field)
+
+**Builder**:
+````javascript
+Music.isTopResult
+````
+
+
+
+**Return:**
+<span class="flex_return">[boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)</span>
 ## relativeBrowseID
 The relative browseId of the music (used for fetching related songs)
 
@@ -168,6 +209,18 @@ Music.resultType
 
 **Return:**
 <span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+## searchRanking
+Search matching index
+
+**Builder**:
+````javascript
+Music.searchRanking
+````
+
+
+
+**Return:**
+<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## thumbnails
 An array of available Artwork in different sizes
 
