@@ -104,6 +104,12 @@ function parseSongRuns(runs: any[]): Record<string, any> {
 		}
 	});
 
+	if (parsed.artists.length === 0) parsed.artists.push({
+		name: runs[0].text,
+		id: undefined,
+		isArtist: false
+	});
+
 	return parsed;
 }
 
