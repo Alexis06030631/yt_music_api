@@ -7,5 +7,12 @@
 			"description": "If the artist's content is empty except for the artist's name, this is due to a problem with Youtube that I'm trying to resolve as best I can."
 		}
 	],
-	"Methods": []
+	"Methods": [
+		{
+			"name": "charts",
+			"type": "danger",
+			"title": "Charts not working",
+			"description": "The charts are not working. I'm working on it."
+		}
+	]
 }

@@ -52,7 +52,7 @@ Artist.id
 **Return:**
 <span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
 ## name
-:::info The Artist class is used to represent an artist in YouTube Music ::: The artist name
+The artist name
 
 **Builder**:
 ````javascript

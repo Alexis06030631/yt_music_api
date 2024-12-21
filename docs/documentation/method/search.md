@@ -5,7 +5,7 @@ Search for a query in YouTube Music
 ---
 **Builder**:
 ````javascript
-search(query, filter, fetch)
+search(query, filter, options)
 ````
 
 ### Parameters
@@ -13,7 +13,7 @@ search(query, filter, fetch)
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
 | filter |  | ex: "SONG" (Check available types) | <h1 style="color: darkgreen">✓</h1> |
-| fetch | [boolean![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | ex: false (If you want to get complete results, but it will take more time) | <h1 style="color: darkgreen">✓</h1> |
+| options |  | Use to set the language and fetch the music data | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
