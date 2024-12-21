@@ -26,7 +26,8 @@ export default {
 			"client": {
 				"clientName": "WEB_REMIX",
 				"clientVersion": "1." + date.getUTCFullYear() + (date.getUTCMonth() + 1).toString().padStart(2, '0') + date.getUTCDate().toString().padStart(2, '0') + ".01.00",
-				"originalUrl": "https://music.youtube.com"
+				"originalUrl": "https://music.youtube.com",
+				"hl": "en",
 			},
 			"user": {},
 		}
@@ -39,3 +40,12 @@ export declare type AvailableQuality = typeof AvailableQuality[number];
 export declare type AvailableFormat = typeof AvailableFormat[number];
 export declare type AvailableCountries = typeof countries[number];
 export declare type AvailableCountriesCodes = typeof countriesCodes[number];
+export declare type options = {
+	language: AvailableCountriesCodes,
+	fetch: boolean,
+}
+
+export const default_options: options = {
+	language: 'en',
+	fetch: false
+}

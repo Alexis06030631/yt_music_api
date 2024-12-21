@@ -271,7 +271,7 @@ export function parseSearchResult(response: any, category: string = ""): any {
 	const videoType = nav(response, [...PLAY_BUTTON, "playNavigationEndpoint", ...NAVIGATION_VIDEO_TYPE], true)
 	let resultType: string = category ? category.toLowerCase() : ""
 	const browseID = nav(response, NAVIGATION_BROWSE_ID, true)
-	if (!resultType) {
+	if (!resultType || !all_TYPES.includes(resultType)) {
 		if (browseID) {
 			let mapping = {
 				"VM": "playlist",

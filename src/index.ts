@@ -19,6 +19,8 @@ import {
 	AvailableTypes,
 	countries,
 	countriesCodes,
+	default_options,
+	options,
 	TYPE_SEARCH_CODE
 } from "./utils/default";
 import Music from "./classes/Music";
@@ -33,12 +35,12 @@ import {COUNTRIES} from "./utils/countries";
  * Search for a query in YouTube Music
  * @param query ex: "Hello Adele"
  * @param filter ex: "SONG" (Check available types)
- * @param fetch ex: false (If you want to get complete results, but it will take more time)
+ * @param options Use to set the language and fetch the music data
  * @example
  * const search = await client.search("Hello Adele", "SONG")
  * console.log(search)
  */
-export function search(query: string, filter?: AvailableTypes, fetch: boolean = false): Promise<{
+export function search(query: string, filter?: AvailableTypes, options: options = default_options): Promise<{
 	query: string,
 	filter: AvailableTypes,
 	content: Music[] | Artist[] | Playlist[]
@@ -52,7 +54,10 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 			result.content = [await this.get(query).catch(reject)]
 			return resolve(result)
 		}
-		request('search', {query, params: hasFilter ? TYPE_SEARCH_CODE[filter] : ''}).then(async (response: any) => {
+		request('search', {
+			query,
+			params: hasFilter ? TYPE_SEARCH_CODE[filter] : ''
+		}, {}, options).then(async (response: any) => {
 			try {
 				if (response.content) return resolve(result)
 				else response = response.contents
@@ -73,6 +78,8 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 					} else if (res.musicShelfRenderer) {
 						shelf_contents = res["musicShelfRenderer"]["contents"]
 						category = nav(res, [...MUSIC_SHELF, ...TITLE_TEXT], true)
+					} else if (res.musicResponsiveListItemRenderer) {
+						shelf_contents = res['musicResponsiveListItemRenderer']['contents']
 					} else continue
 
 					shelf_contents = shelf_contents.filter((item: any) => item.musicResponsiveListItemRenderer || item.musicTwoRowItemRenderer || item.musicMultiRowListItemRenderer)
@@ -83,7 +90,7 @@ export function search(query: string, filter?: AvailableTypes, fetch: boolean = 
 					})
 				}
 				result.content = result.content.filter((content: any) => !!content?.id)
-				if (fetch) {
+				if (options.fetch) {
 					result.content = result.content.filter((content: any) => !!content?.id)
 					const promises = result.content.map(async (content: any) => {
 						if (content.id) return await this.get(content.id).catch((e) => {

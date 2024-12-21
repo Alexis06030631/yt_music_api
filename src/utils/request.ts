@@ -1,12 +1,12 @@
-import default_const from './default'
+import default_const, {default_options, options} from './default'
 import {error} from "./error";
 
 let visitorID = process.env.YT_VISITOR_ID || ""
 
-export default function (url: string, body: any = {}, header: object = {}) {
+export default function (url: string, body: any = {}, header: object = {}, options: options = default_options): Promise<any> {
 	return new Promise(async (resolve, reject) => {
-		const headers = await headerBuilder(header)
-		body = bodyBuilder(body)
+		const headers = await headerBuilder(header, options)
+		body = bodyBuilder(body, options)
 		url = makeUrl(url)
 
 		fetch(url, {
@@ -39,7 +39,7 @@ export function makeUrl(url: string, params?: Array<any>): string {
 	return encodeURI(url)
 }
 
-export async function headerBuilder(header: object) {
+export async function headerBuilder(header: object, options?: options) {
 	const headers = new Headers()
 
 	for (const key in default_const.header) {
@@ -57,7 +57,16 @@ export async function headerBuilder(header: object) {
 	return headers
 }
 
-export function bodyBuilder(body: object) {
+export function bodyBuilder(body: object, options: options): string {
+	const def_body = default_const.body
+	for (const key in options) {
+		switch (key) {
+			case "language": {
+				def_body.context.client.hl = options.language
+				break
+			}
+		}
+	}
 	return JSON.stringify(Object.assign(default_const.body, body))
 }
 
