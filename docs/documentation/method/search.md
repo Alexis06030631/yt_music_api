@@ -12,13 +12,13 @@ search(query, filter, options)
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
-| filter |  | ex: "SONG" (Check available types) | <h1 style="color: darkgreen">✓</h1> |
-| options |  | Use to set the language and fetch the music data | <h1 style="color: darkgreen">✓</h1> |
+| filter | [AvailableTypes](/documentation/type/AvailableTypes) | ex: "SONG" (Check available types) | <h1 style="color: darkgreen">✓</h1> |
+| options | [options](/documentation/type/options) | Use to set the language and fetch the music data | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
 [promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;{
     query: string;
-    filter: ;
+    filter: [AvailableTypes](/documentation/type/AvailableTypes);
     content: [Music](/documentation/class/Music)[] | [Artist](/documentation/class/Artist)[] | [Playlist](/documentation/class/Playlist)[];
 }&gt;</span>

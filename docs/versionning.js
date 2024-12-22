@@ -18,4 +18,3 @@ if (version.versions.find(v => v.version === c_version.version)) {
 
 // Write the new version.json
 writeFileSync('./docs/.vitepress/version.json', JSON.stringify(version, null, 2))
-

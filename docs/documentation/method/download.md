@@ -12,8 +12,8 @@ download(query, format, quality)
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | The music ID or URL | <h1 style="color: darkred">𐄂</h1> |
-| format |  | The format of the music (Check available formats) | <h1 style="color: darkgreen">✓</h1> |
-| quality |  | The quality of the music (Check available qualities) | <h1 style="color: darkgreen">✓</h1> |
+| format | [AvailableFormat](/documentation/type/AvailableFormat) | The format of the music (Check available formats) | <h1 style="color: darkgreen">✓</h1> |
+| quality | [AvailableQuality](/documentation/type/AvailableQuality) | The quality of the music (Check available qualities) | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;

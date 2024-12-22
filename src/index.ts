@@ -19,8 +19,8 @@ import {
 	AvailableTypes,
 	countries,
 	countriesCodes,
-	default_options,
 	options,
+	optionsType,
 	TYPE_SEARCH_CODE
 } from "./utils/default";
 import Music from "./classes/Music";
@@ -35,12 +35,12 @@ import {COUNTRIES} from "./utils/countries";
  * Search for a query in YouTube Music
  * @param query ex: "Hello Adele"
  * @param filter ex: "SONG" (Check available types)
- * @param options Use to set the language and fetch the music data
+ * @param option Use to set the language and fetch the music data
  * @example
  * const search = await client.search("Hello Adele", "SONG")
  * console.log(search)
  */
-export function search(query: string, filter?: AvailableTypes, options: options = default_options): Promise<{
+export function search(query: string, filter?: AvailableTypes, option: optionsType = options): Promise<{
 	query: string,
 	filter: AvailableTypes,
 	content: Music[] | Artist[] | Playlist[]
@@ -57,7 +57,7 @@ export function search(query: string, filter?: AvailableTypes, options: options 
 		request('search', {
 			query,
 			params: hasFilter ? TYPE_SEARCH_CODE[filter] : ''
-		}, {}, options).then(async (response: any) => {
+		}, {}, option).then(async (response: any) => {
 			try {
 				if (response.content) return resolve(result)
 				else response = response.contents
@@ -90,7 +90,7 @@ export function search(query: string, filter?: AvailableTypes, options: options 
 					})
 				}
 				result.content = result.content.filter((content: any) => !!content?.id)
-				if (options.fetch) {
+				if (option.fetch) {
 					result.content = result.content.filter((content: any) => !!content?.id)
 					const promises = result.content.map(async (content: any) => {
 						if (content.id) return await this.get(content.id).catch((e) => {

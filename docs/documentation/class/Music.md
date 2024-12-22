@@ -22,8 +22,8 @@ Music.download(format, quality)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| format |  | The format of the music (Check available formats) | ✓ |
-| quality |  | The quality of the music (Check available qualities) | ✓ |
+| format | [AvailableFormat](/documentation/type/AvailableFormat) | The format of the music (Check available formats) | ✓ |
+| quality | [AvailableQuality](/documentation/type/AvailableQuality) | The quality of the music (Check available qualities) | ✓ |
 
 
 <span class="flex_return">**Return:**&nbsp;

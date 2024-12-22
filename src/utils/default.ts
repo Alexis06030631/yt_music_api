@@ -11,6 +11,10 @@ export const TYPE_SEARCH_CODE = {
 	video: 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D',
 	album: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D'
 }
+export const options = {
+	language: 'en',
+	fetch: false
+}
 
 export default {
 	apiUrl: 'https://music.youtube.com/youtubei/v1/',
@@ -40,12 +44,7 @@ export declare type AvailableQuality = typeof AvailableQuality[number];
 export declare type AvailableFormat = typeof AvailableFormat[number];
 export declare type AvailableCountries = typeof countries[number];
 export declare type AvailableCountriesCodes = typeof countriesCodes[number];
-export declare type options = {
+export declare type optionsType = {
 	language: AvailableCountriesCodes,
 	fetch: boolean,
-}
-
-export const default_options: options = {
-	language: 'en',
-	fetch: false
 }

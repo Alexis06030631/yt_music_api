@@ -75,6 +75,35 @@
           "link": "/documentation/class/Thumbnail"
         }
       ]
+    },
+    {
+      "text": "Types",
+      "items": [
+        {
+          "text": "AvailableCountries",
+          "link": "/documentation/type/AvailableCountries"
+        },
+        {
+          "text": "AvailableCountriesCodes",
+          "link": "/documentation/type/AvailableCountriesCodes"
+        },
+        {
+          "text": "AvailableFormat",
+          "link": "/documentation/type/AvailableFormat"
+        },
+        {
+          "text": "AvailableQuality",
+          "link": "/documentation/type/AvailableQuality"
+        },
+        {
+          "text": "AvailableTypes",
+          "link": "/documentation/type/AvailableTypes"
+        },
+        {
+          "text": "options",
+          "link": "/documentation/type/options"
+        }
+      ]
     }
   ]
 }

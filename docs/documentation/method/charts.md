@@ -15,7 +15,7 @@ charts(country)
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
-| country |  | The country code (Check available countries) | <h1 style="color: darkgreen">✓</h1> |
+| country | [AvailableCountries](/documentation/type/AvailableCountries) | The country code (Check available countries) | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
