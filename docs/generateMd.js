@@ -56,7 +56,7 @@ async function createFile(member) {
 	linkToType.data.push(member);
 	if (!fs.existsSync(linkToType.path)) fs.mkdirSync(linkToType.path);
 	const fileName = `${name}.md`;
-	const filePath = path.join(linkToType.path, fileName);
+	let filePath = path.join(linkToType.path, fileName);
 
 	//if(!name.includes('downloadManager')) return 'Method'
 	const bugs = bugs_data?.[linkToType.name].filter(e => e.name === name)
@@ -165,8 +165,10 @@ async function createFile(member) {
 	} else {
 		const data = await tsImport.importSingleTs(path.join('../', member.fileUrlPath), {tsconfig: path.join(__dirname, '../', 'tsconfig.json')})
 		let vars
-		if (member.name === 'options') vars = data?.[member.name]
-		else vars = member.excerptTokens.filter(e => e.kind === 'Reference').map(e => data?.[e.text])[0]
+		if (member.name === 'options') {
+			vars = data?.[member.name]
+			filePath = path.join(linkToType.path, fileName.split('.')[0] + 'Type.md')
+		} else vars = member.excerptTokens.filter(e => e.kind === 'Reference').map(e => data?.[e.text])[0]
 
 		if (!vars) return
 		fileContent += `${member.docComment}\n\n---\n` +
