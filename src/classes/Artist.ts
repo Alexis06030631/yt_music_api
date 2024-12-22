@@ -28,7 +28,7 @@ export default class Artist {
 	 * 		"width": 60,
 	 * 		"height": 60
 	 * 		}
-	 * 		```
+	 * ```
 	 */
 	public thumbnails: Array<Thumbnail>
 

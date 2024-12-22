@@ -14,6 +14,7 @@ export default class Playlist {
 	 * 		"height": 60
 	 * 	},
 	 * 	]
+	 * ```
 	 */
 	public thumbnails: Array<Thumbnail>;
 	/**
@@ -28,7 +29,7 @@ export default class Playlist {
 	public name: string;
 	/**
 	 * An array of Artist objects
-	 * @TODO: Not Implemented
+	 * @TODO Not Implemented
 	 * @example
 	 * ```json
 	 * [
@@ -37,6 +38,7 @@ export default class Playlist {
 	 *  	    "id": "MPREb_5eN7fQq3J9_"
 	 * 		}
 	 * 	]
+	 * ```
 	 */
 	public artists: Array<Artist>
 	/**
@@ -54,14 +56,17 @@ export default class Playlist {
 
 	/**
 	 * The year of the music if it's available
-	 * @TODO: Not Implemented
+	 * @TODO Not Implemented
 	 * @example 2024
 	 */
 	public year?: number
 
 	/**
 	 * Music List of the Playlist
-	 * @example [{}, {}, {}]
+	 * @example
+	 * ```JSON
+	 *  [{}, {}, {}]
+	 * ```
 	 */
 	public musics: Array<Music>
 

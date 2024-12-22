@@ -37,8 +37,10 @@ import {COUNTRIES} from "./utils/countries";
  * @param filter ex: "SONG" (Check available types)
  * @param option Use to set the language and fetch the music data
  * @example
+ * ```JS
  * const search = await client.search("Hello Adele", "SONG")
  * console.log(search)
+ * ```
  */
 export function search(query: string, filter?: AvailableTypes, option: optionsType = options): Promise<{
 	query: string,

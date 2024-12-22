@@ -5,7 +5,7 @@ export default class Album {
 	/**
 	 * An array of available Artwork in different sizes
 	 * @example
-	 * ```json
+	 * ```JSON
 	 * [
 	 * 	{
 	 * 		"url": "https://lh3.googleusercontent.com/...",
@@ -13,6 +13,7 @@ export default class Album {
 	 * 		"height": 60
 	 * 	},
 	 * 	]
+	 * ```
 	 */
 	public thumbnails: Array<Thumbnail>;
 	/**
@@ -35,6 +36,7 @@ export default class Album {
 	 *  	    "id": "MPREb_5eN7fQq3J9_"
 	 * 		}
 	 * 	]
+	 * ```
 	 */
 	public artists: Array<Artist>
 	/**

@@ -23,6 +23,7 @@ export default class Music {
 	 * 		"height": 60
 	 * 	},
 	 * 	]
+	 * ```
 	 */
 	public thumbnails: Array<Thumbnail>;
 	/**
@@ -45,6 +46,7 @@ export default class Music {
 	 *  	    "id": "MPREb_5eN7fQq3J9_"
 	 * 		}
 	 * 	]
+	 * ```
 	 */
 	public artists: Array<Artist>
 	/**
@@ -68,6 +70,7 @@ export default class Music {
 	 * 	"formatted": "3:33",
 	 * 	"formattedLong": "3 minutes, 33 seconds"
 	 * 	}
+	 * ```
 	 */
 	public duration: Duration
 
