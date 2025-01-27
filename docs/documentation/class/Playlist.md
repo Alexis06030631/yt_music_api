@@ -12,7 +12,7 @@
 
 
 ## artists
-An array of Artist objects @TODO: Not Implemented
+An array of Artist objects  @TODO Not Implemented
 
 **Builder**:
 ````javascript
@@ -96,7 +96,7 @@ Playlist.thumbnails
 **Return:**
 <span class="flex_return">[array![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Thumbnail](/documentation/class/Thumbnail)&gt;</span>
 ## year
-The year of the music if it's available @TODO: Not Implemented
+The year of the music if it's available  @TODO Not Implemented
 
 **Builder**:
 ````javascript

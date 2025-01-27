@@ -11,7 +11,7 @@ getBaseUrl().then((url) => {
 	axios.get(url).then((res) => {
 		fs.writeFileSync(path.join(__dirname, 'base.js'), res.data);
 		console.log('base.js saved');
-		require('./decode_builder.js');
+		require('./decoderBuilderV2.js');
 	}).catch((err) => {
 		console.log(err);
 	})

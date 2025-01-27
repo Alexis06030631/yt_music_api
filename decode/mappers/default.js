@@ -58,7 +58,7 @@ function orgaCompose(a, b, c) {
 		B:a,
 		j:{
 			alr: "yes",
-			c: "WEB_REMIX"
+			c: "WEB_REMIX",
 		}
 	};
 	if(c) {

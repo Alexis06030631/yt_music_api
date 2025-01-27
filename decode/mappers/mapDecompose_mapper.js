@@ -1,4 +1,4 @@
 function mapDecompose(a) {
-	let b = a.signatureCipher;
+	let // REPLACE_letter_key = a.signatureCipher;
 	// REPLACE_all
 }

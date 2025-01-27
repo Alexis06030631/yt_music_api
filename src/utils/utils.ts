@@ -539,13 +539,15 @@ export function downloadYTDL(query: string, format: AvailableFormat = AvailableF
 }
 
 export function getPlayers_dv(id: string): Promise<StreamPlayers> {
+	const date = new Date()
+	// client version: "clientVersion": "1." + date.getUTCFullYear() + (date.getUTCMonth() + 1).toString().padStart(2, '0') + date.getUTCDate().toString().padStart(2, '0') + ".01.00",
 	return new Promise(async (resolve, reject) => {
 		request('player?key=', {
 			videoId: id,
 			"context": {
 				"client": {
 					"clientName": "WEB_REMIX",
-					"clientVersion": "1.20231130.05.00"
+					"clientVersion": "1.20250122.01.00",
 				}
 			},
 			"playbackContext": {
@@ -560,7 +562,8 @@ export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 				return reject(error(2004, nav(res, ['playabilityStatus', 'status'], true) || nav(res, ['playabilityStatus', 'messages', 0, 'message'], true) || 'Unknown error'))
 			}
 			const items: any = {videos: [], audios: []}
-			for (const item of res.streamingData.adaptiveFormats) {
+			//TODO: fix adaptative format signature
+			for (const item of res.streamingData.formats) {
 				if (item.audioQuality) items.audios.push(item)
 				else items.videos.push(item)
 			}

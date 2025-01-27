@@ -1,12 +1,16 @@
 import NodeCache from "node-cache";
 import {error} from "./error";
+import querystring from "querystring";
+import * as vm from "node:vm";
+import * as fs from "node:fs";
 
 const cache = new NodeCache({stdTTL: 3600})
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
+		// TODO: FIX SIGNATURE TIMESTAMP
 		fetchScript().then((res) => {
-			resolve(res.signatureTimestamp)
+			resolve(20110)
 		})
 	})
 }
@@ -14,15 +18,15 @@ export function getSignatureTimestamp(): Promise<number> {
 export function getDecodeScript(): Promise<any> {
 	return new Promise((resolve) => {
 		fetchScript().then((res) => {
-			resolve(res.decode)
+			resolve(res)
 		})
 	})
 }
 
-export function getUrlDecode(url: string, retry: boolean = false): Promise<string> {
+export function getUrlDecode(url: any, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
-		getDecodeScript().then(async (decode: any) => {
-			checkUrlIsMusic(decode(url)).then(resolve).catch((e) => {
+		getDecodeScript().then(async ([decipherScript, nTransformScript]: any) => {
+			checkUrlIsMusic(decode(url, decipherScript, nTransformScript).url).then(resolve).catch((e) => {
 				if (!retry) return resolve(getUrlDecode(url, true))
 				reject(e)
 			})
@@ -51,14 +55,51 @@ function fetchScript(): Promise<any> {
 	return new Promise((resolve, reject) => {
 		if (process.env.buildDevDecoderPath) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
-			return resolve(require(process.env.buildDevDecoderPath))
+			const file = fs.readFileSync(process.env.buildDevDecoderPath).toString()
+			let scripts = file.split('\n\n//NTransform\n')
+			scripts = scripts.map((script: string) => {
+				return new vm.Script(script)
+			})
+			return resolve(scripts)
 		}
 		if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
 		return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
 			return res.text()
 		}).then(res => {
-			cache.set('decoder', res)
-			return resolve(eval(res))
+			//cache.set('decoder', res)
+			let scripts = res.split('\n\n//NTransform\n')
+			scripts = scripts.map((script: string) => {
+				return new vm.Script(script)
+			})
+			return resolve(scripts)
 		})
 	})
+}
+
+export function decode(format: any, decipherScript: vm.Script, nTransformScript: vm.Script): any {
+	if (!decipherScript) return;
+	const decipher = (url: string) => {
+		const args: any = querystring.parse(url);
+		if (!args.s) return args.url;
+		const components = new URL(decodeURIComponent(args.url));
+		const context = {};
+		context["sig"] = decodeURIComponent(args.s);
+		components.searchParams.set(args.sp || "sig", decipherScript.runInNewContext(context));
+		return components.toString();
+	};
+	const nTransform = (url: string) => {
+		const components = new URL(decodeURIComponent(url));
+		const n = components.searchParams.get("n");
+		if (!n || !nTransformScript) return url;
+		const context = {};
+		context["ncode"] = n;
+		components.searchParams.set("n", nTransformScript.runInNewContext(context));
+		return components.toString();
+	};
+	const cipher = !format.url;
+	const url = format.url || format.signatureCipher || format.cipher;
+	format.url = nTransform(cipher ? decipher(url) : url);
+	delete format.signatureCipher;
+	delete format.cipher;
+	return format;
 }
