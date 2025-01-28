@@ -56,8 +56,8 @@ function fetchScript(): Promise<any> {
 		if (process.env.buildDevDecoderPath) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
 			const file = fs.readFileSync(process.env.buildDevDecoderPath).toString()
-			let scripts = file.split('\n\n//NTransform\n')
-			scripts = scripts.map((script: string) => {
+			const scriptsS = file.split('\n\n//NTransform\n')
+			const scripts = scriptsS.map((script: string) => {
 				return new vm.Script(script)
 			})
 			return resolve(scripts)
