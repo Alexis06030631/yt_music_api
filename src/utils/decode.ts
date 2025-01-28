@@ -67,8 +67,8 @@ function fetchScript(): Promise<any> {
 			return res.text()
 		}).then(res => {
 			//cache.set('decoder', res)
-			let scripts = res.split('\n\n//NTransform\n')
-			scripts = scripts.map((script: string) => {
+			const scriptsS = res.split('\n\n//NTransform\n')
+			const scripts = scriptsS.map((script: string) => {
 				return new vm.Script(script)
 			})
 			return resolve(scripts)
