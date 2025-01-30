@@ -2,7 +2,7 @@ import NodeCache from "node-cache";
 import {error} from "./error";
 import querystring from "querystring";
 import * as vm from "vm";
-import * as fs from "node:fs";
+import {readFileSync} from 'fs'
 
 const cache = new NodeCache({stdTTL: 3600})
 
@@ -55,7 +55,7 @@ function fetchScript(): Promise<any> {
 	return new Promise((resolve, reject) => {
 		if (process.env.buildDevDecoderPath) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
-			const file = fs.readFileSync(process.env.buildDevDecoderPath).toString()
+			const file = readFileSync(process.env.buildDevDecoderPath).toString()
 			const scriptsS = file.split('\n\n//NTransform\n')
 			const scripts = scriptsS.map((script: string) => {
 				return new vm.Script(script)
