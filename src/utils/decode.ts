@@ -2,7 +2,6 @@ import NodeCache from "node-cache";
 import {error} from "./error";
 import querystring from "querystring";
 import * as vm from "vm";
-import {readFileSync} from 'fs-extra'
 
 const cache = new NodeCache({stdTTL: 3600})
 
@@ -53,9 +52,9 @@ function checkUrlIsMusic(url: string): Promise<string> {
 
 function fetchScript(): Promise<any> {
 	return new Promise((resolve, reject) => {
-		if (process.env.buildDevDecoderPath) {
+		if (process.env.buildDevDecoderFile) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
-			const file = readFileSync(process.env.buildDevDecoderPath).toString()
+			const file = process.env.buildDevDecoderFile.toString()
 			const scriptsS = file.split('\n\n//NTransform\n')
 			const scripts = scriptsS.map((script: string) => {
 				return new vm.Script(script)

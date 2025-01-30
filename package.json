@@ -1,6 +1,6 @@
 {
 	"name": "ytmusic_api_unofficial",
-	"version": "2.0.14",
+	"version": "2.0.15",
 	"description": "A simple API to get music from YouTube Music",
 	"scripts": {
 		"test": "nodemon test.js",
@@ -43,12 +43,10 @@
 		"node-cache": "^5.1.2",
 		"querystring": "^0.2.1",
 		"sha1": "^1.1.1",
-		"vm": "^0.1.0",
-		"fs-extra": "^11.3.0"
+		"vm": "^0.1.0"
 	},
 	"devDependencies": {
 		"@microsoft/api-extractor": "^7.47.0",
-		"@types/fs-extra": "^11.0.4",
 		"@types/node": "^20.14.2",
 		"comment-parser": "^1.4.1",
 		"nodemon": "^3.1.3",
