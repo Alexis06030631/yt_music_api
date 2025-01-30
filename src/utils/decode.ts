@@ -2,7 +2,7 @@ import NodeCache from "node-cache";
 import {error} from "./error";
 import querystring from "querystring";
 import * as vm from "vm";
-import {readFileSync} from 'fs'
+import {readFileSync} from 'fs-extra'
 
 const cache = new NodeCache({stdTTL: 3600})
 
