@@ -532,6 +532,7 @@ export function downloadYTDL(query: string, format: AvailableFormat = AvailableF
 			} else if (quality === 'medium') {
 				downloads = downloads.sort((a: any, b: any) => b.bitrate - a.bitrate)[Math.round(downloads.length / 2) - 1]
 			}
+			if (!downloads) return reject(error(2006, `No download found for ${format} ${quality}`))
 			downloads.urlDecoded = await downloads.url()
 			resolve(new Player(downloads))
 		}).catch(reject)

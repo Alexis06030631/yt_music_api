@@ -20,6 +20,23 @@ export const HELPER_REGEXP = `var (${VARIABLE_PART})=\\{((?:(?:${VARIABLE_PART_D
 	VARIABLE_PART_DEFINE
 }${SLICE_PART}|${VARIABLE_PART_DEFINE}${SPLICE_PART}|${VARIABLE_PART_DEFINE}${SWAP_PART}),?\\n?)+)\\};`;
 
+export const COMPOSER_REGEXP = `=function\\(${VARIABLE_PART}\\){var ${VARIABLE_PART}=(${VARIABLE_PART}\\.${VARIABLE_PART}\\(${VARIABLE_PART},${VARIABLE_PART}\\)\\|\\|)${VARIABLE_PART}\\.signatureCipher.*?return ${VARIABLE_PART}};`
+export const COMPOSER_exTractFun1Name = `(${VARIABLE_PART})\\(${VARIABLE_PART}\\);`
+export const COMPOSER_exTractFun1 = `=function\\(${VARIABLE_PART}\\){.*?return.*?};`
+export const COMPOSER_exTractFun2Name = `(${VARIABLE_PART})\\(${VARIABLE_PART},.*?\\)`
+export const COMPOSER_exTractFun2 = `=function\\(${VARIABLE_PART},${VARIABLE_PART}\\){.*?return.*?};`
+export const COMPOSER_exTractFun3 = `:(${VARIABLE_PART}?)===`
+export const COMPOSER_exTractFun4 = `(${VARIABLE_PART}?)\\.hasOwnProperty`
+export const COMPOSER_exTractFun5 = `try{var ${VARIABLE_PART}=(.*?)\\(`
+export const COMPOSER_exTractFun6 = `match\\((${VARIABLE_PART})\\)`
+export const COMPOSER_exTractFun7 = `:(${VARIABLE_PART})`
+export const COMPOSER_exTractFun8 = `function\\(\\w,\\w,\\w\\){(\\w=\\w===void 0\\?"":\\w;\\w=\\w===void 0\\?"":\\w.*?return.*?)};`
+export const COMPOSER_exTractFun8E = `(${VARIABLE_PART}[\\.${VARIABLE_PART}]?)\\(${VARIABLE_PART},.*?\\)`
+export const COMPOSER_exTractFun8E2 = `=function\\(${VARIABLE_PART},${VARIABLE_PART}\\){.*?};\n`
+export const COMPOSER_exTractFun8E3 = `=(${VARIABLE_PART})\\(${VARIABLE_PART}\\(${VARIABLE_PART}\\)\\)`
+export const COMPOSER_exTractFun8E4 = (name) => `var ${name}={.*?}};`
+export const COMPOSER_exTractFun9 = `\\.prototype\\.set=function\\(.*?\\){.*?};`
+
 export const SCVR = "[a-zA-Z0-9$_]";
 export const MCR = `${SCVR}+`;
 export const AAR = "\\[(\\d+)]";

@@ -29,6 +29,7 @@ import Playlist from "./classes/Playlist";
 import Player from "./classes/Player";
 import StreamPlayer from "./classes/StreamPlayer";
 import {COUNTRIES} from "./utils/countries";
+import {getUrlDecode} from "./utils/decode";
 
 
 /**
@@ -207,4 +208,12 @@ export function download(query: string, format: AvailableFormat = AvailableForma
  */
 export function getPlayers(query: string): Promise<StreamPlayer> {
 	return getPlayers_dv(getYTIdFromText(query).isValidId ? getYTIdFromText(query).id : query)
+}
+
+export function getUrlDecodeT(format: any): Promise<string> {
+	return new Promise((resolve, reject) => {
+		getUrlDecode(format).then(async (decoded: any) => {
+			return resolve(decoded)
+		})
+	})
 }

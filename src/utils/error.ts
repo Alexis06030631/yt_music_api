@@ -28,6 +28,7 @@ export const errors = [
 	{code: 2003, message: 'Lyrics not available for the music'},
 	{code: 2004, message: 'Song is not streamable, please check the unplayable reason'},
 	{code: 2005, message: 'The download link returned is not valid, please retry or report the error'},
+	{code: 2006, message: 'No download link found for the music with the given format and quality'},
 
 ]
 

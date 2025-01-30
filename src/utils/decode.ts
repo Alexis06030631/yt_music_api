@@ -1,7 +1,7 @@
 import NodeCache from "node-cache";
 import {error} from "./error";
 import querystring from "querystring";
-import * as vm from "node:vm";
+import * as vm from "vm";
 import * as fs from "node:fs";
 
 const cache = new NodeCache({stdTTL: 3600})

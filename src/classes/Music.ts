@@ -194,8 +194,12 @@ export default class Music {
 	 * @param format The format of the music (Check available formats)
 	 * @param quality The quality of the music (Check available qualities)
 	 **/
-	download(format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<any> {
-		return downloadYTDL(this.id, format, quality)
+	async download(format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<any> {
+		try {
+			return await downloadYTDL(this.id, format, quality);
+		} catch (e) {
+			throw e;
+		}
 	}
 
 	/**
