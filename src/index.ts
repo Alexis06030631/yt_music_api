@@ -215,6 +215,6 @@ export function getUrlDecodeT(format: any): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getUrlDecode(format).then(async (decoded: any) => {
 			return resolve(decoded)
-		})
+		}).catch(reject)
 	})
 }
