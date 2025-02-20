@@ -10,6 +10,8 @@ export const errors = [
 	{code: 504, message: 'Gateway Timeout'},
 	{code: 1000, message: 'Network Error, please check your internet connection'},
 
+	{code: 5000, message: 'Unknown Error'},
+
 	// Errors in function calls
 	{code: 1001, message: 'Invalid filter type. Please check available types'},
 	{code: 1002, message: 'No results found for the given query'},

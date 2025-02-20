@@ -97,7 +97,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 					result.content = result.content.filter((content: any) => !!content?.id)
 					const promises = result.content.map(async (content: any) => {
 						if (content.id) return await this.get(content.id).catch((e) => {
-							throw e
+							if (process.env.YT_DEBUG_MODE === "true") console.error(e)
 							return null
 						})
 						else return null
@@ -108,11 +108,11 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 				result.content = rankingResponse(result.content, query)
 				return resolve(result)
 			} catch (e) {
-				reject({
+				reject(error(5000, {
 					code: 1005,
 					error: e,
 					message: `Please report this issue on the GitHub repository, this is a bug.`
-				})
+				}))
 			}
 		}).catch((e) => {
 			reject(e);
