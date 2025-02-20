@@ -95,7 +95,7 @@ async function runScript(script: string, ...args: any): Promise<any> {
 	})
 }
 
-export async function decode(format: any, decipherScript: string, nTransformScript: string): any {
+export async function decode(format: any, decipherScript: string, nTransformScript: string): Promise<any> {
 	try {
 		if (!decipherScript) return;
 		const decipher = async (url: string) => {
