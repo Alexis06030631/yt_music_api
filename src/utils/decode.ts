@@ -1,6 +1,5 @@
 import {error} from "./error";
 import querystring from "querystring";
-import {getQuickJS} from "quickjs-emscripten";
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
@@ -22,7 +21,7 @@ export function getDecodeScript(): Promise<any> {
 export function getUrlDecode(url: any, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getDecodeScript().then(async ([decipherScript, nTransformScript]: any) => {
-			checkUrlIsMusic((await decode(url, decipherScript, nTransformScript)).url).then(resolve).catch((e) => {
+			checkUrlIsMusic(decode(url, decipherScript, nTransformScript).url).then(resolve).catch((e) => {
 				if (!retry) return resolve(getUrlDecode(url, true))
 				reject(e)
 			})
@@ -66,58 +65,41 @@ function fetchScript(): Promise<any> {
 	})
 }
 
-async function runScript(script: string, ...args: any): Promise<any> {
-	return new Promise(async (resolve, reject) => {
-		let vm: any
-		try {
-			const QuickJS = await getQuickJS()
-			vm = QuickJS.newContext()
+function runScript(script: string, ...args: any): string {
+	try {
+		args.forEach((arg: any) => {
+			script = script.replace(new RegExp(`${arg.name}`, 'g'), `"${arg.value.replace('"', '\\"')}"`)
+		})
 
-			args.forEach((arg: any, i: number) => {
-				const value = vm.newString(arg.value)
-				vm.setProp(vm.global, arg.name, value)
-				value.dispose()
-			})
-
-			const result = vm.evalCode(script)
-			if (result.error) {
-				reject(vm.dump(result.error))
-				result.error.dispose()
-			} else {
-				resolve(vm.dump(result.value))
-				result.value.dispose()
-			}
-
-		} catch (e) {
-			if (vm) vm.dispose()
-			reject(e)
-		}
-	})
+		return eval(script)
+	} catch (e) {
+		return args[0].value
+	}
 }
 
-export async function decode(format: any, decipherScript: string, nTransformScript: string): Promise<any> {
+export function decode(format: any, decipherScript: string, nTransformScript: string): any {
 	try {
 		if (!decipherScript) return;
-		const decipher = async (url: string) => {
+		const decipher = (url: string) => {
 			const args: any = querystring.parse(url);
 			if (!args.s) return args.url;
 			const components = new URL(decodeURIComponent(args.url));
-			components.searchParams.set(args.sp || "sig", await runScript(decipherScript, {
+			components.searchParams.set(args.sp || "sig", runScript(decipherScript, {
 				name: 'sig',
 				value: decodeURIComponent(args.s)
 			}));
 			return components.toString();
 		};
-		const nTransform = async (url: string) => {
+		const nTransform = (url: string) => {
 			const components = new URL(decodeURIComponent(url));
 			const n = components.searchParams.get("n");
 			if (!n || !nTransformScript) return url;
-			components.searchParams.set("n", await runScript(nTransformScript, {name: 'ncode', value: n}));
+			components.searchParams.set("n", runScript(nTransformScript, {name: 'ncode', value: n}));
 			return components.toString();
 		};
 		const cipher = !format.url;
 		const url = format.url || format.signatureCipher || format.cipher;
-		format.url = await nTransform(cipher ? await decipher(url) : url);
+		format.url = nTransform(cipher ? decipher(url) : url);
 		delete format.signatureCipher;
 		delete format.cipher;
 		return format;
