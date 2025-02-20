@@ -580,8 +580,8 @@ export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 }
 
 export function customThumbnailSize(url: string, width: number, height: number): string {
-	const match = url.match(/=w(?<width>\d+)-h(?<height>\d+)/)
-	if (match) url = url.replace(match[0], `=w${width}-h${height}`)
+	const match = url.match(/=w(\d+)-h(\d+)/)
+	if (match) url = url.replace(match[0], `=w${match[1]}-h${match[2]}`)
 	return url
 }
 

@@ -1,9 +1,7 @@
-import NodeCache from "node-cache";
 import {error} from "./error";
 import querystring from "querystring";
 import * as vm from "vm";
 
-const cache = new NodeCache({stdTTL: 3600})
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
@@ -61,7 +59,7 @@ function fetchScript(): Promise<any> {
 			})
 			return resolve(scripts)
 		}
-		if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
+		//if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
 		return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
 			return res.text()
 		}).then(res => {
