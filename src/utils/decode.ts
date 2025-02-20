@@ -53,10 +53,7 @@ function fetchScript(): Promise<any> {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
 			const file = process.env.buildDevDecoderFile.toString()
 			const scriptsS = file.split('\n\n//NTransform\n')
-			const scripts = scriptsS.map((script: string) => {
-				return new vm.Script(script)
-			})
-			return resolve(scripts)
+			return resolve(scriptsS)
 		}
 		//if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
 		return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
