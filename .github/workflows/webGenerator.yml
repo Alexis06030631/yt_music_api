@@ -22,13 +22,13 @@ jobs:
         run: cd ./docs/ && npm ci
 
       - name: download deps
-        run: npm ci
+        run: cd ./docs/ && npm ci
 
       - name: Install @microsoft/api-extractor && @microsoft/api-documenter
-        run: npm install -g @microsoft/api-extractor && npm install -g @microsoft/api-documenter
+        run: cd ./docs/ && npm install -g @microsoft/api-extractor && npm install -g @microsoft/api-documenter
 
       - name: Update docs files
-        run: npm run docs:build
+        run: cd ./docs/ && npm run build
 
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
