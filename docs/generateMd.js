@@ -49,6 +49,8 @@ fs.readFile(path.join(__dirname, 'index.md'), 'utf8', (err, data) => {
 
 async function createFile(member) {
 	const {name, docComment, members} = member;
+	// If @hideconstructor is present, hide the constructor
+	if (docComment.includes('@hideconstructor')) return;
 
 	const linkToType = types[attributeType(member)];
 	if (!linkToType?.path) return //console.log(`No path for ${attributeType(kind, name)}, ${name}`);
@@ -97,11 +99,11 @@ async function createFile(member) {
 
 		if (subMembersContent.functions.length && subMembersContent.properties.length) {
 			const proprs = []
-			subMembersContent.properties.forEach((prop, i) => {
+			subMembersContent.properties.forEach((prop) => {
 				proprs.push(`[${prop.name}](#${prop.name.toLowerCase()})`)
 			})
 			const funcs = []
-			subMembersContent.functions.forEach((func, i) => {
+			subMembersContent.functions.forEach((func) => {
 				funcs.push(`[${func.name}](#function-${func.name.toLowerCase()})`)
 			})
 			fileContent += createTab([generateDetailDisclosure('Properties', proprs.join('\n')), generateDetailDisclosure('Functions', funcs.join('\n'))])
@@ -165,10 +167,8 @@ async function createFile(member) {
 	} else {
 		const data = await tsImport.importSingleTs(path.join('../', member.fileUrlPath), {tsconfig: path.join(__dirname, '../', 'tsconfig.json')})
 		let vars
-		if (member.name === 'options') {
-			vars = data?.[member.name]
-			filePath = path.join(linkToType.path, fileName.split('.')[0] + 'Type.md')
-		} else vars = member.excerptTokens.filter(e => e.kind === 'Reference').map(e => data?.[e.text])[0]
+		if (member.name === 'optionsType') vars = data?.["options"]
+		else vars = member.excerptTokens.filter(e => e.kind === 'Reference').map(e => data?.[e.text])[0]
 
 		if (!vars) return
 		fileContent += `${member.docComment}\n\n---\n` +
@@ -176,6 +176,7 @@ async function createFile(member) {
 			`\`\`\`json\n` +
 			`${member.name} = ${JSON.stringify(vars, null, 2)}\n` +
 			`\`\`\`\`\n\n`
+
 	}
 
 	// Save file
@@ -189,19 +190,7 @@ function subMembers(members) {
 	}
 
 	members && members.forEach(member => {
-		const {
-			kind,
-			name,
-			docComment,
-			summary,
-			returns,
-			parameters,
-			fileUrlPath,
-			typeParameters,
-			decorators,
-			signatures,
-			members
-		} = member;
+		const {kind} = member;
 		switch (kind) {
 			case 'Property':
 				returnVal.properties.push(member)
@@ -234,8 +223,8 @@ function createTab(header = [], properties = [], center = []) {
 			})
 		}
 	})
-	properties.forEach((prop, i) => {
-		header.forEach((head, i) => {
+	properties.forEach((prop) => {
+		header.forEach((head) => {
 			tab += `| ${prop[head.toLowerCase()] || ''} `
 		})
 		tab += '|\n'
@@ -286,13 +275,13 @@ function extractDataFormDocCommentProp(prop) {
 	return Object.assign(parsed, prop)
 }
 
-function typeUrlGenerator(type, isSingle = false) {
+function typeUrlGenerator(type) {
 	const TypeLower = type.text.toLowerCase();
 	if (MozillaType[TypeLower]) {
 		return `[${TypeLower}![Link](/assets/img/external_link.svg)](${MozillaType[TypeLower]})`
 	} else if (type.kind !== 'Reference') return type.text
 	else {
-		const dt = ApiDocumenter.members[0].members.find(e => e.canonicalReference.includes(`~${type.text}:`))
+		const dt = ApiDocumenter.members[0].members.find(e => e.canonicalReference.includes(`~${type.text}:`) || e.canonicalReference.includes(`!${type.text}:`))
 		if (attributeType(dt, true) && !types[attributeType(dt, true)]) return null
 		if (dt && attributeType(dt, true)) {
 			return `[${type.text}](${path.join(types[attributeType(dt, true)].url, type.text)})`
@@ -312,22 +301,6 @@ copySync(defaultDir, path.join(pathDocVersion), {overwrite: true});
 generateSidebar()
 
 function generateSidebar() {
-	const version = require('../package.json').version
-	const sidebar = `- **Version: ${version}**\n` +
-		'- [Introduction](README)\n' +
-		'- **Methods**' +
-		types.Function.data.map(m => `\n  - [${m.name}](/method/${m.name})`).join('') +
-		'\n- **Classes**' +
-		types.Class.data.map(c => `\n  - [${c.name}](/class/${c.name}.md)`).join('') +
-		//'\n- **Interfaces**' +
-		//types.Interface.data.map(t => `\n  - [${t.name}](/interface/${t.name}.md)`).join('') +
-		'\n- **Links**\n' +
-		'- [![Github](/yt_music_api/assets/img/github.svg)Github](https://github.com/Alexis06030631/yt_music_api/)\n' +
-		'- [![NPM](/yt_music_api/assets/img/npm.svg)NPM](https://www.npmjs.com/package/ytmusic_api_unofficial)\n' +
-		'- [![Instagram](/yt_music_api/assets/img/instagram.svg)@Leko_system](https://instagram.com/leko_system)'
-
-	//writeFileSync(join(dir, 'sidebar.md'), sidebar)
-
 	// Open vitepressConfig file
 	let config = require(themeConfig)
 

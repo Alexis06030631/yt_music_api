@@ -3,8 +3,8 @@
 	"version": "1.0.1",
 	"description": "Documentation for the ytmusic_api package",
 	"scripts": {
-		"dev": "vitepress dev",
-		"build": "vitepress build ./content"
+		"dev": "node generateMd.js && vitepress dev",
+		"build": "cd ./../ && tsc && api-extractor run --local --verbose && cd ./docs && node generateMd.js && vitepress build ./"
 	},
 	"nodemonConfig": {
 		"ignore": [
@@ -13,7 +13,10 @@
 		"ext": "js,json,ts"
 	},
 	"dependencies": {
+		"comment-parser": "^1.4.1",
+		"fs-extra": "^11.3.0",
 		"import-single-ts": "^1.2.0",
-		"ts-import": "^5.0.0-beta.0"
+		"ts-import": "^5.0.0-beta.0",
+		"vitepress": "^1.6.3"
 	}
 }

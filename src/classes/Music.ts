@@ -77,7 +77,7 @@ export default class Music {
 	/**
 	 * The browseId of the music (NOT WORKING)
 	 * @example "MPREb_5eN7fQq3J9_"
-	 * @todo
+	 * @TODO Fix this
 	 */
 	public browseID: string;
 
@@ -191,8 +191,8 @@ export default class Music {
 
 	/**
 	 * Download the music
-	 * @param format The format of the music (Check available formats)
-	 * @param quality The quality of the music (Check available qualities)
+	 *  @param format - The format of the music (Check available formats)
+	 *  @param quality - The quality of the music (Check available qualities)
 	 **/
 	async download(format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<any> {
 		try {
@@ -224,8 +224,8 @@ export default class Music {
 
 	/**
 	 * Return Thumbnail with custom size
-	 * @param width The width of the thumbnail
-	 * @param height The height of the thumbnail
+	 * @param width - The width of the thumbnail
+	 * @param height - The height of the thumbnail
 	 */
 	getThumbnail(width: number, height: number): Thumbnail {
 		return new Thumbnail({

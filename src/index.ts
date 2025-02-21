@@ -30,13 +30,38 @@ import Player from "./classes/Player";
 import StreamPlayer from "./classes/StreamPlayer";
 import {COUNTRIES} from "./utils/countries";
 import {getUrlDecode} from "./utils/decode";
+import Duration from "./classes/Duration";
+import Album from "./classes/Album";
+
+/**
+ * Require for DOC API
+ */
+export {Thumbnail} from "./classes/Thumbnail";
+export {
+	Artist,
+	Duration,
+	Album,
+	Music,
+	Playlist,
+	Player,
+	StreamPlayer,
+	AvailableTypes,
+	optionsType,
+	AvailableCountries,
+	AvailableFormat,
+	AvailableQuality,
+	all_TYPES,
+	countries,
+	countriesCodes,
+	AvailableCountriesCodes
+}
 
 
 /**
  * Search for a query in YouTube Music
- * @param query ex: "Hello Adele"
- * @param filter ex: "SONG" (Check available types)
- * @param option Use to set the language and fetch the music data
+ * @param query - ex: "Hello Adele"
+ * @param filter - ex: "SONG" (Check available types)
+ * @param option - Use to set the language and fetch the music data
  * @example
  * ```JS
  * const search = await client.search("Hello Adele", "SONG")
@@ -106,6 +131,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 					result.content = result.content.filter((content: any) => !!content?.id)
 				}
 				result.content = rankingResponse(result.content, query)
+				if (result.content.length === 0) return reject(error(1002, {query}))
 				return resolve(result)
 			} catch (e) {
 				reject(error(5000, {
@@ -121,8 +147,8 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 }
 
 /**
- * Get a music from YouTube Music by URL or ID or search query (Warning: search query length must be different from 11 characters)
- * @param query ex: "Hello Adele" or "https://music.youtube.com/watch?v=abc" or "abc"
+ * Get music from YouTube Music by URL or ID or search query (Warning: search query length must be different from 11 characters)
+ * @param query - ex: "Hello Adele" or https://music.youtube.com/watch?v=abc
  * @example
  * const get = await client.get("Hello Adele")
  * return:
@@ -133,21 +159,19 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
  * 			"url": "https://lh3.googleusercontent.com/...",
  * 			"width": 60,
  * 		   "height": 60
- * 		   }
- * 		   ],
- * 		   "id": "dQw4w9WgXcQ",
- * 		   "title": "Never Gonna Give You Up",
- * 		   "artists": [
- * 		   	{
- * 		   		"name": "Rick Astley",
- * 		   		"id": "MPREb_5eN7fQq3J9_"
- * 		   	}
- * 		   	],
- * 		   	"resultType": "song",
- * 		   	"videoType": "MUSIC_VIDEO_TYPE_ATV"
- * 		   	...
- * 		   	}
- * 		   	```
+ * 		}
+ * 	   ],
+ * 	   "id": "dQw4w9WgXcQ",
+ *     "title": "Never Gonna Give You Up",
+ * 	   "artists": [{
+ *  	    "name": "Rick Astley",
+ * 		   	"id": "MPREb_5eN7fQq3J9_"
+ * 		}],
+ * 		"resultType": "song",
+ * 	   	"videoType": "MUSIC_VIDEO_TYPE_ATV"
+ *      // Other properties
+ * 	}
+ * ```
  */
 export function get(query: string): Promise<Music | Artist | Playlist | null> {
 	return new Promise((resolve, reject) => {
@@ -175,7 +199,7 @@ export function get(query: string): Promise<Music | Artist | Playlist | null> {
 
 /**
  * Get chart music from YouTube Music by country or global
- * @param country The country code (Check available countries)
+ * @param country - The country code (Check available countries)
  */
 export function charts(country: AvailableCountries = 'global'): Promise<Playlist> {
 	return new Promise((resolve, reject) => {
@@ -189,10 +213,10 @@ export function charts(country: AvailableCountries = 'global'): Promise<Playlist
 
 
 /**
- * Get Download link of a music
- * @param query The music ID or URL
- * @param format The format of the music (Check available formats)
- * @param quality The quality of the music (Check available qualities)
+ * Get a Download link of a music
+ * @param query - The music ID or URL
+ * @param format - The format of the music (Check available formats)
+ * @param quality - The quality of the music (Check available qualities)
  * @example
  */
 export function download(query: string, format: AvailableFormat = AvailableFormat[0], quality: AvailableQuality = AvailableQuality[0]): Promise<Player> {
@@ -205,12 +229,16 @@ export function download(query: string, format: AvailableFormat = AvailableForma
 
 /**
  * getPlayers is a function that returns the available players (music, video) in all qualities
- * @param query The music ID or URL
+ * @param query - The music ID or URL
  */
 export function getPlayers(query: string): Promise<StreamPlayer> {
 	return getPlayers_dv(getYTIdFromText(query).isValidId ? getYTIdFromText(query).id : query)
 }
 
+/**
+ * @hideconstructor
+ * @param format - The format of the music (Check available formats)
+ */
 export function getUrlDecodeT(format: any): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getUrlDecode(format).then(async (decoded: any) => {

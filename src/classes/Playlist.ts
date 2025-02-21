@@ -50,7 +50,7 @@ export default class Playlist {
 	/**
 	 * The browseId of the Album (NOT WORKING)
 	 * @example "MPREb_5eN7fQq3J9_"
-	 * @todo
+	 * @TODO Not Implemented
 	 */
 	public browseId: string;
 
