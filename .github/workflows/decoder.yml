@@ -18,7 +18,7 @@ jobs:
       
       - name: download deps
         working-directory: ./decode
-        run: npm ci
+        run: npm i ytmusic_api_unofficial@latest && npm ci
 
       - name: Build files
         working-directory: ./decode
