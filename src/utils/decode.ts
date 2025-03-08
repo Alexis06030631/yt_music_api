@@ -3,16 +3,15 @@ import querystring from "querystring";
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
-		// TODO: FIX SIGNATURE TIMESTAMP
-		fetchScript().then((res) => {
-			resolve(20110)
+		fetchScript("SignatureTimestamp").then((res) => {
+			resolve(eval(res))
 		})
 	})
 }
 
 export function getDecodeScript(): Promise<any> {
 	return new Promise((resolve) => {
-		fetchScript().then((res) => {
+		fetchScript(['ExtractDecipher', 'NTransform']).then((res) => {
 			resolve(res)
 		})
 	})
@@ -46,22 +45,31 @@ function checkUrlIsMusic(url: string): Promise<string> {
 	})
 }
 
-function fetchScript(): Promise<any> {
-	return new Promise((resolve, reject) => {
+function fetchScript(nameFunc: [string, string] | string = "ExtractDecipher"): Promise<any> {
+	return new Promise(async (resolve, reject) => {
+		let file: string | any = null
 		if (process.env.buildDevDecoderFile) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
-			const file = process.env.buildDevDecoderFile.toString()
-			const scriptsS = file.split('\n\n//NTransform\n')
-			return resolve(scriptsS)
+			file = process.env.buildDevDecoderFile.toString()
 		}
-		//if (cache.has('decoder')) return resolve(eval((cache.get('decoder') || '').toString()))
-		return fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
-			return res.text()
-		}).then(res => {
-			//cache.set('decoder', res)
-			const scriptsS = res.split('\n\n//NTransform\n')
-			return resolve(scriptsS)
-		})
+		if (!file) {
+			await fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
+				return res.text()
+			}).then(res => {
+				file = res
+			})
+		}
+		if (!file) return reject(error(5000, {code: 1005, message: 'The decoder file is not available'}))
+		let scriptsS: any[] | string | null = null
+		if (typeof nameFunc === 'string') {
+			scriptsS = file.match(new RegExp(`//${nameFunc}\n((?:.|\n)*?)(?:\n\n|$)`))[1]
+		}
+		if (Array.isArray(nameFunc)) {
+			scriptsS = nameFunc.map((name) => {
+				return file.match(new RegExp(`//${name}\n((?:.|\n)*?)(?:\n\n|$)`))[1]
+			})
+		}
+		return resolve(scriptsS)
 	})
 }
 

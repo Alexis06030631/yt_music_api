@@ -548,7 +548,7 @@ export function getPlayers_dv(id: string): Promise<StreamPlayers> {
 			"context": {
 				"client": {
 					"clientName": "WEB_REMIX",
-					"clientVersion": "1.20250122.01.00",
+					"clientVersion": "1." + date.getUTCFullYear() + (date.getUTCMonth() + 1).toString().padStart(2, '0') + date.getUTCDate().toString().padStart(2, '0') + ".01.00",
 				}
 			},
 			"playbackContext": {
