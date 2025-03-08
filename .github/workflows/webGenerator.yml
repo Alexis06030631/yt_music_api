@@ -22,10 +22,10 @@ jobs:
         run: cd ./docs/ && npm ci
 
       - name: download deps
-        run: cd ./docs/ && npm ci
+        run: npm ci
 
       - name: Install @microsoft/api-extractor && @microsoft/api-documenter
-        run: cd ./docs/ && npm install -g @microsoft/api-extractor && npm install -g @microsoft/api-documenter
+        run: npm install -g @microsoft/api-extractor && npm install -g @microsoft/api-documenter
 
       - name: Update docs files
         run: cd ./docs/ && npm run build
