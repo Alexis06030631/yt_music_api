@@ -73,4 +73,6 @@ export default class Album {
 		this.year = data.year
 		this.isExplicit = !!data.isExplicit
 	}
+
+	// TODO: Implement getSongs method
 }

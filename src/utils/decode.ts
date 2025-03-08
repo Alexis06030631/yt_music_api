@@ -1,5 +1,4 @@
 import {error} from "./error";
-import querystring from "querystring";
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
@@ -85,11 +84,23 @@ function runScript(script: string, ...args: any): string {
 	}
 }
 
+function exportArgsUrl(url: string): any {
+	const return_object = {}
+	const args = url.match(/(.*?)=(.*?)(?:&|$)/g)
+	if (args) {
+		args.forEach((arg: string) => {
+			const [name, value] = arg.split('=')
+			return_object[name] = value.replace(/&$/, '')
+		})
+	}
+	return return_object
+}
+
 export function decode(format: any, decipherScript: string, nTransformScript: string): any {
 	try {
 		if (!decipherScript) return;
 		const decipher = (url: string) => {
-			const args: any = querystring.parse(url);
+			const args: any = exportArgsUrl(url)
 			if (!args.s) return args.url;
 			const components = new URL(decodeURIComponent(args.url));
 			components.searchParams.set(args.sp || "sig", runScript(decipherScript, {
