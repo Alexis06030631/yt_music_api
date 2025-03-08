@@ -1,5 +1,9 @@
 import {Thumbnail} from "./Thumbnail";
 import {thumbnail_defaults_size} from "../utils/utils";
+import Music from "./Music";
+import {search} from "../index";
+import {error} from "../utils/error";
+import Album from "./Album";
 
 export default class Artist {
 	/**
@@ -44,5 +48,44 @@ export default class Artist {
 		this.id = artist?.id
 		this.followers = artist?.followers
 		this.description = artist?.description
+	}
+
+	/**
+	 * Get the artist's songs
+	 * @returns Promise<Music[]>
+	 */
+	getSongs(): Promise<Music[]> {
+		return new Promise((resolve, reject) => {
+			search(this.name, 'artist_song').then((res: any) => {
+				if (res?.content?.length) return resolve(res.content)
+				reject(error(1008, {artist: this.name, type: 'song'}))
+			}).catch(reject)
+		})
+	}
+
+	/**
+	 * Get the artist's albums
+	 * @returns Promise<Album[]>
+	 */
+	getAlbums(): Promise<Album[]> {
+		return new Promise((resolve, reject) => {
+			search(this.name, 'artist_album').then((res: any) => {
+				if (res?.content?.length) return resolve(res.content)
+				reject(error(1008, {artist: this.name, type: 'album'}))
+			}).catch(reject)
+		})
+	}
+
+	/**
+	 * Get the artist's videos
+	 * @returns Promise<Music[]>
+	 */
+	getVideos(): Promise<Music[]> {
+		return new Promise((resolve, reject) => {
+			search(this.name, 'artist_video').then((res: any) => {
+				if (res?.content?.length) return resolve(res.content)
+				reject(error(1008, {artist: this.name, type: 'video'}))
+			}).catch(reject)
+		})
 	}
 }

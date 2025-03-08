@@ -23,6 +23,7 @@ export const errors = [
 		message: 'The query provided looks unvalid. Please provide a valid query or URL (If is a mistake, please report it)'
 	},
 	{code: 1007, message: 'Invalid country code. Please check available countries'},
+	{code: 1008, message: 'the data you request is not available for this type and artist'},
 
 	// Errors in ytmusic response
 	{code: 2001, message: 'No response from YouTube Music'},

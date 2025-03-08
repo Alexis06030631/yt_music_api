@@ -9,7 +9,10 @@ export const all_TYPES = ['false', "album", ...UN_TYPES]
 export const TYPE_SEARCH_CODE = {
 	song: 'EgWKAQIIAWoOEAMQBBAJEA4QChAFEBU%3D',
 	video: 'EgWKAQIQAWoOEAkQBRADEAQQDhAKEBU%3D',
-	album: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D'
+	album: 'EgWKAQIYAWoQEAMQBBAJEAoQBRAREBAQFQ%3D%3D',
+	artist_song: 'EgWKAQIIAWoSEAMQBBAJEA4QChAFEBEQEBAV',
+	artist_video: 'EgWKAQIQAWoSEAMQBBAJEA4QChAFEBEQEBAV',
+	artist_album: 'EgWKAQIYAWoSEAMQBBAJEA4QChAFEBEQEBAV',
 }
 export const options = {
 	language: 'en',

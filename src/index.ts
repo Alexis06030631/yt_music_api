@@ -76,7 +76,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 	return new Promise(async (resolve, reject) => {
 		const hasFilter: boolean = !!filter
 		filter = filter?.toString()?.toLowerCase() as AvailableTypes
-		if (hasFilter && !all_TYPES.includes(filter)) return reject(error(1001, `Available types: ${all_TYPES.join(", ")}`))
+		if (hasFilter && (!all_TYPES.includes(filter) && !(!!TYPE_SEARCH_CODE?.[filter]))) return reject(error(1001, `Available types: ${all_TYPES.join(", ")}`))
 		const result: any = {query, filter: hasFilter ? filter : false, content: []}
 		if (getYTIdFromText(query).isValidId) {
 			result.content = [await this.get(query).catch(reject)]
@@ -113,7 +113,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 					shelf_contents = shelf_contents.filter((item: any) => item.musicResponsiveListItemRenderer || item.musicTwoRowItemRenderer || item.musicMultiRowListItemRenderer)
 
 					parseSearchResults(shelf_contents, category).forEach((content: any, i: number) => {
-						if (!content || (hasFilter && content?.resultType !== filter)) return
+						if (!content || (filter && (hasFilter && (all_TYPES.includes(filter) && content?.resultType !== filter)))) return
 						else result.content.push(content)
 					})
 				}
