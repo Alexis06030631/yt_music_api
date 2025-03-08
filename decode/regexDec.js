@@ -37,6 +37,22 @@ export const COMPOSER_exTractFun8E3 = `=(${VARIABLE_PART})\\(${VARIABLE_PART}\\(
 export const COMPOSER_exTractFun8E4 = (name) => `var ${name}={.*?}};`
 export const COMPOSER_exTractFun9 = `\\.prototype\\.set=function\\(.*?\\){.*?};`
 
+export const POT_exTractFun1 = `${VARIABLE_PART}?=function(\\(${VARIABLE_PART}?,${VARIABLE_PART}?\\)){if.*?}};`
+export const POT_exTractFun2 = `;${VARIABLE_PART}?=.*?:(${VARIABLE_PART}?\\..*?\\({.*}}\\))`
+export const POT_exTractFun3E = `\\w*?\\..*?\\.(.*?)\\({`
+export const POT_exTractFun3 = (name) => `\\.\\w{1,5}(\\.${name}=function\\(\\w\\).*?!0\\)};)`
+export const POT_exTractFun4 = `return.*?\\(.*?,(.*?)\\(.*?\\),`
+export const POT_exTractFun5 = `return\\W(.*?)\\(.*?,.*?\\(.*?\\),`
+export const POT_exTractFun5E2 = `=function\\(${VARIABLE_PART},${VARIABLE_PART},${VARIABLE_PART}\\){.*?return.*?};`
+export const POT_exTractFun4bis = `return\\(.*:(.*?\\(.*?\\))}catch`
+export const POT_exTractFun5E3 = `return\\(.*:(.*?)\\(.*?\\)}catch`
+export const POT_exTractFun5E5 = `=function\\(${VARIABLE_PART},${VARIABLE_PART},${VARIABLE_PART}\\){.*?};`
+export const POT_exTractFun6 = `=function\\(${VARIABLE_PART},${VARIABLE_PART},${VARIABLE_PART},${VARIABLE_PART}\\){.*?return.*?};`
+export const POT_exTractFun10 = `=function\\(\\){.*?return.*?};`
+export const POT_exTractFun12 = `=function\\(\\){.*?};`
+export const POT_exTractFun11 = `=function\\(${VARIABLE_PART}\\){.*?};`
+
+
 export const SCVR = "[a-zA-Z0-9$_]";
 export const MCR = `${SCVR}+`;
 export const AAR = "\\[(\\d+)]";
