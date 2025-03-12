@@ -206,7 +206,7 @@ export function charts(country: AvailableCountries = 'global'): Promise<Playlist
 		country = country?.toUpperCase() as AvailableCountries | AvailableCountriesCodes
 		if (!countries.includes(country) && !countriesCodes.includes(country)) return reject(error(1007, `Available countries: ${countries.join(", ")}`))
 		request('browse', {browseId: (COUNTRIES.find((c) => c.name === country)?.id || COUNTRIES.find((c) => c.codeCountry === country)?.id)}).then((res: any) => {
-			resolve(parseGetResult(res, 'playlist') as Playlist)
+			resolve(parseGetResult(res, 'charts') as Playlist)
 		}).catch(reject)
 	})
 }

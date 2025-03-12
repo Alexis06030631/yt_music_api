@@ -44,7 +44,7 @@ function checkUrlIsMusic(url: string): Promise<string> {
 	})
 }
 
-function fetchScript(nameFunc: [string, string] | string = "ExtractDecipher"): Promise<any> {
+function fetchScript(nameFunc: any[] | string = "ExtractDecipher"): Promise<any> {
 	return new Promise(async (resolve, reject) => {
 		let file: string | any = null
 		if (process.env.buildDevDecoderFile) {

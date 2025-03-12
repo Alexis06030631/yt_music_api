@@ -1,11 +1,16 @@
 import {
 	BADGE_LABEL,
 	CARD_SHELF_TITLE,
+	CHARTS_SHELF_PLAYLISTID,
+	CHARTS_SHELF_RENDERER,
 	DESCRIPTION,
 	findObjectsByKey,
 	HEADER_ARTIST,
 	HEADER_ARTIST_THUMBNAIL,
 	HEADER_ARTIST_TITLE,
+	HEADER_CHART_DESCRIPTION,
+	HEADER_CHART_THUMBNAIL,
+	HEADER_CHART_TITLE,
 	HEADER_DETAIL,
 	HEADER_PLAYLIST_THUMBNAIL,
 	HEADER_PLAYLIST_TITLE,
@@ -405,6 +410,14 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.musics = searchResult.musics.filter((e: any) => e.title !== response.title)
 	}
 
+	if (["charts"].includes(type)) {
+		searchResult.musics = parseSearchResults(nav(response, CHARTS_SHELF_RENDERER, true) || [], 'song')
+		searchResult.name = nav(response, HEADER_CHART_TITLE, true)
+		searchResult.thumbnails = nav(response, HEADER_CHART_THUMBNAIL, true)
+		searchResult.description = nav(response, [...HEADER_CHART_DESCRIPTION], true)
+		searchResult.id = nav(response, [...CHARTS_SHELF_PLAYLISTID], true)
+		searchResult.artists = []
+	}
 
 	if (["playlist"].includes(type)) {
 		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
@@ -468,6 +481,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 			return new Music(searchResult);
 		case "artist":
 			return new Artist(searchResult);
+		case "charts":
 		case "playlist":
 			return new Playlist(searchResult);
 		case "autoMix":

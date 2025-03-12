@@ -8,6 +8,7 @@ export const SINGLE_COLUMN_TAB: any[] = [...SINGLE_COLUMN, ...TAB_CONTENT];
 export const SECTION: any[] = ["sectionListRenderer"];
 export const SECTION_LIST: any[] = [...SECTION, "contents"];
 export const SECTION_LIST_ITEM: any[] = [...SECTION, ...CONTENT];
+export const TWO_COLUMN_TAB: any[] = [...TWO_COLUMN_RENDERER];
 export const RESPONSIVE_HEADER: any[] = ["musicResponsiveHeaderRenderer"];
 export const ITEM_SECTION: any[] = ["itemSectionRenderer", ...CONTENT];
 export const MUSIC_SHELF: any[] = ["musicShelfRenderer"];
@@ -87,6 +88,11 @@ export const FRAMEWORK_MUTATIONS: any[] = ["frameworkUpdates", "entityBatchUpdat
 export const LONGTEXT_RUNS: any[] = ["longBylineText", "runs"];
 export const SUBSCRIBE_BUTTON: any[] = ["subscriptionButton", "subscribeButtonRenderer"];
 export const PLAYLIST_SHELF_RENDERER: any[] = [...SINGLE_COLUMN_TAB, ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
+export const CHARTS_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer", "contents"];
+export const CHARTS_SHELF_PLAYLISTID: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer", ...PLAYLIST_ID];
+export const HEADER_CHART_TITLE: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...TITLE_TEXT];
+export const HEADER_CHART_THUMBNAIL: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...THUMBNAILS];
+export const HEADER_CHART_DESCRIPTION: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, "description", ...DESCRIPTION_SHELF, ...DESCRIPTION];
 
 
 export function nav(root: any, items: any[], none_if_absent: boolean = false): any {
