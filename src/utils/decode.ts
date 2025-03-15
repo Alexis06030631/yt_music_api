@@ -1,5 +1,4 @@
 import {error} from "./error";
-import {getVisitorId} from "./request";
 
 let decodeFile = ''
 
