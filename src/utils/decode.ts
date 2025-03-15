@@ -1,4 +1,7 @@
 import {error} from "./error";
+import {getVisitorId} from "./request";
+
+let decodeFile = ''
 
 export function getSignatureTimestamp(): Promise<number> {
 	return new Promise((resolve) => {
@@ -8,9 +11,9 @@ export function getSignatureTimestamp(): Promise<number> {
 	})
 }
 
-export function getDecodeScript(): Promise<any> {
+export function getDecodeScript(force = false): Promise<any> {
 	return new Promise((resolve) => {
-		fetchScript(['ExtractDecipher', 'NTransform']).then((res) => {
+		fetchScript(['ExtractDecipher', 'NTransform'], force).then((res) => {
 			resolve(res)
 		})
 	})
@@ -18,8 +21,7 @@ export function getDecodeScript(): Promise<any> {
 
 export function getUrlDecode(url: any, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
-		getDecodeScript().then(async ([decipherScript, nTransformScript]: any) => {
-			checkUrlIsMusic(decode(url, decipherScript, nTransformScript).url).then(resolve).catch((e) => {
+		getDecodeScript(retry).then(async ([decipherScript, nTransformScript]: any) => {
 				if (!retry) return resolve(getUrlDecode(url, true))
 				reject(e)
 			})
@@ -44,18 +46,20 @@ function checkUrlIsMusic(url: string): Promise<string> {
 	})
 }
 
-function fetchScript(nameFunc: any[] | string = "ExtractDecipher"): Promise<any> {
+function fetchScript(nameFunc: any[] | string = "ExtractDecipher", force = false): Promise<any> {
 	return new Promise(async (resolve, reject) => {
 		let file: string | any = null
 		if (process.env.buildDevDecoderFile) {
 			process.emitWarning('You are using a development build, the decoder will be use as local. If you want to use the internet decoder, please use a production build.')
 			file = process.env.buildDevDecoderFile.toString()
 		}
+		if (!force && decodeFile !== '') file = decodeFile
 		if (!file) {
 			await fetch('https://raw.githubusercontent.com/Alexis06030631/yt_music_api/docs/decoder.js').then(res => {
 				return res.text()
 			}).then(res => {
 				file = res
+				decodeFile = res
 			})
 		}
 		if (!file) return reject(error(5000, {code: 1005, message: 'The decoder file is not available'}))
