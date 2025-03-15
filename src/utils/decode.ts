@@ -21,6 +21,7 @@ export function getDecodeScript(force = false): Promise<any> {
 
 export function getUrlDecode(url: any, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
+		getDecodeScript(retry).then(async ([decipherScript, nTransformScript]: any) => {
 			checkUrlIsMusic((await decode(url, decipherScript, nTransformScript)).url).then(resolve).catch((e) => {
 				if (!retry) return resolve(getUrlDecode(url, true))
 				reject(e)
