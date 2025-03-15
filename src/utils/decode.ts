@@ -22,9 +22,8 @@ export function getDecodeScript(force = false): Promise<any> {
 export function getUrlDecode(url: any, retry: boolean = false): Promise<string> {
 	return new Promise((resolve, reject) => {
 		getDecodeScript(retry).then(async ([decipherScript, nTransformScript]: any) => {
-				if (!retry) return resolve(getUrlDecode(url, true))
-				reject(e)
-			})
+			if (!retry) return resolve(getUrlDecode(url, true))
+			reject(e)
 		})
 	})
 }
