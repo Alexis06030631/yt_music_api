@@ -180,7 +180,7 @@ export default class Music {
 				if (!nav(res, ['contents', 'sectionListRenderer', 'contents', 0, 'musicDescriptionShelfRenderer', 'description'], true)) return reject(error(2003, nav(res, ['contents', 'messageRenderer', 'text', 'runs', 0, 'text'])))
 				else {
 					const resolveData = {
-						lyrics: nav(res, ['contents', 'sectionListRenderer', 'contents', 0, 'musicDescriptionShelfRenderer', 'description', 'runs', 0, 'text'], true),
+						lyrics: nav(res, ['contents', 'sectionListRenderer', 'contents', 0, 'musicDescriptionShelfRenderer', 'description', 'runs', 0, 'text'], true)?.replace(/\r\n/g, '\n'),
 						source: nav(res, ['contents', 'sectionListRenderer', 'contents', 0, 'musicDescriptionShelfRenderer', 'footer', 'runs', 0, 'text'], true).replace('Source: ', '')
 					}
 					resolve(resolveData)

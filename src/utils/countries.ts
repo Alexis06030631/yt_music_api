@@ -1,10 +1,5 @@
 export const COUNTRIES = [
 	{
-		"codeCountry": "FR",
-		"name": "FRANCE",
-		"id": "VLPL4fGSI1pDJn50iCQRUVmgUjOrCggCQ9nR"
-	},
-	{
 		"codeCountry": "ZZ",
 		"name": "GLOBAL",
 		"id": "VLPL4fGSI1pDJn5kI81J1fYWK5eZRl1zJ5kM"
@@ -98,6 +93,11 @@ export const COUNTRIES = [
 		"codeCountry": "FI",
 		"name": "FINLAND",
 		"id": "VLPL4fGSI1pDJn4ogogSnHUTIWMc_b7pHW9A"
+	},
+	{
+		"codeCountry": "FR",
+		"name": "FRANCE",
+		"id": "VLPL4fGSI1pDJn50iCQRUVmgUjOrCggCQ9nR"
 	},
 	{
 		"codeCountry": "DE",
