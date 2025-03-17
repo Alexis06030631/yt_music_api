@@ -13,7 +13,7 @@ search(query, filter, option)
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" | <h1 style="color: darkred">𐄂</h1> |
 | filter | [AvailableTypes](/documentation/type/AvailableTypes) | ex: "SONG" (Check available types) | <h1 style="color: darkgreen">✓</h1> |
-| option | [optionsType](/documentation/type/optionsType) | Use to set the language and fetch the music data | <h1 style="color: darkgreen">✓</h1> |
+| option | [optionsType](/documentation/type/optionsType) | Use to set the language | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;

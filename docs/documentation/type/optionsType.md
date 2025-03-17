@@ -6,7 +6,7 @@
 **Content**:
 ```json
 optionsType = {
-  "language": "en",
+  "country": "en",
   "fetch": false
 }
 ````

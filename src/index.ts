@@ -61,7 +61,7 @@ export {
  * Search for a query in YouTube Music
  * @param query - ex: "Hello Adele"
  * @param filter - ex: "SONG" (Check available types)
- * @param option - Use to set the language and fetch the music data
+ * @param option - You can change country code. This parameter can be used to get a more precise result depending on location demand
  * @example
  * ```JS
  * const search = await client.search("Hello Adele", "SONG")

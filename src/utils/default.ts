@@ -15,7 +15,7 @@ export const TYPE_SEARCH_CODE = {
 	artist_album: 'EgWKAQIYAWoSEAMQBBAJEA4QChAFEBEQEBAV',
 }
 export const options = {
-	language: 'en',
+	country: 'en',
 	fetch: false
 }
 
@@ -35,6 +35,7 @@ export default {
 				"clientVersion": "1." + date.getUTCFullYear() + (date.getUTCMonth() + 1).toString().padStart(2, '0') + date.getUTCDate().toString().padStart(2, '0') + ".01.00",
 				"originalUrl": "https://music.youtube.com",
 				"hl": "en",
+				"gl": "en",
 			},
 			"user": {},
 		}
@@ -48,6 +49,6 @@ export declare type AvailableFormat = typeof AvailableFormat[number];
 export declare type AvailableCountries = typeof countries[number];
 export declare type AvailableCountriesCodes = typeof countriesCodes[number];
 export declare type optionsType = {
-	language: AvailableCountriesCodes,
+	country: AvailableCountriesCodes,
 	fetch: boolean,
 }

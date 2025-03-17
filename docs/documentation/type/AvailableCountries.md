@@ -6,7 +6,6 @@
 **Content**:
 ```json
 AvailableCountries = [
-  "FRANCE",
   "GLOBAL",
   "ARGENTINA",
   "AUSTRALIA",
@@ -26,6 +25,7 @@ AvailableCountries = [
   "EL SALVADOR",
   "ESTONIA",
   "FINLAND",
+  "FRANCE",
   "GERMANY",
   "GUATEMALA",
   "HONDURAS",

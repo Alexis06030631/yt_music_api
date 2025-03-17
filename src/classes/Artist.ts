@@ -52,7 +52,7 @@ export default class Artist {
 
 	/**
 	 * Get the artist's songs
-	 * @returns Promise<Music[]>
+	 * @return Music[]
 	 */
 	getSongs(): Promise<Music[]> {
 		return new Promise((resolve, reject) => {
@@ -65,7 +65,7 @@ export default class Artist {
 
 	/**
 	 * Get the artist's albums
-	 * @returns Promise<Album[]>
+	 * @returns Album[]
 	 */
 	getAlbums(): Promise<Album[]> {
 		return new Promise((resolve, reject) => {
@@ -78,7 +78,7 @@ export default class Artist {
 
 	/**
 	 * Get the artist's videos
-	 * @returns Promise<Music[]>
+	 * @returns Music[]
 	 */
 	getVideos(): Promise<Music[]> {
 		return new Promise((resolve, reject) => {

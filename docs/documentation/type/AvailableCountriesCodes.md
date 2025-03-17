@@ -6,7 +6,6 @@
 **Content**:
 ```json
 AvailableCountriesCodes = [
-  "FR",
   "ZZ",
   "AR",
   "AU",
@@ -26,6 +25,7 @@ AvailableCountriesCodes = [
   "SV",
   "EE",
   "FI",
+  "FR",
   "DE",
   "GT",
   "HN",

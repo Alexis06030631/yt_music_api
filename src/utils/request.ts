@@ -1,4 +1,4 @@
-import default_const, {options, optionsType} from './default'
+import default_const, {countriesCodes, options, optionsType} from './default'
 import {error} from "./error";
 
 let visitorID = process.env.YT_VISITOR_ID || ""
@@ -6,7 +6,7 @@ let visitorID = process.env.YT_VISITOR_ID || ""
 export default function (url: string, body: any = {}, header: object = {}, option: optionsType = options): Promise<any> {
 	return new Promise(async (resolve, reject) => {
 		const headers = await headerBuilder(header, option)
-		body = bodyBuilder(body, option)
+		body = await bodyBuilder(body, option).catch(reject)
 		url = makeUrl(url)
 
 		fetch(url, {
@@ -57,12 +57,14 @@ export async function headerBuilder(header: object, options?: optionsType) {
 	return headers
 }
 
-export function bodyBuilder(body: object, options: optionsType): string {
+export async function bodyBuilder(body: object, options: optionsType): Promise<string> {
 	const def_body = default_const.body
 	for (const key in options) {
 		switch (key) {
 			case "language": {
-				def_body.context.client.hl = options.language
+				if (!countriesCodes.includes(options.country.toUpperCase())) throw error(1002, `Available languages codes: ${countriesCodes.join(", ")}`)
+				def_body.context.client.hl = options.country.toLowerCase()
+				def_body.context.client.gl = options.country.toUpperCase()
 				break
 			}
 		}
