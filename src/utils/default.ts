@@ -34,8 +34,8 @@ export default {
 				"clientName": "WEB_REMIX",
 				"clientVersion": "1." + date.getUTCFullYear() + (date.getUTCMonth() + 1).toString().padStart(2, '0') + date.getUTCDate().toString().padStart(2, '0') + ".01.00",
 				"originalUrl": "https://music.youtube.com",
-				"hl": "en",
-				"gl": "en",
+				"hl": "en", // language app
+				"gl": "US", // language result
 			},
 			"user": {},
 		}
