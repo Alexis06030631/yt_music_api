@@ -15,7 +15,7 @@ export const TYPE_SEARCH_CODE = {
 	artist_album: 'EgWKAQIYAWoSEAMQBBAJEA4QChAFEBEQEBAV',
 }
 export const options = {
-	country: 'en',
+	country: null,
 	fetch: false
 }
 

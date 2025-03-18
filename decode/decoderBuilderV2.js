@@ -225,4 +225,4 @@ fs.writeFileSync(path.join(__dirname, './build/decoder.js'), `//ExtractDecipher\
 \n\n//NTransform\n${getExtractFunctions([extractNTransformFunc, extractNTransformWithName], body, code => code.replace(/if\(typeof \S+==="undefined"\)return \S+;/, ""),)}
 \n\n//Composer\n${getExtractFunctions([extractMacComposeFun], body)}
 \n\n//potKey\n${getExtractFunctions([extractPotKey], body)}
-\n\n//SignatureTimestamp\nconst signatureTimestamp=()=>{${getSignatureTimestamp(body)}}signatureTimestamp()`);
+\n\n//SignatureTimestamp\nconst signatureTimestamp=()=>{return ${getSignatureTimestamp(body)}}signatureTimestamp()`);

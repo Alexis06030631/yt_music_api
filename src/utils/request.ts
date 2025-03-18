@@ -61,7 +61,8 @@ export async function bodyBuilder(body: object, options: optionsType): Promise<s
 	const def_body = default_const.body
 	for (const key in options) {
 		switch (key) {
-			case "language": {
+			case "country": {
+				if (!options.country) break
 				if (!countriesCodes.includes(options.country.toUpperCase())) throw error(1002, `Available languages codes: ${countriesCodes.join(", ")}`)
 				def_body.context.client.hl = options.country.toLowerCase()
 				def_body.context.client.gl = options.country.toUpperCase()
