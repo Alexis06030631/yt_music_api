@@ -57,15 +57,15 @@ export async function headerBuilder(header: object, options?: optionsType) {
 	return headers
 }
 
-export async function bodyBuilder(body: object, options: optionsType): Promise<string> {
+export async function bodyBuilder(body: object, options_arr: optionsType): Promise<string> {
 	const def_body = default_const.body
-	for (const key in options) {
+	for (const key in options_arr) {
 		switch (key) {
 			case "country": {
-				if (!options.country) break
-				if (!countriesCodes.includes(options.country.toUpperCase())) throw error(1002, `Available languages codes: ${countriesCodes.join(", ")}`)
-				def_body.context.client.hl = options.country.toLowerCase()
-				def_body.context.client.gl = options.country.toUpperCase()
+				if (!options_arr.country || options_arr.country === options.country) break
+				if (!countriesCodes.includes(options_arr.country.toUpperCase())) throw error(1002, `Available languages codes: ${countriesCodes.join(", ")}`)
+				def_body.context.client.hl = options_arr.country.toLowerCase()
+				def_body.context.client.gl = options_arr.country.toUpperCase()
 				break
 			}
 		}
