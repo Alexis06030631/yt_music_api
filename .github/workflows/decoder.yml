@@ -25,7 +25,8 @@ jobs:
         run: npm run build
 
       - name: Test build
-        run: cd ./decode && npm run dev:test
+        working-directory: ./decode
+        run: npm run dev:test
 
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
