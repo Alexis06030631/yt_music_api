@@ -1,4 +1,4 @@
-name: Build and push website to GitHub page
+name: Github Page Generator
 on:
   workflow_dispatch:
   push:
