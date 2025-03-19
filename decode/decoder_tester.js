@@ -1,4 +1,4 @@
-const ytb = require('../dist')
+const ytb = require('ytmusic_api_unofficial')
 const path = require("node:path");
 const core = require('@actions/core');
 const {readFileSync} = require("node:fs");
