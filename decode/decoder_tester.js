@@ -4,13 +4,12 @@ const core = require('@actions/core');
 const {readFileSync} = require("node:fs");
 
 
-process.env.YT_DEBUG_MODE = true
 const file = readFileSync(path.resolve(__dirname, 'build/decoder.js')).toString()
 process.env.buildDevDecoderFile = file
 core.info("Decoder truncated: " + file.substring(0, 50))
 
 
-ytb.getPlayers('Zec28Gd5fls').then(async (data) => {
+ytb.getPlayers('XR9SgC--g_o').then(async (data) => {
 	let validUrlCount = 0
 
 	data.audios.push(...data.videos)
