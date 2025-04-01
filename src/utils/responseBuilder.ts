@@ -53,7 +53,7 @@ export const THUMBNAIL_CROPPED: any[] = ["thumbnail", "croppedSquareThumbnailRen
 export const FEEDBACK_TOKEN: any[] = ["feedbackEndpoint", "feedbackToken"];
 export const BADGE_PATH: any[] = [0, "musicInlineBadgeRenderer", "accessibilityData", "accessibilityData", "label"];
 export const BADGE_LABEL: any[] = ["badges", ...BADGE_PATH];
-export const SUBTITLE_BADGE_LABEL: any[] = ["subtitleBadges", ...BADGE_PATH];
+export const SUBTITLE_BADGE_LABEL: any[] = ["subtitleBadge", ...BADGE_PATH];
 export const CATEGORY_TITLE: any[] = ["musicNavigationButtonRenderer", "buttonText", ...RUN_TEXT];
 export const CATEGORY_PARAMS: any[] = ["musicNavigationButtonRenderer", "clickCommand", "browseEndpoint", "params"];
 export const MMRIR: string = "musicMultiRowListItemRenderer";
@@ -88,12 +88,15 @@ export const FRAMEWORK_MUTATIONS: any[] = ["frameworkUpdates", "entityBatchUpdat
 export const LONGTEXT_RUNS: any[] = ["longBylineText", "runs"];
 export const SUBSCRIBE_BUTTON: any[] = ["subscriptionButton", "subscribeButtonRenderer"];
 export const PLAYLIST_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
+export const ALBUM_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicShelfRenderer"];
+export const ALBUM_SHELF_HEADER_RENDERER: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST, 0, ...RESPONSIVE_HEADER];
 export const PLAYLIST_SHELF_HEADER_RENDERER: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST, 0, ...RESPONSIVE_HEADER];
 export const CHARTS_SHELF_RENDERER: any[] = [...PLAYLIST_SHELF_RENDERER, "contents"];
 export const CHARTS_SHELF_PLAYLISTID: any[] = [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID];
 export const HEADER_CHART_TITLE: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...TITLE_TEXT];
 export const HEADER_CHART_THUMBNAIL: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...THUMBNAILS];
 export const HEADER_CHART_DESCRIPTION: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, "description", ...DESCRIPTION_SHELF, ...DESCRIPTION];
+export const ALBUM_LINK: any[] = ["microformat", "microformatDataRenderer", "urlCanonical"];
 
 
 export function nav(root: any, items: any[], none_if_absent: boolean = false, skip_if_absent: boolean = false): any {

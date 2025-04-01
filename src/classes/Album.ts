@@ -1,5 +1,8 @@
 import {Thumbnail} from "./Thumbnail";
 import Artist from "./Artist";
+import Music from "./Music";
+import {get} from "../index";
+import {error} from "../utils/error";
 
 export default class Album {
 	/**
@@ -45,12 +48,6 @@ export default class Album {
 	 */
 	public resultType: string
 
-	/**
-	 * The browseId of the Album (NOT WORKING)
-	 * @example "MPREb_5eN7fQq3J9_"
-	 * todo
-	 */
-	public browseId: string;
 
 	/**
 	 * The year of the music if it's available
@@ -74,5 +71,17 @@ export default class Album {
 		this.isExplicit = !!data.isExplicit
 	}
 
-	// TODO: Implement getSongs method
+	/**
+	 * Get the Album's songs
+	 * @return Music[]
+	 */
+	getSongs(): Promise<Music[]> {
+		return new Promise((resolve, reject) => {
+			get(this.id).then((res: any) => {
+				console.log(res.musics)
+				if (res?.musics?.length) return resolve(res?.musics)
+				reject(error(1008, {artist: this.name, type: 'song'}))
+			}).catch(reject)
+		})
+	}
 }

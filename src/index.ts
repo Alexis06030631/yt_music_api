@@ -184,6 +184,7 @@ export function get(query: string): Promise<Music | Artist | Playlist | null> {
 				break
 			case "playlist":
 			case "artist":
+			case "album":
 				req.url = 'browse'
 				req.body = {browseId: id.id}
 				break

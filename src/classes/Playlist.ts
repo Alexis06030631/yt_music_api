@@ -70,6 +70,12 @@ export default class Playlist {
 	 */
 	public musics: Array<Music>
 
+	/**
+	 * Description of the Playlist
+	 * @example "This is a playlist"
+	 */
+	public description: string | null
+
 	constructor(data: any) {
 		this.resultType = data.resultType
 		this.thumbnails = data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))
@@ -77,5 +83,6 @@ export default class Playlist {
 		this.name = data.title || data.name
 		this.artists = data?.artists?.map((artist: any) => new Artist(artist))
 		this.musics = data?.musics || []
+		this.description = data?.description || null
 	}
 }

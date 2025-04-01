@@ -1,9 +1,13 @@
 import {
+	ALBUM_LINK,
+	ALBUM_SHELF_HEADER_RENDERER,
+	ALBUM_SHELF_RENDERER,
 	BADGE_LABEL,
 	CARD_SHELF_TITLE,
 	CHARTS_SHELF_PLAYLISTID,
 	CHARTS_SHELF_RENDERER,
 	DESCRIPTION,
+	DESCRIPTION_SHELF,
 	findObjectsByKey,
 	HEADER_ARTIST,
 	HEADER_ARTIST_THUMBNAIL,
@@ -419,12 +423,19 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.artists = []
 	}
 
-	if (["playlist"].includes(type)) {
+	if (["playlist", "album"].includes(type)) {
 		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
 		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true)
 		searchResult.thumbnails = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...THUMBNAILS], true)
 		searchResult.description = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION], true)
 		searchResult.id = nav(response, [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID], true)
+	}
+
+	if (["album"].includes(type)) {
+		searchResult.musics = parseSearchResults(nav(response, [...ALBUM_SHELF_RENDERER, "contents"], true) || [], 'song')
+		searchResult.description = nav(response, [...ALBUM_SHELF_HEADER_RENDERER, "description", ...DESCRIPTION_SHELF, ...DESCRIPTION], true)
+		searchResult.id = (getYTIdFromText(nav(response, [...ALBUM_LINK], true))).id
+		searchResult.artists = (parseSongRuns(nav(response, [...ALBUM_SHELF_HEADER_RENDERER, "straplineTextOne", "runs"], true)))?.artists
 	}
 
 	if (['artist'].includes(type)) {
@@ -463,14 +474,14 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	if (["song", "video", "episode"].includes(searchResult.resultType)) {
 		searchResult.videoId = nav(response, ["videoId"], true)
 	}
-	if (["song", "video", "album"].includes(searchResult.resultType)) {
+	if (["song", "video"].includes(searchResult.resultType)) {
 		searchResult.duration = null
 		searchResult.year = null
 		const nav_ = nav(response, LONGTEXT_RUNS, false)
 		const nav_Offset = (nav_[0].length === 1 ? 2 : 0);
 		searchResult = {...searchResult, ...parseSongRuns([...nav_.slice(nav_Offset), ...response.lengthText.runs])};
 	}
-	if (["song", "album"].includes(searchResult.resultType)) {
+	if (["song"].includes(searchResult.resultType)) {
 		searchResult.isExplicit = nav(response, BADGE_LABEL, true) !== null;
 	}
 
@@ -483,7 +494,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 			return new Artist(searchResult);
 		case "charts":
 		case "playlist":
-			return new Playlist(searchResult);
+		case "album":
 		case "autoMix":
 			return new Playlist(searchResult);
 		default:
