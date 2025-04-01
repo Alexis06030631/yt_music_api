@@ -29,6 +29,7 @@ jobs:
             echo "Commit message does not match version pattern. Skipping publish."
             echo "valid=false" >> $GITHUB_ENV
             echo "valid=false" >> $GITHUB_OUTPUT
+          fi
         shell: bash
 
   publish-npm:
