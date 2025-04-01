@@ -11,9 +11,9 @@ export const SWAP_PART = ":function\\(\\w,\\w\\)\\{var \\w=\\w\\[0\\];\\w\\[0\\]
 
 export const DECIPHER_REGEXP =
 	`function(?: ${VARIABLE_PART})?\\(([a-zA-Z])\\)\\{` +
-	'\\1=\\1\\.split\\(""\\);\\s*' +
+	'\\1=\\1\\.split\\(.*?\\);\\s*' +
 	`((?:(?:\\1=)?${VARIABLE_PART}${VARIABLE_PART_ACCESS}\\(\\1,\\d+\\);)+)` +
-	'return \\1\\.join\\(""\\)' +
+	'return \\1\\.join\\(.*?\\)' +
 	`\\}`;
 
 export const HELPER_REGEXP = `var (${VARIABLE_PART})=\\{((?:(?:${VARIABLE_PART_DEFINE}${REVERSE_PART}|${

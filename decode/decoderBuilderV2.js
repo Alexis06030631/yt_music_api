@@ -52,8 +52,13 @@ const COMPOSE_ARGUMENT = "compArg";
 
 const extractDecipherFunc = (exports.d1 = body => {
 	try {
-		const helperObject = matchFirst(HELPER_REGEXP, body);
-		const decipherFunc = matchFirst(DECIPHER_REGEXP, body);
+		let helperObject = matchFirst(HELPER_REGEXP, body);
+		const decipherFunc = matchFirst(DECIPHER_REGEXP, body, 'gm');
+		const split = matchGroup1(`split\\((.*?)\\[`, decipherFunc)
+		if (split) {
+			const splitVarObject = matchGroup1(`(${split}=".*?),\\n`, body);
+			helperObject = splitVarObject + '\n' + helperObject;
+		}
 		const resultFunc = `var ${DECIPHER_FUNC_NAME}=${decipherFunc};`;
 		const callerFunc = `${DECIPHER_FUNC_NAME}(${DECIPHER_ARGUMENT});`;
 		return helperObject + resultFunc + callerFunc;
@@ -80,7 +85,7 @@ const extractDecipherWithName = (exports.d2 = body => {
 
 const extractNTransformFunc = (exports.n1 = body => {
 	try {
-		const nFunc = matchFirst(N_TRANSFORM_REGEXP, body);
+		const nFunc = matchGroup1("^.*(function.*?var \\w=.+.split?.+\\(.*?\\),\\w=\\[-?\\d{3,}(?:|.|\\n)*?};)$", body, 'm');
 		const resultFunc = `var ${N_TRANSFORM_FUNC_NAME}=${nFunc}`;
 		const callerFunc = `${N_TRANSFORM_FUNC_NAME}(${N_ARGUMENT});`;
 		return resultFunc + callerFunc;
@@ -110,6 +115,7 @@ const getExtractFunctions = (extractFunctions, body, postProcess = null) => {
 			//console.log("ehzodkezhjoifjzo", postProcess ? postProcess(func) : func)
 			//return new vm.Script(postProcess ? postProcess(func) : func);
 		} catch (err) {
+			throw err;
 		}
 	}
 	return null;
