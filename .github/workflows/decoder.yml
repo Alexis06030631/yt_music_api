@@ -27,6 +27,8 @@ jobs:
       - name: Test build
         working-directory: ./decode
         run: npm run dev:test
+        env:
+          YT_VISITOR_ID: ${{ secrets.YT_VISITOR_ID }}
 
       - name: Push to website
         uses: JamesIves/github-pages-deploy-action@v4
