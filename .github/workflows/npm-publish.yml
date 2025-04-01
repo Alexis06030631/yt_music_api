@@ -1,15 +1,39 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: Publish Package
+
 on:
-  workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 jobs:
+  check-commit:
+    runs-on: ubuntu-latest
+    outputs:
+      valid_commit: ${{ steps.check_version.outputs.valid }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get commit message
+        id: commit_message
+        run: echo "MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
+      - name: Check if commit message matches version pattern
+        id: check_version
+        run: |
+          if [[ "${{ env.MESSAGE }}" =~ ^V[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Valid commit message: ${{ env.MESSAGE }}"
+            echo "valid=true" >> $GITHUB_ENV
+            echo "::set-output name=valid::true"
+          else
+            echo "Commit message does not match version pattern. Skipping publish."
+            echo "valid=false" >> $GITHUB_ENV
+            echo "::set-output name=valid::false"
+        continue-on-error: true
+
   publish-npm:
+    needs: check-commit
+    if: needs.check-commit.outputs.valid_commit == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,4 +44,4 @@ jobs:
       - run: npm ci
       - run: npm run publish_npm
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
