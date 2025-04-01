@@ -23,10 +23,20 @@ export default {
 	apiUrl: 'https://music.youtube.com/youtubei/v1/',
 	header: {
 		'Content-Type': 'application/json',
-		'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
+		'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
 		"cookie": "SOCS=CAI",
 		'Referer': 'https://music.youtube.com/',
 		'Origin': 'https://music.youtube.com',
+		'Accept-Language': 'en-US,en;q=0.9',
+		'Accept-Encoding': 'gzip, deflate, br',
+		'Accept': '*/*',
+		'Connection': 'keep-alive',
+		'X-Goog-Visitor-Id': '',
+		'X-Goog-AuthUser': '0',
+		'X-Goog-PageId': 'none',
+		'X-Goog-Encode-Response-If-Executable': 'base64',
+		'X-Goog-ME': 'true',
+		'x-youtube-client-version': '2.20210721.07.00',
 	},
 	body: {
 		"context": {
