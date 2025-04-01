@@ -21,15 +21,15 @@ jobs:
       - name: Check if commit message matches version pattern
         id: check_version
         run: |
-          if [[ "${{ env.MESSAGE }}" =~ ^V[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Valid commit message: ${{ env.MESSAGE }}"
+          if [[ "$MESSAGE" =~ ^V[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Valid commit message: $MESSAGE"
             echo "valid=true" >> $GITHUB_ENV
-            echo "::set-output name=valid::true"
+            echo "valid=true" >> $GITHUB_OUTPUT
           else
             echo "Commit message does not match version pattern. Skipping publish."
             echo "valid=false" >> $GITHUB_ENV
-            echo "::set-output name=valid::false"
-        continue-on-error: true
+            echo "valid=false" >> $GITHUB_OUTPUT
+        shell: bash
 
   publish-npm:
     needs: check-commit
