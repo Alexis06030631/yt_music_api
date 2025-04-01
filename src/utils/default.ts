@@ -36,7 +36,10 @@ export default {
 		'X-Goog-PageId': 'none',
 		'X-Goog-Encode-Response-If-Executable': 'base64',
 		'X-Goog-ME': 'true',
-		'x-youtube-client-version': '2.20210721.07.00',
+		"x-youtube-bootstrap-logged-in": false,
+		"x-youtube-client-name": 67,
+		"x-youtube-client-version": "1.20250310.01.00",
+		"sec-ch-ua-full-version": "134.0.6998.44"
 	},
 	body: {
 		"context": {

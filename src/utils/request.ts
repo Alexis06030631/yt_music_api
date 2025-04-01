@@ -1,7 +1,9 @@
 import default_const, {countriesCodes, options, optionsType} from './default'
 import {error} from "./error";
 
-let visitorID = process.env.YT_VISITOR_ID || ""
+let visitorID: string = process.env.YT_VISITOR_ID || ""
+let context: any = process.env.YT_USER_CONTEXT || ""
+let cookies: string = process.env.YT_COOKIE || ""
 
 export default function (url: string, body: any = {}, header: object = {}, option: optionsType = options): Promise<any> {
 	return new Promise(async (resolve, reject) => {
@@ -54,11 +56,14 @@ export async function headerBuilder(header: object, options?: optionsType) {
 	}
 
 	headers.append('X-Goog-Visitor-Id', await getVisitorId())
+	headers.append('cookie', cookies)
 	return headers
 }
 
 export async function bodyBuilder(body: object, options_arr: optionsType): Promise<string> {
 	const def_body = default_const.body
+	await getVisitorData()
+	def_body.context = context || def_body.context
 	for (const key in options_arr) {
 		switch (key) {
 			case "country": {
@@ -73,6 +78,19 @@ export async function bodyBuilder(body: object, options_arr: optionsType): Promi
 	return JSON.stringify(Object.assign(default_const.body, body))
 }
 
+
+function addOrReplaceCookie(cookie: string, value: string) {
+	const regex = new RegExp(`(?:^|,\\W)(${cookie})=(.*?);`, 'g')
+	cookie = cookie.replace(/,\s?/g, '')
+	cookie = cookie.replace(/;\s?/g, '')
+	value = value.replace(/,\s?/g, '')
+	value = value.replace(/;\s?/g, '')
+	if (cookies.match(regex)) {
+		cookies = cookies.replace(regex, `$1=${value};`)
+	} else {
+		cookies += `${cookie}=${value};`
+	}
+}
 
 async function getVisitorId(): Promise<string> {
 	try {
@@ -94,6 +112,75 @@ async function getVisitorId(): Promise<string> {
 		return visitorID
 	} catch (error) {
 		process.emitWarning(`Failed to get visitor ID: ${error}`, 'uncaughtException')
+		return visitorID
+	}
+}
+
+
+export async function getVisitorData(): Promise<string> {
+	try {
+		if (visitorID !== '') return visitorID
+		if (context !== '') return context?.client?.visitorData
+
+		/********** Init Consent Panel **********/
+		let init = await fetch('https://music.youtube.com/',
+			{
+				method: 'GET',
+				headers: {
+					'User-Agent': default_const.header['User-Agent']
+				},
+				redirect: 'manual',
+			})
+
+		init.headers?.get('set-cookie')?.match(/(?:^|,\W)([^;|,]*?)=(.*?);/g)?.forEach((cookie: string) => {
+			addOrReplaceCookie(cookie.split('=')[0], cookie.split('=')[1])
+		})
+		await fetch(init?.headers?.get('location') || '', {
+			method: 'GET',
+			headers: {
+				'User-Agent': default_const.header['User-Agent'],
+				'cookie': cookies
+			},
+		})
+
+		/********** Set No Cookie And Validate User **********/
+		let saveUser = await fetch('https://consent.youtube.com/save',
+			{
+				method: 'POST',
+				headers: {
+					'User-Agent': default_const.header['User-Agent'],
+					'cookie': cookies,
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: 'gl=FR&m=0&app=0&pc=ytm&continue=https%3A%2F%2Fmusic.youtube.com%2F%3Fcbrd%3D1&x=6&bl=boq_identityfrontenduiserver_20250309.09_p0&hl=fr&src=1&cm=2&set_eom=true'
+			}
+		)
+
+		saveUser.headers?.get('set-cookie')?.match(/(?:^|,\W)([^;|,]*?)=(.*?);/g)?.forEach((cookie: string) => {
+			addOrReplaceCookie(cookie.split('=')[0], cookie.split('=')[1])
+		})
+
+		/********** Get Context **********/
+		let response = await (await fetch('https://music.youtube.com/',
+			{
+				method: 'GET',
+				headers: {
+					'User-Agent': default_const.header['User-Agent'],
+					'cookie': cookies
+				},
+			})).text()
+
+		const matches = response.match(/ytcfg\.set\s*\(\s*({.+?})\s*\)\s*;/);
+		if (matches && matches.length > 0) {
+			const ytcfg = JSON.parse(matches[1]);
+			context = ytcfg?.INNERTUBE_CONTEXT
+			context.client.visitorData = ytcfg?.INNERTUBE_CONTEXT?.client.visitorData || ''
+			visitorID = context?.client?.visitorData
+		}
+
+		return visitorID
+	} catch (error) {
+		if (process.env.YT_DEBUG_MODE === "true") console.error(`Failed to get visitor ID: `, error)
 		return visitorID
 	}
 }
