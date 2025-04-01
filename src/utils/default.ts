@@ -37,7 +37,9 @@ export default {
 				"hl": "en", // language app
 				"gl": "US", // language result
 			},
-			"user": {},
+			"user": {
+				lockedSafetyMode: false
+			},
 		}
 	},
 }

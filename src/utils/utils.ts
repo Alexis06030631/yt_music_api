@@ -11,9 +11,6 @@ import {
 	HEADER_CHART_DESCRIPTION,
 	HEADER_CHART_THUMBNAIL,
 	HEADER_CHART_TITLE,
-	HEADER_DETAIL,
-	HEADER_PLAYLIST_THUMBNAIL,
-	HEADER_PLAYLIST_TITLE,
 	ICON_TYPE,
 	LONGTEXT_RUNS,
 	MENU_ITEMS,
@@ -24,6 +21,7 @@ import {
 	NAVIGATION_VIDEO_TYPE,
 	PLAY_BUTTON,
 	PLAYLIST_ID,
+	PLAYLIST_SHELF_HEADER_RENDERER,
 	PLAYLIST_SHELF_RENDERER,
 	RUN_TEXT,
 	SUBSCRIBE_BUTTON,
@@ -316,7 +314,8 @@ export function parseSearchResult(response: any, category: string = ""): any {
 	if (["song", "video", "album"].includes(searchResult.resultType)) {
 		searchResult.duration = null
 		searchResult.year = null
-		const nav_ = nav(getFlexColumnItem(response, 1), TEXT_RUNS, false)
+		const nav_ = nav(getFlexColumnItem(response, 1), TEXT_RUNS, true)
+		if (!nav_) return null
 		const nav_Offset = (nav_[0].length === 1 ? 2 : 0);
 		searchResult = {...searchResult, ...parseSongRuns(nav_.slice(nav_Offset))};
 	}
@@ -357,6 +356,7 @@ export function parseSearchResults(response: any[], category: string): any {
 }
 
 export function getFlexColumnItem(item: any, index: number): any {
+	if (!item?.flexColumns) return null;
 	if (item.flexColumns.length <= index || !("text" in item.flexColumns[index].musicResponsiveListItemFlexColumnRenderer) || !("runs" in item.flexColumns[index].musicResponsiveListItemFlexColumnRenderer.text)) {
 		return null;
 	} else return item.flexColumns[index].musicResponsiveListItemFlexColumnRenderer;
@@ -421,9 +421,9 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 
 	if (["playlist"].includes(type)) {
 		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
-		searchResult.name = nav(response, HEADER_PLAYLIST_TITLE, true)
-		searchResult.thumbnails = nav(response, HEADER_PLAYLIST_THUMBNAIL, true)
-		searchResult.description = nav(response, [...HEADER_DETAIL, ...DESCRIPTION], true)
+		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true)
+		searchResult.thumbnails = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...THUMBNAILS], true)
+		searchResult.description = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION], true)
 		searchResult.id = nav(response, [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID], true)
 	}
 

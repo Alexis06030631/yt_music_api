@@ -67,7 +67,7 @@ export const MENU_PLAYLIST_ID: any[] = [...MENU_ITEMS, 0, MNIR, ...NAVIGATION_WA
 export const MENU_RADIO_PLAYLIST_ID: any[] = [...MENU_ITEMS, 0, MNIR, "navigationEndpoint", "watchEndpoint", "playlistId"];
 export const MULTI_SELECT: any[] = ["musicMultiSelectMenuItemRenderer"];
 export const HEADER: any[] = ["header"];
-export const HEADER_DETAIL: any[] = [...HEADER, "musicDetailHeaderRenderer"];
+export const HEADER_DETAIL: any[] = [...HEADER];
 export const EDITABLE_PLAYLIST_DETAIL_HEADER: any[] = ["musicEditablePlaylistDetailHeaderRenderer"];
 export const HEADER_EDITABLE_DETAIL: any[] = [...HEADER, ...EDITABLE_PLAYLIST_DETAIL_HEADER];
 export const HEADER_SIDE: any[] = [...HEADER, "musicSideAlignedItemRenderer"];
@@ -76,7 +76,7 @@ export const HEADER_ARTIST: any[] = [...HEADER, "musicImmersiveHeaderRenderer"];
 export const HEADER_ARTIST_TITLE: any[] = [...HEADER_ARTIST, ...TITLE_TEXT];
 export const HEADER_PLAYLIST_TITLE: any[] = [...HEADER_DETAIL, ...TITLE_TEXT];
 export const HEADER_ARTIST_THUMBNAIL: any[] = [...HEADER_ARTIST, ...THUMBNAILS];
-export const HEADER_PLAYLIST_THUMBNAIL: any[] = [...HEADER_DETAIL, ...THUMBNAIL_CROPPED];
+export const HEADER_PLAYLIST_THUMBNAIL: any[] = [...HEADER_DETAIL];
 export const DESCRIPTION_SHELF: any[] = ["musicDescriptionShelfRenderer"];
 export const DESCRIPTION: any[] = ["description", ...RUN_TEXT];
 export const CAROUSEL: any[] = ["musicCarouselShelfRenderer"];
@@ -87,15 +87,16 @@ export const CARD_SHELF_TITLE: any[] = [...HEADER, "musicCardShelfHeaderBasicRen
 export const FRAMEWORK_MUTATIONS: any[] = ["frameworkUpdates", "entityBatchUpdate", "mutations"];
 export const LONGTEXT_RUNS: any[] = ["longBylineText", "runs"];
 export const SUBSCRIBE_BUTTON: any[] = ["subscriptionButton", "subscribeButtonRenderer"];
-export const PLAYLIST_SHELF_RENDERER: any[] = [...SINGLE_COLUMN_TAB, ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
-export const CHARTS_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer", "contents"];
-export const CHARTS_SHELF_PLAYLISTID: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer", ...PLAYLIST_ID];
+export const PLAYLIST_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
+export const PLAYLIST_SHELF_HEADER_RENDERER: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST, 0, ...RESPONSIVE_HEADER];
+export const CHARTS_SHELF_RENDERER: any[] = [...PLAYLIST_SHELF_RENDERER, "contents"];
+export const CHARTS_SHELF_PLAYLISTID: any[] = [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID];
 export const HEADER_CHART_TITLE: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...TITLE_TEXT];
 export const HEADER_CHART_THUMBNAIL: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, ...THUMBNAILS];
 export const HEADER_CHART_DESCRIPTION: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST_ITEM, ...RESPONSIVE_HEADER, "description", ...DESCRIPTION_SHELF, ...DESCRIPTION];
 
 
-export function nav(root: any, items: any[], none_if_absent: boolean = false): any {
+export function nav(root: any, items: any[], none_if_absent: boolean = false, skip_if_absent: boolean = false): any {
 	try {
 		for (const k of items) {
 			root = root[k];
@@ -103,6 +104,8 @@ export function nav(root: any, items: any[], none_if_absent: boolean = false): a
 	} catch (e) {
 		if (none_if_absent) {
 			return null;
+		} else if (skip_if_absent) {
+			return root;
 		}
 		throw new Error(`Unable to find '${items}' on ${JSON.stringify(root)}, exception: ${e}`);
 	}

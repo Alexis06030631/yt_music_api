@@ -232,7 +232,9 @@ export function download(query: string, format: AvailableFormat = AvailableForma
  * @param query - The music ID or URL
  */
 export function getPlayers(query: string): Promise<StreamPlayer> {
-	return getPlayers_dv(getYTIdFromText(query).isValidId ? getYTIdFromText(query).id : query)
+	return getPlayers_dv(getYTIdFromText(query).isValidId ? getYTIdFromText(query).id : query).catch((e) => {
+		throw e
+	})
 }
 
 /**
