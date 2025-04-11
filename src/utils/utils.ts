@@ -3,6 +3,7 @@ import {
 	ALBUM_SHELF_HEADER_RENDERER,
 	ALBUM_SHELF_RENDERER,
 	BADGE_LABEL,
+	BADGE_PATH,
 	CARD_SHELF_TITLE,
 	CHARTS_SHELF_PLAYLISTID,
 	CHARTS_SHELF_RENDERER,
@@ -393,7 +394,7 @@ export function getItemText(item: any, index: number, run_index: number = 0, non
 	return column.text.runs[run_index].text;
 }
 
-export function parseGetResult(response: any, type: string): Artist | Music | Playlist | null {
+export function parseGetResult(response: any, type: string): Artist | Music | Playlist | Album | null {
 	let searchResult: any = {}
 	searchResult.resultType = type
 
@@ -428,13 +429,20 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
 		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true)
 		searchResult.thumbnails = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...THUMBNAILS], true)
-		searchResult.description = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION_PLAYLIST], true)
+		searchResult.description = ''
+		for (const text of nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION_PLAYLIST], true) || []) {
+			searchResult.description += text?.navigationEndpoint?.urlEndpoint?.url || text.text
+		}
 		searchResult.id = nav(response, [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID], true)
+		searchResult.isExplicit = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, "description", ...DESCRIPTION_SHELF, "straplineBadge", ...BADGE_PATH], true) !== null;
 	}
 
 	if (["album"].includes(type)) {
 		searchResult.musics = parseSearchResults(nav(response, [...ALBUM_SHELF_RENDERER, "contents"], true) || [], 'song')
-		searchResult.description = nav(response, [...ALBUM_SHELF_HEADER_RENDERER, "description", ...DESCRIPTION_SHELF, ...DESCRIPTION], true)
+		searchResult.description = ''
+		for (const text of nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION_PLAYLIST], true) || []) {
+			searchResult.description += text?.navigationEndpoint?.urlEndpoint?.url || text.text
+		}
 		searchResult.id = (getYTIdFromText(nav(response, [...ALBUM_LINK], true))).id
 		searchResult.artists = (parseSongRuns(nav(response, [...ALBUM_SHELF_HEADER_RENDERER, "straplineTextOne", "runs"], true)))?.artists
 	}
@@ -495,9 +503,10 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 			return new Artist(searchResult);
 		case "charts":
 		case "playlist":
-		case "album":
 		case "autoMix":
 			return new Playlist(searchResult);
+		case "album":
+			return new Album(searchResult);
 		default:
 			console.log("gtRs", "Unknown result type: ", searchResult)
 	}

@@ -173,7 +173,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
  * 	}
  * ```
  */
-export function get(query: string): Promise<Music | Artist | Playlist | null> {
+export function get(query: string): Promise<Music | Artist | Playlist | Album | null> {
 	return new Promise((resolve, reject) => {
 		const id = getYTIdFromText(query, true)
 		const req = {url: '', body: {}, method: 'POST'}

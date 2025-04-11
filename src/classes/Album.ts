@@ -29,6 +29,13 @@ export default class Album {
 	 * @example %
 	 */
 	public name: string;
+
+	/**
+	 * The Album description
+	 * @example "Rick Astley - Never Gonna Give You Up"
+	 */
+	public description: string;
+
 	/**
 	 * An array of Artist objects
 	 * @example
@@ -61,11 +68,15 @@ export default class Album {
 	 */
 	public isExplicit: boolean
 
+	#musics: Array<Music>
+
 	constructor(data: any) {
+		this.#musics = data?.musics || []
 		this.resultType = data.resultType
 		this.thumbnails = data?.thumbnails?.map((thumbnail: any) => new Thumbnail(thumbnail))
 		this.id = data.id
 		this.name = data.title || data.name
+		this.description = data.description
 		this.artists = data?.artists?.map((artist: any) => new Artist(artist))
 		this.year = data.year
 		this.isExplicit = !!data.isExplicit
@@ -77,6 +88,7 @@ export default class Album {
 	 */
 	getSongs(): Promise<Music[]> {
 		return new Promise((resolve, reject) => {
+			if (this.#musics.length) return resolve(this.#musics)
 			get(this.id).then((res: any) => {
 				console.log(res.musics)
 				if (res?.musics?.length) return resolve(res?.musics)
