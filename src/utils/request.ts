@@ -5,18 +5,21 @@ let visitorID: string = process.env.YT_VISITOR_ID || ""
 let context: any = process.env.YT_USER_CONTEXT || ""
 let cookies: string = process.env.YT_COOKIE || ""
 
-export default function (url: string, body: any = {}, header: object = {}, option: optionsType = options): Promise<any> {
+export default function (url: string, body: any = {}, header: object = {}, option: optionsType = options, method: string = "POST"): Promise<any> {
 	return new Promise(async (resolve, reject) => {
 		const headers = await headerBuilder(header, option)
 		body = await bodyBuilder(body, option).catch(reject)
 		url = makeUrl(url)
 
 		fetch(url, {
-			method: 'POST',
+			method: method,
 			headers: headers,
-			body: body
+			body: method === "POST" ? body : undefined,
 		}).then(async (res: any) => {
-			res = await res.json();
+			if (res.headers.get('content-type').includes('html')) {
+				res = decodeURIComponent((await res.text()).match(/browse',(?:\n|.)*?data:.*?'(.*responseContext.*?)'/)[1].replace(/\\x/g, '%')).replace(/\\\\"/g, '\\"')
+				res = JSON.parse(res)
+			} else res = await res.json();
 			if (res.error) reject(error(res.error.code, {message: res.error.message, url: url}))
 			else resolve(res)
 		}).catch((e) => {

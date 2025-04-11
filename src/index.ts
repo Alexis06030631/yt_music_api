@@ -79,7 +79,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 		if (hasFilter && (!all_TYPES.includes(filter) && !(!!TYPE_SEARCH_CODE?.[filter]))) return reject(error(1001, `Available types: ${all_TYPES.join(", ")}`))
 		const result: any = {query, filter: hasFilter ? filter : false, content: []}
 		if (getYTIdFromText(query).isValidId) {
-			result.content = [await this.get(query).catch(reject)]
+			result.content = [await get(query).catch(reject)]
 			return resolve(result)
 		}
 		request('search', {
@@ -121,7 +121,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 				if (option.fetch) {
 					result.content = result.content.filter((content: any) => !!content?.id)
 					const promises = result.content.map(async (content: any) => {
-						if (content.id) return await this.get(content.id).catch((e) => {
+						if (content.id) return await get(content.id).catch((e) => {
 							if (process.env.YT_DEBUG_MODE === "true") console.error(e)
 							return null
 						})
@@ -176,13 +176,18 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 export function get(query: string): Promise<Music | Artist | Playlist | null> {
 	return new Promise((resolve, reject) => {
 		const id = getYTIdFromText(query, true)
-		const req = {url: '', body: {}}
+		const req = {url: '', body: {}, method: 'POST'}
 		switch (id.type) {
 			case "song":
 				req.url = 'next'
 				req.body = {videoId: id.id}
 				break
 			case "playlist":
+				if (id.id.includes('_')) {
+					req.url = 'https://music.youtube.com/playlist/?list=' + id.id
+					req.method = 'GET'
+					break
+				}
 			case "artist":
 			case "album":
 				req.url = 'browse'
@@ -191,7 +196,7 @@ export function get(query: string): Promise<Music | Artist | Playlist | null> {
 		}
 
 		if (!!req.url) {
-			request(req.url, req.body).then((res: any) => {
+			request(req.url, req.body, {}, options, req.method).then((res: any) => {
 				resolve(parseGetResult(res, <string>id.type))
 			}).catch(reject)
 		} else reject(error(1006, {query: query, id: id.id, type: id.type}))

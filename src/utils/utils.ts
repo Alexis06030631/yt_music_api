@@ -7,6 +7,7 @@ import {
 	CHARTS_SHELF_PLAYLISTID,
 	CHARTS_SHELF_RENDERER,
 	DESCRIPTION,
+	DESCRIPTION_PLAYLIST,
 	DESCRIPTION_SHELF,
 	findObjectsByKey,
 	HEADER_ARTIST,
@@ -427,7 +428,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
 		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true)
 		searchResult.thumbnails = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...THUMBNAILS], true)
-		searchResult.description = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION], true)
+		searchResult.description = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION_PLAYLIST], true)
 		searchResult.id = nav(response, [...PLAYLIST_SHELF_RENDERER, ...PLAYLIST_ID], true)
 	}
 
