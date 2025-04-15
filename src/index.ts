@@ -19,6 +19,7 @@ import {
 	AvailableTypes,
 	countries,
 	countriesCodes,
+	followerFormat,
 	options,
 	optionsType,
 	TYPE_SEARCH_CODE
@@ -53,7 +54,8 @@ export {
 	all_TYPES,
 	countries,
 	countriesCodes,
-	AvailableCountriesCodes
+	AvailableCountriesCodes,
+	followerFormat
 }
 
 
