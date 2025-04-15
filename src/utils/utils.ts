@@ -5,6 +5,7 @@ import {
 	BADGE_LABEL,
 	BADGE_PATH,
 	CARD_SHELF_TITLE,
+	CAROUSEL_TITLE,
 	CHARTS_SHELF_PLAYLISTID,
 	CHARTS_SHELF_RENDERER,
 	DESCRIPTION,
@@ -23,13 +24,18 @@ import {
 	MNIR,
 	MRLIR,
 	nav,
+	NAVIGATION_BROWSE,
 	NAVIGATION_BROWSE_ID,
 	NAVIGATION_VIDEO_TYPE,
+	PAGE_TYPE,
 	PLAY_BUTTON,
 	PLAYLIST_ID,
 	PLAYLIST_SHELF_HEADER_RENDERER,
 	PLAYLIST_SHELF_RENDERER,
+	PLAYLIST_SHELF_RENDERER_ARTIST,
 	RUN_TEXT,
+	SECTION_LIST,
+	SINGLE_COLUMN_TAB,
 	SUBSCRIBE_BUTTON,
 	SUBTITLE,
 	TEXT_RUN_TEXT,
@@ -426,8 +432,8 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 	}
 
 	if (["playlist", "album"].includes(type)) {
-		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || [], 'song')
-		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true)
+		searchResult.musics = parseSearchResults(nav(response, [...PLAYLIST_SHELF_RENDERER, "contents"], true) || nav(response, [...PLAYLIST_SHELF_RENDERER_ARTIST, "contents"], true) || [], 'song')
+		searchResult.name = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...TITLE, "text"], true) || 'Songs'
 		searchResult.thumbnails = nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...THUMBNAILS], true)
 		searchResult.description = ''
 		for (const text of nav(response, [...PLAYLIST_SHELF_HEADER_RENDERER, ...DESCRIPTION_PLAYLIST], true) || []) {
@@ -453,6 +459,7 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.description = nav(response, [...HEADER_ARTIST, ...DESCRIPTION], true)
 		searchResult.id = nav(response, [...HEADER_ARTIST, ...SUBSCRIBE_BUTTON, "channelId"], true)
 		searchResult.followers = nav(response, [...HEADER_ARTIST, ...SUBSCRIBE_BUTTON, "shortSubscriberCountText", ...RUN_TEXT], true)
+
 		if (searchResult.followers) {
 			const split = searchResult.followers.split(new RegExp('\\s| '))
 			const end = split[1]
@@ -460,6 +467,28 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 			searchResult.followers = {
 				followers: num,
 				followersText: searchResult.followers,
+			}
+		}
+
+		searchResult.browseIds = []
+
+		for (let content of nav(response, [...SINGLE_COLUMN_TAB, ...SECTION_LIST], true)) {
+			if (content?.musicShelfRenderer) {
+				const item = content.musicShelfRenderer;
+				searchResult.browseIds.push({
+					type: nav(item, [...TITLE, ...NAVIGATION_BROWSE, ...PAGE_TYPE], true),
+					id: nav(item, [...TITLE, ...NAVIGATION_BROWSE_ID], true),
+					param: nav(item, [...TITLE, ...NAVIGATION_BROWSE, "params"], true)
+				})
+			} else if (content?.musicCarouselShelfRenderer) {
+				const item = content.musicCarouselShelfRenderer;
+				if (nav(item, [...CAROUSEL_TITLE, ...NAVIGATION_BROWSE, ...PAGE_TYPE], true)) {
+					searchResult.browseIds.push({
+						type: nav(item, [...CAROUSEL_TITLE, ...NAVIGATION_BROWSE, ...PAGE_TYPE], true),
+						id: nav(item, [...CAROUSEL_TITLE, ...NAVIGATION_BROWSE_ID], true),
+						param: nav(item, [...CAROUSEL_TITLE, ...NAVIGATION_BROWSE, "params"], true)
+					})
+				}
 			}
 		}
 	}

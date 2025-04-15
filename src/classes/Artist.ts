@@ -1,10 +1,11 @@
 import {Thumbnail} from "./Thumbnail";
 import {thumbnail_defaults_size} from "../utils/utils";
 import Music from "./Music";
-import {search} from "../index";
+import {get} from "../index";
 import {error} from "../utils/error";
 import Album from "./Album";
 import {followerFormat} from "../utils/default";
+import Playlist from "./Playlist";
 
 export default class Artist {
 	/**
@@ -40,6 +41,8 @@ export default class Artist {
 	 */
 	public thumbnails: Array<Thumbnail>
 
+	#browseIds: Array<any>
+
 	/**
 	 * The artist's description
 	 * @example "Adele Laurie Blue Adkins is an English singer and songwriter."
@@ -52,16 +55,19 @@ export default class Artist {
 		this.id = artist?.id
 		this.followers = artist?.followers
 		this.description = artist?.description
+		this.#browseIds = artist?.browseIds || []
 	}
 
 	/**
 	 * Get the artist's songs
 	 * @return Music[]
 	 */
-	getSongs(): Promise<Music[]> {
+	getSongs(): Promise<Playlist> {
 		return new Promise((resolve, reject) => {
-			search(this.name, 'artist_song').then((res: any) => {
-				if (res?.content?.length) return resolve(res.content)
+			const typeOfBrowse = this.#browseIds.find(id => id.type === 'MUSIC_PAGE_TYPE_PLAYLIST')
+			get(typeOfBrowse.id, typeOfBrowse.param).then((res: any) => {
+				res.artists = [this]
+				if (res?.musics?.length) return resolve(res)
 				reject(error(1008, {artist: this.name, type: 'song'}))
 			}).catch(reject)
 		})
@@ -73,7 +79,8 @@ export default class Artist {
 	 */
 	getAlbums(): Promise<Album[]> {
 		return new Promise((resolve, reject) => {
-			search(this.name, 'artist_album').then((res: any) => {
+			const typeOfBrowse = this.#browseIds?.find(id => id.type === 'MUSIC_PAGE_TYPE_ARTIST_DISCOGRAPHY')
+			get(typeOfBrowse.id, typeOfBrowse.param).then((res: any) => {
 				if (res?.content?.length) return resolve(res.content)
 				reject(error(1008, {artist: this.name, type: 'album'}))
 			}).catch(reject)
@@ -86,7 +93,7 @@ export default class Artist {
 	 */
 	getVideos(): Promise<Music[]> {
 		return new Promise((resolve, reject) => {
-			search(this.name, 'artist_video').then((res: any) => {
+			get(this.name, 'artist_video').then((res: any) => {
 				if (res?.content?.length) return resolve(res.content)
 				reject(error(1008, {artist: this.name, type: 'video'}))
 			}).catch(reject)

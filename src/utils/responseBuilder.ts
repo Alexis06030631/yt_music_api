@@ -89,6 +89,7 @@ export const FRAMEWORK_MUTATIONS: any[] = ["frameworkUpdates", "entityBatchUpdat
 export const LONGTEXT_RUNS: any[] = ["longBylineText", "runs"];
 export const SUBSCRIBE_BUTTON: any[] = ["subscriptionButton", "subscribeButtonRenderer"];
 export const PLAYLIST_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
+export const PLAYLIST_SHELF_RENDERER_ARTIST: any[] = [...SINGLE_COLUMN_TAB, ...SECTION_LIST_ITEM, "musicPlaylistShelfRenderer"];
 export const ALBUM_SHELF_RENDERER: any[] = [...TWO_COLUMN_TAB, "secondaryContents", ...SECTION_LIST_ITEM, "musicShelfRenderer"];
 export const ALBUM_SHELF_HEADER_RENDERER: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST, 0, ...RESPONSIVE_HEADER];
 export const PLAYLIST_SHELF_HEADER_RENDERER: any[] = [...TWO_COLUMN_TAB, ...TAB_CONTENT, ...SECTION_LIST, 0, ...RESPONSIVE_HEADER];

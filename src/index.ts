@@ -149,6 +149,7 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
 /**
  * Get music from YouTube Music by URL or ID or search query (Warning: search query length must be different from 11 characters)
  * @param query - ex: "Hello Adele" or https://music.youtube.com/watch?v=abc
+ * @param param - Private parameter for the function (Make sure to not use it)
  * @example
  * const get = await client.get("Hello Adele")
  * return:
@@ -173,26 +174,31 @@ export function search(query: string, filter?: AvailableTypes, option: optionsTy
  * 	}
  * ```
  */
-export function get(query: string): Promise<Music | Artist | Playlist | Album | null> {
+export function get(query: string, param: string | null = null): Promise<Music | Artist | Playlist | Album | null> {
 	return new Promise((resolve, reject) => {
 		const id = getYTIdFromText(query, true)
 		const req = {url: '', body: {}, method: 'POST'}
-		switch (id.type) {
-			case "song":
-				req.url = 'next'
-				req.body = {videoId: id.id}
-				break
-			case "playlist":
-				if (id.id.includes('_')) {
-					req.url = 'https://music.youtube.com/playlist/?list=' + id.id
-					req.method = 'GET'
+		if (param) {
+			req.url = "browse"
+			req.body = {browseId: query, params: param}
+		} else {
+			switch (id.type) {
+				case "song":
+					req.url = 'next'
+					req.body = {videoId: id.id}
 					break
-				}
-			case "artist":
-			case "album":
-				req.url = 'browse'
-				req.body = {browseId: id.id}
-				break
+				case "playlist":
+					if (id.id.includes('_')) {
+						req.url = 'https://music.youtube.com/playlist/?list=' + id.id
+						req.method = 'GET'
+						break
+					}
+				case "artist":
+				case "album":
+					req.url = 'browse'
+					req.body = {browseId: id.id}
+					break
+			}
 		}
 
 		if (!!req.url) {
