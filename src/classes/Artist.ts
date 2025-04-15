@@ -1,6 +1,5 @@
 import {Thumbnail} from "./Thumbnail";
 import {thumbnail_defaults_size} from "../utils/utils";
-import Music from "./Music";
 import {get} from "../index";
 import {error} from "../utils/error";
 import Album from "./Album";
@@ -81,16 +80,18 @@ export default class Artist {
 		return new Promise((resolve, reject) => {
 			const typeOfBrowse = this.#browseIds?.find(id => id.type === 'MUSIC_PAGE_TYPE_ARTIST_DISCOGRAPHY')
 			get(typeOfBrowse.id, typeOfBrowse.param).then((res: any) => {
-				if (res?.content?.length) return resolve(res.content)
+				if (res?.length) return resolve(res)
 				reject(error(1008, {artist: this.name, type: 'album'}))
 			}).catch(reject)
 		})
 	}
 
+	//TODO: Fix getVideos
+
 	/**
 	 * Get the artist's videos
 	 * @returns Music[]
-	 */
+
 	getVideos(): Promise<Music[]> {
 		return new Promise((resolve, reject) => {
 			get(this.name, 'artist_video').then((res: any) => {
@@ -99,4 +100,5 @@ export default class Artist {
 			}).catch(reject)
 		})
 	}
+	 */
 }

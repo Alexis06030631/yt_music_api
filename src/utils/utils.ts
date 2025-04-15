@@ -2,6 +2,7 @@ import {
 	ALBUM_LINK,
 	ALBUM_SHELF_HEADER_RENDERER,
 	ALBUM_SHELF_RENDERER,
+	ALBUM_SHELF_RENDERER_ARTIST,
 	BADGE_LABEL,
 	BADGE_PATH,
 	CARD_SHELF_TITLE,
@@ -38,9 +39,12 @@ import {
 	SINGLE_COLUMN_TAB,
 	SUBSCRIBE_BUTTON,
 	SUBTITLE,
+	SUBTITLE_BADGE_LABEL,
+	SUBTITLE_RUNS,
 	TEXT_RUN_TEXT,
 	TEXT_RUNS,
 	THUMBNAIL,
+	THUMBNAIL_RENDERER,
 	THUMBNAILS,
 	TITLE,
 	TITLE_TEXT,
@@ -493,6 +497,23 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		}
 	}
 
+	if (["artist_albums"].includes(type)) {
+		const albums = nav(response, [...ALBUM_SHELF_RENDERER_ARTIST, "items"], true)
+		searchResult.albums = []
+		for (const album of albums) {
+			const item = album.musicTwoRowItemRenderer;
+			const parsed = parseSongRuns(nav(item, SUBTITLE_RUNS))
+			searchResult.albums.push({
+				id: nav(item, [...TITLE, ...NAVIGATION_BROWSE_ID], true),
+				title: nav(item, TITLE_TEXT, true),
+				artists: [],
+				thumbnails: nav(item, THUMBNAIL_RENDERER, true),
+				year: parsed.year,
+				isExplicit: nav(item, SUBTITLE_BADGE_LABEL, true) !== null
+			})
+		}
+	}
+
 
 	if (!searchResult.resultType) {
 		if (searchResult.browseID) {
@@ -544,6 +565,8 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 			return new Playlist(searchResult);
 		case "album":
 			return new Album(searchResult);
+		case "artist_albums":
+			return searchResult?.albums?.map((e: any) => new Album(e)) || []
 		default:
 			console.log("gtRs", "Unknown result type: ", searchResult)
 	}
@@ -580,6 +603,7 @@ export function getTypeByID(id: string = ""): string | null {
 	if (id.startsWith("VM")) return "playlist"
 	if (id.startsWith("PL")) return "playlist"
 	if (id.startsWith("OL")) return "playlist"
+	if (id.startsWith("MPA")) return "artist_albums"
 	if (id.length === 11) return "song"
 	return null
 }
