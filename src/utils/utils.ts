@@ -41,7 +41,7 @@ import {
 	WATCH_VIDEO_ID
 } from "./responseBuilder";
 import Music from "../classes/Music";
-import {all_TYPES, AvailableFormat, AvailableQuality} from "./default";
+import {all_TYPES, AvailableFormat, AvailableQuality, transformFollowerNumber} from "./default";
 import Artist from "../classes/Artist";
 import User from "../classes/User";
 import Album from "../classes/Album";
@@ -452,8 +452,16 @@ export function parseGetResult(response: any, type: string): Artist | Music | Pl
 		searchResult.thumbnails = nav(response, HEADER_ARTIST_THUMBNAIL, true)
 		searchResult.description = nav(response, [...HEADER_ARTIST, ...DESCRIPTION], true)
 		searchResult.id = nav(response, [...HEADER_ARTIST, ...SUBSCRIBE_BUTTON, "channelId"], true)
-		searchResult.followers = nav(response, [...HEADER_ARTIST, ...SUBSCRIBE_BUTTON, "longSubscriberCountText", ...RUN_TEXT], true)
-		if (searchResult.followers) searchResult.followers = searchResult.followers.split(' ')[0].includes('K') ? Number(searchResult.followers.split(' ')[0].replace('K', '')) * 1000 : searchResult.followers.split(' ')[0].includes('M') ? Number(searchResult.followers.split(' ')[0].replace('M', '')) * 1000000 : Number(searchResult.followers.split(' ')[0])
+		searchResult.followers = nav(response, [...HEADER_ARTIST, ...SUBSCRIBE_BUTTON, "shortSubscriberCountText", ...RUN_TEXT], true)
+		if (searchResult.followers) {
+			const split = searchResult.followers.split(new RegExp('\\s| '))
+			const end = split[1]
+			const num = transformFollowerNumber(Number(split[0].replace(',', '.')), end)
+			searchResult.followers = {
+				followers: num,
+				followersText: searchResult.followers,
+			}
+		}
 	}
 
 

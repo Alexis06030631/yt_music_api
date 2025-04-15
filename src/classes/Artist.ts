@@ -4,6 +4,7 @@ import Music from "./Music";
 import {search} from "../index";
 import {error} from "../utils/error";
 import Album from "./Album";
+import {followerFormat} from "../utils/default";
 
 export default class Artist {
 	/**
@@ -19,9 +20,12 @@ export default class Artist {
 
 	/**
 	 * The artist's followers count
-	 * @example 123456
+	 * @example {
+	 *     "followers": 1000000
+	 *     "followersText": "1 M"
+	 * }
 	 */
-	public followers: number;
+	public followers: followerFormat;
 
 	/**
 	 * Thumbnails of the user

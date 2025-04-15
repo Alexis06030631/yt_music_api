@@ -56,6 +56,18 @@ export default {
 		}
 	},
 }
+
+export const shortFollowerFormat = {
+	'K': 1e3,
+	'M': 1e6,
+	'B': 1e9,
+}
+
+export function transformFollowerNumber(number: number, format: string = '') {
+	return number * (shortFollowerFormat[format] || 1)
+}
+
+
 export const countries = COUNTRIES.map((country) => country.name) || []
 export const countriesCodes = COUNTRIES.map((country) => country.codeCountry) || []
 export declare type AvailableTypes = typeof all_TYPES[number];
@@ -66,4 +78,9 @@ export declare type AvailableCountriesCodes = typeof countriesCodes[number];
 export declare type optionsType = {
 	country: AvailableCountriesCodes,
 	fetch: boolean,
+}
+
+export declare type followerFormat = {
+	followers: number,
+	followersText: string,
 }
