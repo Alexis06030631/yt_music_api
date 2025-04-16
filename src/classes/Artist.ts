@@ -40,7 +40,11 @@ export default class Artist {
 	 */
 	public thumbnails: Array<Thumbnail>
 
-	#browseIds: Array<any>
+	/**
+	 * Used to get the artist's songs and albums (Ignore this)
+	 * @private
+	 */
+	private readonly browseIds: Array<any>
 
 	/**
 	 * The artist's description
@@ -54,16 +58,16 @@ export default class Artist {
 		this.id = artist?.id
 		this.followers = artist?.followers
 		this.description = artist?.description
-		this.#browseIds = artist?.browseIds || []
+		this.browseIds = artist?.browseIds || []
 	}
 
 	/**
 	 * Get the artist's songs
-	 * @return Music[]
+	 * @returns Playlist
 	 */
 	getSongs(): Promise<Playlist> {
 		return new Promise((resolve, reject) => {
-			const typeOfBrowse = this.#browseIds.find(id => id.type === 'MUSIC_PAGE_TYPE_PLAYLIST')
+			const typeOfBrowse = this.browseIds.find(id => id.type === 'MUSIC_PAGE_TYPE_PLAYLIST')
 			get(typeOfBrowse.id, typeOfBrowse.param).then((res: any) => {
 				res.artists = [this]
 				if (res?.musics?.length) return resolve(res)
@@ -78,8 +82,11 @@ export default class Artist {
 	 */
 	getAlbums(): Promise<Album[]> {
 		return new Promise((resolve, reject) => {
-			const typeOfBrowse = this.#browseIds?.find(id => id.type === 'MUSIC_PAGE_TYPE_ARTIST_DISCOGRAPHY')
+			const typeOfBrowse = this.browseIds?.find(id => id.type === 'MUSIC_PAGE_TYPE_ARTIST_DISCOGRAPHY')
 			get(typeOfBrowse.id, typeOfBrowse.param).then((res: any) => {
+				for (const alb of res) {
+					alb.artists = [this]
+				}
 				if (res?.length) return resolve(res)
 				reject(error(1008, {artist: this.name, type: 'album'}))
 			}).catch(reject)

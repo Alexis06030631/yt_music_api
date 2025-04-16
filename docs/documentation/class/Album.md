@@ -3,9 +3,26 @@
 
 
 ---
-| <details open><summary>Properties</summary><p>[artists](#artists)<br>[browseId](#browseid)<br>[id](#id)<br>[isExplicit](#isexplicit)<br>[name](#name)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[year](#year)</p></details> |
-| --- |
+| <details open><summary>Properties</summary><p>[artists](#artists)<br>[description](#description)<br>[id](#id)<br>[isExplicit](#isexplicit)<br>[name](#name)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[year](#year)</p></details> | <details open><summary>Functions</summary><p>[getSongs](#function-getsongs)</p></details> |
+| --- | --- |
 
+
+
+ # Functions
+
+
+## Function getSongs() 
+Get the Album's songs  @return Music[]
+
+**Builder**:
+````javascript
+Album.getSongs()
+````
+
+
+
+<span class="flex_return">**Return:**&nbsp;
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/documentation/class/Music)[]&gt;</span>
 
 
  # Properties
@@ -23,12 +40,12 @@ Album.artists
 
 **Return:**
 <span class="flex_return">[array![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Artist](/documentation/class/Artist)&gt;</span>
-## browseId
-The browseId of the Album (NOT WORKING)
+## description
+The Album description
 
 **Builder**:
 ````javascript
-Album.browseId
+Album.description
 ````
 
 

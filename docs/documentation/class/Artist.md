@@ -7,7 +7,7 @@ If the artist's content is empty except for the artist's name, this is due to a 
 
 
 ---
-| <details open><summary>Properties</summary><p>[description](#description)<br>[followers](#followers)<br>[id](#id)<br>[name](#name)<br>[thumbnails](#thumbnails)</p></details> | <details open><summary>Functions</summary><p>[getAlbums](#function-getalbums)<br>[getSongs](#function-getsongs)<br>[getVideos](#function-getvideos)</p></details> |
+| <details open><summary>Properties</summary><p>[description](#description)<br>[followers](#followers)<br>[id](#id)<br>[name](#name)<br>[thumbnails](#thumbnails)</p></details> | <details open><summary>Functions</summary><p>[getAlbums](#function-getalbums)<br>[getSongs](#function-getsongs)</p></details> |
 | --- | --- |
 
 
@@ -28,7 +28,7 @@ Artist.getAlbums()
 <span class="flex_return">**Return:**&nbsp;
 [promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Album](/documentation/class/Album)[]&gt;</span>
 ## Function getSongs() 
-Get the artist's songs  @return Music[]
+Get the artist's songs
 
 **Builder**:
 ````javascript
@@ -38,19 +38,7 @@ Artist.getSongs()
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/documentation/class/Music)[]&gt;</span>
-## Function getVideos() 
-Get the artist's videos
-
-**Builder**:
-````javascript
-Artist.getVideos()
-````
-
-
-
-<span class="flex_return">**Return:**&nbsp;
-[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/documentation/class/Music)[]&gt;</span>
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Playlist](/documentation/class/Playlist)&gt;</span>
 
 
  # Properties
@@ -79,7 +67,7 @@ Artist.followers
 
 
 **Return:**
-<span class="flex_return">[number![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)</span>
+<span class="flex_return">[followerFormat](/documentation/type/followerFormat)</span>
 ## id
 The YouTube Music artist id
 

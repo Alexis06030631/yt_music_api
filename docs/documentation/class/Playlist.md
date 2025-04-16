@@ -3,7 +3,7 @@
 
 
 ---
-| <details open><summary>Properties</summary><p>[artists](#artists)<br>[browseId](#browseid)<br>[id](#id)<br>[musics](#musics)<br>[name](#name)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[year](#year)</p></details> |
+| <details open><summary>Properties</summary><p>[artists](#artists)<br>[browseId](#browseid)<br>[description](#description)<br>[id](#id)<br>[musics](#musics)<br>[name](#name)<br>[resultType](#resulttype)<br>[thumbnails](#thumbnails)<br>[year](#year)</p></details> |
 | --- |
 
 
@@ -35,6 +35,18 @@ Playlist.browseId
 
 **Return:**
 <span class="flex_return">[string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)</span>
+## description
+Description of the Playlist
+
+**Builder**:
+````javascript
+Playlist.description
+````
+
+
+
+**Return:**
+<span class="flex_return">string | null</span>
 ## id
 The YTmusic id of the Playlist
 

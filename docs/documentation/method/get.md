@@ -5,14 +5,15 @@ Get music from YouTube Music by URL or ID or search query (Warning: search query
 ---
 **Builder**:
 ````javascript
-get(query)
+get(query, param)
 ````
 
 ### Parameters
 | Parameter | Type | Description | Optional |
 | :---: | :---: | :---: | :---: |
 | query | [string![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ex: "Hello Adele" or https://music.youtube.com/watch?v=abc | <h1 style="color: darkred">𐄂</h1> |
+| param | string | null | Private parameter for the function (Make sure to not use it) | <h1 style="color: darkgreen">✓</h1> |
 
 
 <span class="flex_return">**Return:**&nbsp;
-[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/documentation/class/Music) | [Artist](/documentation/class/Artist) | [Playlist](/documentation/class/Playlist) | null&gt;</span>
+[promise![Link](/assets/img/external_link.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Music](/documentation/class/Music) | [Artist](/documentation/class/Artist) | [Playlist](/documentation/class/Playlist) | [Album](/documentation/class/Album) | null&gt;</span>
